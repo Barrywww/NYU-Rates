@@ -1,8 +1,3 @@
-.site-layout-content {
-    min-height: 280px;
-    padding: 24px;
-    background: #fff;
-}
 #components-layout-demo-top .logo {
     float: left;
     width: 120px;
@@ -27,4 +22,53 @@
 
 #root{
     height: 100%;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+p.image{
+    text-align:center;
+    font-size: xx-large;
+    font-weight: 500;
+    color:blueviolet;
+}
+.imageColumn{
+    float:left;
+    width:33.3%;
+    padding:30px
+}
+
+.imageRow{
+    margin:40px 150px 15px 150px;
+}
+
+.imageRow::after{
+    content : "";
+    display : table;
+    clear:both
+}
+
+.imageColumn1{
+    float:left;
+    width:50%;
+    padding:20px
+}
+
+.imageRow1{
+    margin:80px 300px 40px 300px
+}
+
+.imageRow1::after{
+    content : "";
+    display : table;
+    clear:both
+}
+
+p.image1{
+    text-align:left;
+    font-size: x-large;
+    font-weight: 500;
+    color:rgb(12, 4, 4);
 }
