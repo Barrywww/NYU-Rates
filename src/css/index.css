@@ -40,6 +40,10 @@ p.image{
     padding:30px
 }
 
+.imageColumn img{
+    border-radius: 15px;
+}
+
 .imageRow{
     margin:40px 150px 15px 150px;
 }
