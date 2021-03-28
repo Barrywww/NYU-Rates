@@ -36,8 +36,8 @@ Used to view rating of a specified course, within a specific timespan.
 ```json
 {
     "course_name": "[corresponding course name]",
-    "rating": (Float) average rating of the input course,
-    "total_comments": (Int) total number of comments,
+    "rating": 5.0,
+    "total_comments": 1,
     "comments": [
         {
             "time": "[yyyy-mm-dd hh:mm]",
@@ -101,14 +101,14 @@ Used to view rating of a specified professor, within a specific timespan.
 {
     "professor_name": "[corresponding professor name]",
     "department": "[department of the professor]",
-    "rating": (Float) average rating of the input professor,
-    "total_comments": (Int) total number of comments,
+    "rating": 5.0,
+    "total_comments": 1,
     "comments": [
         {
             "time": "[yyyy-mm-dd hh:mm]",
             "username": "[username of comment]",
             "course_code": "[valid course code]",
-            "rating": (Float) rating of this comment, 
+            "rating": 5.0, 
             "content": "[comment body]"
         }
     ],
@@ -117,7 +117,7 @@ Used to view rating of a specified professor, within a specific timespan.
             "course_name": "[valid course name]",
             "course_code": "[valid course code]",
             "semester": "[corresponing semester]",
-            "rating": (Float) avg rating in that semester
+            "rating": 5.0
         }
     ]
 }
@@ -151,10 +151,10 @@ Used to dynamically load comments, if too many of them.
 **Data constraints**
 ```json
 {
-    "search_type": "course" or "professor",
+    "search_type": " 'course' or 'professor' ",
     "course_code": "[valid course code]",
     "professor_id": "[valid professor netid]",
-    "start_idx": (Int) Starting index of the query.
+    "start_idx": 0
 }
 ```
 
@@ -171,7 +171,7 @@ Used to dynamically load comments, if too many of them.
             "time": "[yyyy-mm-dd hh:mm]",
             "username": "[username of comment]",
             "course_code": "[valid course code]",
-            "rating": (Float) rating of this comment, 
+            "rating": 5.0, 
             "content": "[comment body]"
         }
     ]
@@ -315,7 +315,7 @@ Used to search for a course.
 ```json
 {
     "course_link": "[inputed course link]",
-    "rating": (Float) rating of the course
+    "rating": 5.0
 }
 ```
 
@@ -351,7 +351,7 @@ Used to search for a professor.
 
 ```json
 {
-    "search_type": "name" or "id",
+    "search_type": " 'name' or 'id' ",
     "professor_name": "[valid professor name]",
     "professor_id": "[valid professor id]"
 }
@@ -367,7 +367,7 @@ Used to search for a professor.
 ```json
 {
     "professor_link": "[inputed professor link]",
-    "rating": (Float) rating of the professor.
+    "rating": 5.0
 }
 ```
 
@@ -404,7 +404,7 @@ Used to post a comment.
     "professor_id": "[valid professor netid]",
     "course_code": "[valid course code]",
     "time": "[valid semester id]",
-    "rating": (Int) rating for this comment,
+    "rating": 5,
     "comment_body": "[content body]"
 }
 ```
@@ -440,7 +440,7 @@ Used to handle like/dislike
 **Data constraints**
 ```json
 {
-    "action": "plus" or "minus",
+    "action": " 'plus' or 'minus' ",
     "comment_id": "[corresponding comment id]"
 }
 ```
@@ -558,14 +558,14 @@ Used to query statistics of a given course.
 **Content Example**
 ```json
 {
-    "rating": (Float) rating of the given course,
+    "rating": 5.0,
     "total_num": "[number of ratings posted in the timespan]",
     "comments": [
         {
             "time": "[yyyy-mm-dd hh:mm]",
             "username": "[username of comment]",
             "course_code": "[valid course code]",
-            "rating": (Float) rating of this comment, 
+            "rating": 5.0, 
             "content": "[comment body]"
         }
     ]
