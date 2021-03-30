@@ -8,6 +8,8 @@ import {BrowserRouter, Route, Switch, NavLink, Link} from "react-router-dom";
 const IndexPage = lazy(() => import('./index'));
 const TestPage = lazy(() => import("./TestPage"));
 
+let history = createBrowserHistory(location);
+
 class MainRouter extends React.Component{
     render() {
         return(

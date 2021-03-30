@@ -1,3 +1,18 @@
+@font-face {
+    font-family: GothamBook;
+    src: url("../fonts/Gotham-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GothamBold;
+    src: url("../fonts/Gotham-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GothamMedium;
+    src: url("../fonts/Gotham-Medium.otf") format("opentype");
+}
+
 #components-layout-demo-top .logo {
     float: left;
     width: 120px;
@@ -11,9 +26,89 @@
 }
 .logo{
     float: left;
-    color: white;
+    color: black;
     font-size: 2rem;
     margin-right: 30px;
+}
+
+.indexHeader{
+    background-color: white;
+}
+
+#bannerWrapper{
+    position: relative;
+    background: url("../../public/images/index_banner2.jpg") no-repeat center center;
+    background-size: cover;
+    height: 500px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+#bannerText{
+    color: lightgrey;
+    font-family: "GothamBold";
+    font-size: 3.5rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    align-self: center;
+    text-align: center;
+    margin-top: 55px;
+}
+
+#subText{
+    color: lightgrey;
+    font-family: "GothamBook";
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    align-self: center;
+    text-align: center;
+    margin-top: 30px;
+}
+
+#bannerShade{
+    background-color: black;
+    opacity: 0.5;
+    z-index: 90;
+    position: absolute;
+    min-height: 500px;
+    width: 100%;
+}
+
+#indexSearchButton {
+    height: 50px;
+    border-radius: 32px;
+    width: 100%;
+    background-color: #57068c;
+    border-color: #57068c;
+    color: white;
+    font-size: 1.3rem;
+}
+
+#indexTypeButton{
+    font-size: 1rem;
+}
+
+.inputs{
+    font-family: GothamBook;
+}
+
+.menus{
+    font-family: GothamBook;
+}
+
+.dropdowns{
+    font-family: GothamBook;
+}
+
+.buttons{
+    font-family: GothamBook;
+}
+
+.logo{
+    cursor: grab;
 }
 
 .headerMenu{
@@ -31,8 +126,9 @@
 p.image{
     text-align:center;
     font-size: xx-large;
-    font-weight: 500;
-    color:blueviolet;
+    /*font-weight: 500;*/
+    color:#57068c;
+    font-family: GothamBook;
 }
 .imageColumn{
     float:left;
@@ -58,10 +154,6 @@ p.image{
     float:left;
     width:50%;
     padding:20px
-}
-
-.imageRow1{
-    margin:80px 300px 40px 300px
 }
 
 .imageRow1::after{
