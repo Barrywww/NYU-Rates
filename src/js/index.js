@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import { DownOutlined, UserOutlined, ReadOutlined } from '@ant-design/icons';
+import {DownOutlined, UserOutlined, ReadOutlined, SearchOutlined} from '@ant-design/icons';
 import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown} from 'antd';
 //import { Button, Tooltip } from 'antd';
 import "../css/index.css";
@@ -14,9 +14,11 @@ const {Option} = Select;
 class IndexDropDown extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {selectedType: ""};
+        this.props = props;
+        console.log(this.props);
+        this.state = {selectedType: "", collapse: false};
         this.menu = (
-            <Menu className={"menus"} style={{borderRadius:"5px"}} onClick={this.handleMenuClick.bind(this)}>
+            <Menu className={"menus"} style={{borderRadius:"5px"}} onClick={props.handleClick.bind(this)}>
                 <Menu.Item key="Professor" icon={<UserOutlined style={{fontSize:"1rem"}}/>} style={{fontSize:"1rem"}}>
                     Professor
                 </Menu.Item>
@@ -27,14 +29,21 @@ class IndexDropDown extends React.Component{
         );
     }
 
-    handleMenuClick({key}){
-        this.setState({selectedType: key});
+    componentWillMount() {
+        window.addEventListener('resize', this.props.handleResize.bind(this))
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.props.handleResize.bind(this))
     }
 
     render() {
         let prompt_words = "Search Type"
-        if (this.state.selectedType !== "") {
-             prompt_words = this.state.selectedType;
+        if (this.props.selectedType !== "") {
+             prompt_words = this.props.selectedType;
+        }
+        if (this.props.collapse){
+            prompt_words = ""
         }
         return(
             <Dropdown overlay={this.menu} className={"dropdowns"}>
@@ -44,6 +53,65 @@ class IndexDropDown extends React.Component{
             </Dropdown>
         )
     }
+}
+
+class IndexSearchWrapper extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {inputPrompt: "", selectedType: "", collapse: false}
+        if (window.innerWidth < 900){
+            this.setState((state) => ({collapse: true}))
+        }
+    }
+
+    handleMenuClick({key}){
+        this.setState((state) => ({selectedType: key}))
+    }
+
+    handleResize(){
+        if (window.innerWidth < 900){
+            this.setState((state) => ({collapse: true}))
+        }
+        else{
+            this.setState((state) => ({collapse: false}))
+        }
+    }
+
+    render() {
+        let inputPrompt = "";
+        if (this.state.selectedType === "Professor"){
+            inputPrompt = "Professor name...";
+        }
+        else if (this.state.selectedType === "Course"){
+            inputPrompt = "Course name...";
+        }
+
+        let SearchButton = <Button id={"indexSearchButton"} className={"buttons"}>Search</Button>;
+
+        if (this.state.collapse){
+            SearchButton = <Button id={"indexSearchButton"} shape="circle" icon={<SearchOutlined />} />;
+        }
+
+
+        return(
+            <div id={"indexSearchWrapper"} style={{minHeight: "64px", width:"60%", zIndex:"90", position: "relative", margin:"50px  auto"}}>
+                <Row align={"middle"} justify={"center"}>
+                    <Col span={14} style={{borderRadius: "32px"}}>
+                        <Input className={"inputs"} placeholder={inputPrompt} style={{height: "50px", lineHeight:"32px", fontSize:"26px", borderRadius:"32px 0 0 32px", opacity:"0.9", paddingLeft:"20px"}}/>
+                    </Col>
+                    <Col span={4}>
+                        {/*<Input style={{height: "50px", lineHeight:"45px", fontSize:"26px", borderRadius:"0 32px 32px 0"}}/>*/}
+                        <IndexDropDown collapse={this.state.collapse} selectedType={this.state.selectedType} handleClick={this.handleMenuClick.bind(this)} handleResize={this.handleResize.bind(this)}/>
+                    </Col>
+                    <Col span={1}/>
+                    <Col span={4}>
+                        {SearchButton}
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
+
 }
 
 class IndexPage extends Component{
@@ -78,21 +146,7 @@ class IndexPage extends Component{
                             Your ultimate registration rescuer.
                             <div id='subText'>Try searching for a course/professor here</div>
                         </h1>
-                        <div id={"indexSearchWrapper"} style={{minHeight: "64px", width:"60%", zIndex:"90", position: "relative", margin:"50px  auto"}}>
-                            <Row align={"middle"} justify={"center"}>
-                                <Col span={14} style={{borderRadius: "32px"}}>
-                                    <Input className={"inputs"} style={{height: "50px", lineHeight:"32px", fontSize:"26px", borderRadius:"32px 0 0 32px", opacity:"0.9", paddingLeft:"20px"}}/>
-                                </Col>
-                                <Col span={4}>
-                                    {/*<Input style={{height: "50px", lineHeight:"45px", fontSize:"26px", borderRadius:"0 32px 32px 0"}}/>*/}
-                                    <IndexDropDown/>
-                                </Col>
-                                <Col span={1}/>
-                                <Col span={4}>
-                                    <Button id={"indexSearchButton"} className={"buttons"}>Search</Button>
-                                </Col>
-                            </Row>
-                        </div>
+                        <IndexSearchWrapper />
                     </div>
                     <Content style={{ padding: '0 50px'}}>
                     </Content>
@@ -100,15 +154,15 @@ class IndexPage extends Component{
                     <Row align={"middle"} justify={"center"} style={{marginTop:"40px"}}>
                         <Col span={8}>
                             <img src = "/images/Anonymity.png" style={{display:"block", margin:"20px auto", width:"50%"}} />
-                            <p className="image">Anonymous</p>
+                            <p className="imageDesc">Anonymous</p>
                         </Col>
                         <Col span={8}>
                             <img src = "/images/Improvement.png" style={{display:"block", margin:"20px auto", width:"50%"}}/>
-                            <p className="image">Improve Everyone</p>
+                            <p className="imageDesc">Improve Everyone</p>
                         </Col>
                         <Col span={8}>
                             <img src = "/images/Honesty.png" style={{display:"block", margin:"20px auto", width:"50%"}}/>
-                            <p className="image">Be Honest</p>
+                            <p className="imageDesc">Be Honest</p>
                         </Col>
                     </Row>
                     {/*这里结束*/}
