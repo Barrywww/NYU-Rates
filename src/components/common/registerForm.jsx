@@ -76,6 +76,10 @@ const RegisterForm = () => {
             required: true,
             message: 'Please input your E-mail!',
           },
+          {
+              pattern:'[a-zA-Z0-9.-]+@nyu\.edu',
+              message: 'This is not an NYU email!',
+          }
         ]}
       >
         <Input />
@@ -87,7 +91,7 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Please input your password! (no rules)',
           },
         ]}
         hasFeedback
@@ -126,7 +130,7 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your nickname!',
+            message: 'Please input your (appropriate) nickname!',
             whitespace: true,
           },
         ]}
