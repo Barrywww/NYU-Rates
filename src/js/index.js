@@ -56,10 +56,14 @@ class IndexPage extends Component{
                         </Link>
                         <Menu className="headerMenu menus" theme="light" mode="horizontal">
                             <Menu.Item key="1">
-                                <Link to={"/test"}>Login</Link>
+                                <Link to={"/login"}>Login</Link>
                             </Menu.Item>
-                            <Menu.Item key="2">Register</Menu.Item>
-                            <Menu.Item key="3">About Us</Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to={"/register"}>Register</Link>
+                            </Menu.Item>
+                            <Menu.Item key="3">
+                                <Link to={"/AboutUs"}>About Us</Link>
+                            </Menu.Item>
                         </Menu>
                     </Header>
                     <div id={"bannerWrapper"}>

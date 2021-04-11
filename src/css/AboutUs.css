@@ -1,0 +1,87 @@
+@font-face {
+    font-family: GothamBook;
+    src: url("../fonts/Gotham-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GothamBold;
+    src: url("../fonts/Gotham-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GothamMedium;
+    src: url("../fonts/Gotham-Medium.otf") format("opentype");
+}
+
+#components-layout-demo-top .logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+}
+
+.logo{
+    float: left;
+    color: black;
+    font-size: 2rem;
+    margin-right: 30px;
+}
+
+.indexHeader{
+    background-color: white;
+}
+
+.logo{
+    cursor: grab;
+}
+
+.headerMenu{
+    float: right;
+}
+
+.ContentArea{
+    height : 800px;
+    background-color : #dcf1df;
+}
+
+#bannerText1{
+    color: #57068c;
+    font-family: "GothamBold";
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 20px;
+    padding-left: 20px;
+    align-self: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.paraWrapper{
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 40px;
+    padding-right: 200px;
+    padding-left: 200px;
+    align-self: center;
+    text-align: center;
+}
+
+.param{
+    font-family: "GothamMedium";
+    font-size: 2 rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 20px;
+    align-self: left;
+    text-align: left;
+}
