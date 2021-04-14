@@ -4,7 +4,7 @@ import {DownOutlined, UserOutlined, ReadOutlined, SearchOutlined} from '@ant-des
 import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown} from 'antd';
 //import { Button, Tooltip } from 'antd';
 import "../css/index.css";
-import 'antd/dist/antd.compact.css'
+import MainHeader from "../components/common/header";
 //import Like from '../components/common/like';
 //import Dislike from '../components/common/dislike';
 
@@ -118,22 +118,7 @@ class IndexPage extends Component{
     render(){
         return(
                 <Layout className="layout" style={{minHeight: "100%"}}>
-                    <Header className={"indexHeader"} style={{backgroundColor: 'white'}}>
-                        <Link className="logo" to={"/"}>
-                                <img src="/images/logo_withtitle.png" height="60px"/>
-                        </Link>
-                        <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                            <Menu.Item key="1">
-                                <Link to={"/login"}>Login</Link>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Link to={"/register"}>Register</Link>
-                            </Menu.Item>
-                            <Menu.Item key="3">
-                                <Link to={"/AboutUs"}>About Us</Link>
-                            </Menu.Item>
-                        </Menu>
-                    </Header>
+                    <MainHeader />
                     <div id={"bannerWrapper"}>
                         <div id={"bannerShade"}/>
                         <div className="imageRow1">
@@ -146,7 +131,7 @@ class IndexPage extends Component{
                             {/*</div>*/}
                             {/*<img id="indexBanner" src="/images/index_banner2.jpg" width="100%"/>*/}
                         </div>
-                        <h1 id='bannerText'>
+                        <h1 id='index-bannerText'>
                             Your ultimate registration rescuer.
                             <div id='subText'>Try searching for a course/professor here</div>
                         </h1>

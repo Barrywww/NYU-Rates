@@ -1,9 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
     entry: "./src/js/bundle.js",
     mode: "development",
+    devtool: false,
     module: {
         rules: [
             {
@@ -45,7 +47,10 @@ module.exports = {
         hotOnly: true,
         historyApiFallback: true
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()],
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new BundleAnalyzerPlugin({ analyzerPort: 8920 })
+    ],
     performance: {
         hints: false
     }
