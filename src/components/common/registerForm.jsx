@@ -67,6 +67,7 @@ const RegisterForm = () => {
       <Form.Item
         name="email"
         label="E-mail"
+        tooltip="Must be a legit NYU email"
         rules={[
           {
             type: 'email',
@@ -88,10 +89,11 @@ const RegisterForm = () => {
       <Form.Item
         name="password"
         label="Password"
+        tooltip="No rules for password"
         rules={[
           {
             required: true,
-            message: 'Please input your password! (no rules)',
+            message: 'Please input your password!',
           },
         ]}
         hasFeedback
