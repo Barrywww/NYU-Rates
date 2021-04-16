@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {createBrowserHistory} from "history";
 import {BrowserRouter, Route, Switch, NavLink, Link} from "react-router-dom";
+import "../css/fonts.css"
+import 'antd/dist/antd.compact.css'
 
 // import IndexPage from "./index";
 const IndexPage = lazy(() => import('./index'));

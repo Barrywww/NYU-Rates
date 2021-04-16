@@ -1,16 +1,35 @@
-@font-face {
-    font-family: GothamBook;
-    src: url("../fonts/Gotham-Book.otf") format("opentype");
+@media only screen and (max-width: 1200px){
+    #indexTypeButton{
+        font-size: 0.7rem !important;
+    }
 }
 
-@font-face {
-    font-family: GothamBold;
-    src: url("../fonts/Gotham-Bold.otf") format("opentype");
+@media only screen and (max-width: 1000px) {
+    #indexSearchButton{
+        font-size: 1rem !important;
+    }
+    #indexTypeButton{
+        padding: 0 3px 0 3px;
+    }
+    #indexSearchWrapper{
+        width: 90%;
+    }
 }
 
-@font-face {
-    font-family: GothamMedium;
-    src: url("../fonts/Gotham-Medium.otf") format("opentype");
+@media only screen and (max-width: 800px) {
+    .inputs{
+        font-size: 16px !important;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    p.imageDesc{
+        font-size: x-large !important;
+        text-align:center;
+        /*font-weight: 500;*/
+        color:#57068c;
+        font-family: GothamBook;
+    }
 }
 
 html{
@@ -48,7 +67,7 @@ html{
     overflow: hidden;
 }
 
-#bannerText{
+#index-bannerText{
     color: lightgrey;
     font-family: "GothamBold";
     font-size: 3.5rem;
@@ -79,40 +98,6 @@ html{
     position: absolute;
     min-height: 500px;
     width: 100%;
-}
-
-@media only screen and (max-width: 1200px){
-    #indexTypeButton{
-        font-size: 0.7rem !important;
-    }
-}
-
-@media only screen and (max-width: 1000px) {
-    #indexSearchButton{
-        font-size: 1rem !important;
-    }
-    #indexTypeButton{
-        padding: 0 3px 0 3px;
-    }
-    #indexSearchWrapper{
-        width: 90%;
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    .inputs{
-        font-size: 16px !important;
-    }
-}
-
-@media only screen and (max-width: 900px) {
-    p.imageDesc{
-        font-size: x-large !important;
-        text-align:center;
-        /*font-weight: 500;*/
-        color:#57068c;
-        font-family: GothamBook;
-    }
 }
 
 #indexSearchButton {

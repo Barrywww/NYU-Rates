@@ -5,6 +5,7 @@ import { DownOutlined, UserOutlined, ReadOutlined } from '@ant-design/icons';
 import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown,Form, Checkbox} from 'antd';
 import RegisterForm from '../components/common/registerForm';
 import "../css/login.css";
+import MainHeader from "../components/common/header";
 
 // function App() {return <h1>Hello World!</h1>}
 const { Header, Content, Footer } = Layout;
@@ -14,23 +15,8 @@ class Register extends React.Component{
     render(){
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
-                <Header className={"indexHeader"} style={{backgroundColor: 'white'}}>
-                    <Link className="logo" to={"/"}>
-                            <img src="/images/logo_withtitle.png" height="60px"/>
-                    </Link>
-                    <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                        <Menu.Item key="1">
-                            <Link to={"/login"}>Login</Link>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Link to={"/register"}>Register</Link>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Link to={"/AboutUs"}>About Us</Link>
-                        </Menu.Item>
-                    </Menu>
-                </Header>
-                <h1 id='bannerText'>
+                <MainHeader />
+                <h1 id='login-bannerText'>
                     Register Here! 
                 </h1>
                 <div id="reminderText">Note: only NYU emails will be accepted</div>

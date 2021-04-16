@@ -1,9 +1,7 @@
 import React from "react";
-import {BrowserRouter, Link} from "react-router-dom";
-import {useRouteMatch} from "react-router";
-import { DownOutlined, UserOutlined, ReadOutlined } from '@ant-design/icons';
 import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown,Form, Checkbox} from 'antd';
 import "../css/AboutUs.css";
+import MainHeader from "../components/common/header";
 
 // function App() {return <h1>Hello World!</h1>}
 const { Header, Content, Footer } = Layout;
@@ -13,25 +11,9 @@ class AboutUs extends React.Component{
     render(){
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
-                <Header className={"indexHeader"} style={{backgroundColor: 'white'}}>
-                    <Link className="logo" to={"/"}>
-                            <img src="/images/logo_withtitle.png" height="60px"/>
-                    </Link>
-                    <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                        <Menu.Item key="1">
-                            <Link to={"/login"}>Login</Link>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Link to={"/register"}>Register</Link>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Link to={"/AboutUs"}>About Us</Link>
-                        </Menu.Item>
-                    </Menu>
-                </Header>
+                <MainHeader />
                 <Content className='ContentArea'>
-
-                    <div id="bannerText1">About us</div>
+                    <div id="aboutUs-bannerText">About us</div>
                     <div className="paraWrapper">
                         <p className='param'>
                             NYURates is a site that is created by a group of NYU students. The main purpose is to provide
