@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class studentDaoImpl implements studentDao{
+public class StudentDaoImpl implements studentDao{
     private PreparedStatement preparedStatement;
     private Connection connection;
     private ResultSet resultSet;
