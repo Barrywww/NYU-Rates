@@ -2,7 +2,7 @@ package com.example.nyurates.dao.studentDaoImpl;
 
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.jdbcUtil.JdbcUtil;
-import com.example.nyurates.dao.studentDao;
+import com.example.nyurates.dao.StudentDao;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class studentDaoImpl implements studentDao{
+public class StudentDaoImpl implements StudentDao{
     private PreparedStatement preparedStatement;
     private Connection connection;
     private ResultSet resultSet;
