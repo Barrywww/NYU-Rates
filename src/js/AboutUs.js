@@ -8,6 +8,7 @@ const { Header, Content, Footer } = Layout;
 const {Option} = Select;
 
 class AboutUs extends React.Component{
+
     render(){
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>

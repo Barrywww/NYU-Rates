@@ -1,0 +1,15 @@
+#searchWrapperOuter{
+    height: 800px;
+    margin: 20px 8%;
+    max-width: 1400px;
+    font-family: "GothamBook";
+    font-size: 1.5rem;
+}
+
+#searchWrapperInner{
+    margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
