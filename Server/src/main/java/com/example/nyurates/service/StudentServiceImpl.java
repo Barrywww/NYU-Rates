@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService{
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            User existUser = userMapper.findUserByName(user.getUsername());
+            Student existUser = dao.findUserByName(user.getUsername());
             if(existUser != null){
                 //如果用户名已存在
                 result.setMsg("用户名已存在");
