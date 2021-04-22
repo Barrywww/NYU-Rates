@@ -1,8 +1,6 @@
 import React, {lazy, Suspense} from "react";
 import ReactDOM from "react-dom";
-import { Layout, Menu, Breadcrumb } from 'antd';
-import {createBrowserHistory} from "history";
-import {BrowserRouter, Route, Switch, NavLink, Link} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import "../css/fonts.css"
 import 'antd/dist/antd.compact.css'
 
@@ -12,8 +10,7 @@ const TestPage = lazy(() => import("./TestPage"));
 const LoginPage = lazy(() => import("./Login"));
 const RegisterPage = lazy(() => import("./Register"));
 const AboutUsPage = lazy(() => import("./AboutUs"));
-
-let history = createBrowserHistory(location);
+const SearchPage = lazy(() => import("./search"));
 
 class MainRouter extends React.Component{
     render() {
@@ -26,6 +23,7 @@ class MainRouter extends React.Component{
                         <Route path="/AboutUs" component={AboutUsPage}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/test" component={TestPage}/>
+                        <Route path="/search" component={SearchPage}/>
                     </Switch>
                 </Suspense>
             </BrowserRouter>

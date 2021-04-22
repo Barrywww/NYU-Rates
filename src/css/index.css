@@ -100,6 +100,11 @@ html{
     width: 100%;
 }
 
+#globalFooter{
+    font-family: "GothamBook";
+    font-size: 14px;
+}
+
 #indexSearchButton {
     height: 50px;
     border-radius: 32px;
@@ -190,4 +195,11 @@ p.image1{
     font-size: x-large;
     font-weight: 500;
     color:rgb(12, 4, 4);
+}
+h1,h2{
+    font-family: "GothamBold";
+}
+
+h3, h4, h5, h6{
+    font-family: "GothamBook";
 }
