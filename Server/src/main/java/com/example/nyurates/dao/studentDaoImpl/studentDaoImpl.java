@@ -17,11 +17,41 @@ public class studentDaoImpl implements studentDao{
     private ResultSet resultSet;
 
     @Override
-    public boolean studentLogin(Student student) {
-        boolean result = false;
-
-        String query = "SELECT FROM ";
-
-        return false;
+    public Student studentLogin(Student student) {
+        ResultSet result;
+        boolean success = false;
+        String query = "SELECT netid, name FROM Students WHERE email =? AND password=?";
+        try {
+            connection = JdbcUtil.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,student.getEmail());
+            preparedStatement.setString(2, student.getPassword());
+            result =  preparedStatement.executeQuery();
+            if (result.next()){
+                String netID = result.getString("netid");
+                String name = result.getString("name");
+                student.setNetId(netID);
+                student.setName(name);
+                success = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if(preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return success? student:null;
     }
 }
