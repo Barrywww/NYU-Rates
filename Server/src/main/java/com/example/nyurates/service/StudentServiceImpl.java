@@ -17,25 +17,24 @@ public class StudentServiceImpl implements StudentService{
 
     /**
      * 注册
-     * @param user 参数封装
+     * @param student 参数封装
      * @return Result
      */
-    public Result regist(Student student) {
-        Result result = new Result();
+    public Result<Student> regist(Student student) {
+        Result<Student> result = new Result<>();
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            Student existUser = dao.findUserByName(user.getUsername());
-            if(existUser != null){
+            Student existStudent = dao.studentLogin(student);
+            if(existStudent != null){
                 //如果用户名已存在
-                result.setMsg("用户名已存在");
-
+                result.setMsg("Email existed!");
             }else{
-                userMapper.regist(user);
-                //System.out.println(user.getId());
-                result.setMsg("注册成功");
+                dao.studentRegist(student);
+                System.out.println(student.getNetId());
+                result.setMsg("Successfully registered!");
                 result.setSuccess(true);
-                result.setDetail(user);
+                result.setDetail(student);
             }
         } catch (Exception e) {
             result.setMsg(e.getMessage());
@@ -45,22 +44,21 @@ public class StudentServiceImpl implements StudentService{
     }
     /**
      * 登录
-     * @param user 用户名和密码
+     * @param student 用户名和密码
      * @return Result
      */
-    public Result login(User user) {
-        Result result = new Result();
+    public Result<Student> login(Student student) {
+        Result<Student> result = new Result<>();
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            Long userId= userMapper.login(user);
-            if(userId == null){
-                result.setMsg("用户名或密码错误");
+            Student std= dao.studentLogin(student);
+            if(std == null){
+                result.setMsg("The email or the password is wrong!");
             }else{
-                result.setMsg("登录成功");
+                result.setMsg("Successfully Logged in!");
                 result.setSuccess(true);
-                user.setId(userId);
-                result.setDetail(user);
+                result.setDetail(std);
             }
         } catch (Exception e) {
             result.setMsg(e.getMessage());

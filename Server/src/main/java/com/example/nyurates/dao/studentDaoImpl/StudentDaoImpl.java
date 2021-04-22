@@ -20,7 +20,7 @@ public class StudentDaoImpl implements StudentDao{
     public Student studentLogin(Student student) {
         ResultSet result;
         boolean success = false;
-        String query = "SELECT netid, name FROM Students WHERE email =? AND password=?";
+        String query = "SELECT netid, name FROM Students WHERE email = ? AND password= ?";
         try {
             connection = JdbcUtil.getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -52,6 +52,44 @@ public class StudentDaoImpl implements StudentDao{
                 }
             }
         }
-        return success? student:null;
+        return success ? student:null;
+    }
+
+    @Override
+    public void studentRegist(Student student){
+        String query = "INSERT INTO Student (email, netid, name, password) VALUES (?, ?, ?, ?)";
+        try {
+            connection = JdbcUtil.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,student.getEmail());
+            preparedStatement.setString(2, student.getNetId());
+            preparedStatement.setString(3, student.getName());
+            preparedStatement.setString(2, student.getPassword());
+            int n =  preparedStatement.executeUpdate();
+//            if (n > 0){
+//                String netID = result.getString("netid");
+//                String name = result.getString("name");
+//                student.setNetId(netID);
+//                student.setName(name);
+//                success = true;
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if(preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
