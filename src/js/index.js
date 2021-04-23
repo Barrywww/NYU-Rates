@@ -1,120 +1,22 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
-import {DownOutlined, UserOutlined, ReadOutlined, SearchOutlined} from '@ant-design/icons';
-import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown} from 'antd';
-//import { Button, Tooltip } from 'antd';
+import {Layout, Select, Row, Col} from 'antd';
 import "../css/index.css";
 import MainHeader from "../components/common/header";
+import MainFooter from "../components/common/footer";
+import IndexSearchWrapper from "../components/common/searchbar";
 //import Like from '../components/common/like';
 //import Dislike from '../components/common/dislike';
 
-const { Header, Content, Footer } = Layout;
+const {Content} = Layout;
 const {Option} = Select;
 
-class IndexDropDown extends React.Component{
-    constructor(props) {
-        super(props);
-        this.props = props;
-        console.log(this.props);
-        this.state = {selectedType: "", collapse: false};
-        this.menu = (
-            <Menu className={"menus"} style={{borderRadius:"5px"}} onClick={props.handleClick.bind(this)}>
-                <Menu.Item key="Professor" icon={<UserOutlined style={{fontSize:"1rem"}}/>} style={{fontSize:"1rem"}}>
-                    Professor
-                </Menu.Item>
-                <Menu.Item key="Course" icon={<ReadOutlined style={{fontSize:"1rem"}}/>} style={{fontSize:"1rem"}}>
-                    Course
-                </Menu.Item>
-            </Menu>
-        );
-    }
 
-    componentWillMount() {
-        window.addEventListener('resize', this.props.handleResize.bind(this))
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.props.handleResize.bind(this))
-    }
-
-    render() {
-        let prompt_words = "Search Type"
-        if (this.props.selectedType !== "") {
-             prompt_words = this.props.selectedType;
-        }
-        if (this.props.collapse){
-            prompt_words = ""
-        }
-        return(
-            <Dropdown overlay={this.menu} className={"dropdowns"}>
-                <Button className={"buttons"} id={"indexTypeButton"} style={{height:"50px", width:"100%", borderRadius: "0 32px 32px 0", opacity:"0.9"}}>
-                    {prompt_words} <DownOutlined />
-                </Button>
-            </Dropdown>
-        )
-    }
-}
-
-class IndexSearchWrapper extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {inputPrompt: "", selectedType: "", collapse: false}
-        if (window.innerWidth < 900){
-            this.setState((state) => ({collapse: true}))
-        }
-    }
-
-    handleMenuClick({key}){
-        this.setState((state) => ({selectedType: key}))
-    }
-
-    handleResize(){
-        if (window.innerWidth < 900){
-            this.setState((state) => ({collapse: true}))
-        }
-        else{
-            this.setState((state) => ({collapse: false}))
-        }
-    }
-
-    render() {
-        let inputPrompt = "";
-        if (this.state.selectedType === "Professor"){
-            inputPrompt = "Professor name...";
-        }
-        else if (this.state.selectedType === "Course"){
-            inputPrompt = "Course name...";
-        }
-
-        let SearchButton = <Button id={"indexSearchButton"} className={"buttons"}>Search</Button>;
-
-        if (this.state.collapse){
-            SearchButton = <Button id={"indexSearchButton"} shape="circle" icon={<SearchOutlined />} />;
-        }
-
-
-        return(
-            <div id={"indexSearchWrapper"} style={{minHeight: "64px", width:"60%", zIndex:"90", position: "relative", margin:"50px  auto"}}>
-                <Row align={"middle"} justify={"center"}>
-                    <Col span={14} style={{borderRadius: "32px"}}>
-                        <Input className={"inputs"} placeholder={inputPrompt} style={{height: "50px", lineHeight:"32px", fontSize:"26px", borderRadius:"32px 0 0 32px", opacity:"0.9", paddingLeft:"20px"}}/>
-                    </Col>
-                    <Col span={4}>
-                        {/*<Input style={{height: "50px", lineHeight:"45px", fontSize:"26px", borderRadius:"0 32px 32px 0"}}/>*/}
-                        <IndexDropDown collapse={this.state.collapse} selectedType={this.state.selectedType} handleClick={this.handleMenuClick.bind(this)} handleResize={this.handleResize.bind(this)}/>
-                    </Col>
-                    <Col span={1}/>
-                    <Col span={4}>
-                        {SearchButton}
-                    </Col>
-                </Row>
-            </div>
-        )
-    }
-
-}
 
 class IndexPage extends Component{
+    constructor(props) {
+        super(props);
+    }
+
     render(){
         return(
                 <Layout className="layout" style={{minHeight: "100%"}}>
@@ -135,7 +37,7 @@ class IndexPage extends Component{
                             Your ultimate registration rescuer.
                             <div id='subText'>Try searching for a course/professor here</div>
                         </h1>
-                        <IndexSearchWrapper />
+                        <IndexSearchWrapper history={this.props.history} styles={{minHeight: "64px", width:"60%", zIndex:"90", position: "relative", margin:"50px  auto"}}/>
                     </div>
                     <Content style={{ padding: '0 50px'}}>
                     </Content>
@@ -154,9 +56,7 @@ class IndexPage extends Component{
                             <p className="imageDesc">Be Honest</p>
                         </Col>
                     </Row>
-                    {/*这里结束*/}
-
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Ant UED</Footer>
+                    <MainFooter />
                 </Layout>
                 )
         }

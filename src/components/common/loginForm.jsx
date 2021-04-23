@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import {login} from '../../services/authService';
 
 const layout = {
     labelCol: {
@@ -18,8 +19,18 @@ const layout = {
   
 
   const LoginForm = () => {
-    const onFinish = (values) => {
-      console.log('Success:', values);
+    const onFinish = async(values) => {
+      try {
+        console.log('Success:', values);
+        const {data} = await login(values.email,values.role,values.password);
+        localStorage.setItem('userInfo',values);
+        window.location = '/';
+
+      } catch (error) {
+        if (error.response && error.response.status == 400){
+            alert(error.response.data);
+        }
+      }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -37,17 +48,35 @@ const layout = {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="Username"
-          name="username"
+          label="Email"
+          name="email"
           rules={[
             {
               required: true,
-              message: 'Please input your username!',
+              message: 'Please input your registered email!',
             },
           ]}
         >
           <Input />
         </Form.Item>
+
+        <Form.Item
+        name="role"
+        label="Role"
+        tooltip="either 'student' or 'professor' NO CAPS"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your role!',
+          },
+          {
+              pattern:'(?:professor|student)',
+              message: 'Input not valid! Check the tooltip!',
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
   
         <Form.Item
           label="Password"
