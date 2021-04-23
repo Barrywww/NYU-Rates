@@ -15,15 +15,16 @@ const SearchPage = lazy(() => import("./search"));
 
 class MainRouter extends React.Component{
 
-    //state = {};
+    state = {};
 
-   // componentDidMount(){
-    //    try {
-    //        const currUser = localStorage.getItem('userInfo');
-    //        this.setState({currUser});
-    //    } catch (error) {
-   //     } 
-   // };
+   componentDidMount(){
+       try {
+           const currUser = localStorage.getItem('userInfo');
+           this.setState({currUser});
+       } catch (error) {
+           return;
+       }
+   };
     
     render() {
         return(

@@ -25,16 +25,18 @@ public class StudentServiceImpl implements StudentService{
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            Student existStudent = dao.studentLogin(student);
-            if(existStudent != null){
+//            Student existStudent = dao.studentLogin(student);
+            if(false){
                 //如果用户名已存在
                 result.setMsg("Email existed!");
             }else{
-                dao.studentRegist(student);
-                System.out.println(student.getNetId());
-                result.setMsg("Successfully registered!");
-                result.setSuccess(true);
-                result.setDetail(student);
+                boolean r = dao.studentRegist(student);
+                if (r){
+                    System.out.println(student.getNetid());
+                    result.setMsg("Successfully registered!");
+                    result.setSuccess(true);
+                    result.setDetail(student);
+                }
             }
         } catch (Exception e) {
             result.setMsg(e.getMessage());

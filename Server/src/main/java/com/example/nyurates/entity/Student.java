@@ -19,23 +19,23 @@ public class Student {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getNetId() {
-        return netid;
+    public String getNetid() {
+        return this.netid;
     }
 
-    public void setNetId(String netid) {
+    public void setNetid(String netid) {
         this.netid = netid;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -43,7 +43,7 @@ public class Student {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
