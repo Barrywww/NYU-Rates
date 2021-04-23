@@ -15,22 +15,22 @@ const SearchPage = lazy(() => import("./search"));
 
 class MainRouter extends React.Component{
 
-    //state = {};
+    state = {};
 
-   // componentDidMount(){
-    //    try {
-    //        const currUser = localStorage.getItem('userInfo');
-    //        this.setState({currUser});
-    //    } catch (error) {
-   //     } 
-   // };
+    componentDidMount(){
+        try {
+            const currUser = localStorage.getItem('userInfo');
+            this.setState({currUser});
+        } catch (error) {
+        } 
+    };
     
     render() {
         return(
             <BrowserRouter>
                 <Suspense fallback={<div/>}>
                     <Switch>
-                        <Route exact path="/" component={IndexPage}/>
+                        <Route user = {this.state.currUser} exact path="/" component={IndexPage}/>
                         <Route path="/login" component={LoginPage}/>
                         <Route path="/logout" component={Logout}/>
                         <Route path="/AboutUs" component={AboutUsPage}/>
