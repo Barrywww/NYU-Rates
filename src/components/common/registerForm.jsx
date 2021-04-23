@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import {register} from '../../services/userService'
 const { Option } = Select;
 
 const formItemLayout = {
@@ -36,8 +37,15 @@ const tailFormItemLayout = {
 const RegisterForm = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const onFinish = async(values) => {
+      try {
+        console.log('Received values of form: ', values);
+        await userService.register(values);
+      } catch (error) {
+          if (error.response && error.response.status == 400){
+              alert(error.response.data);
+          }
+      };
   };
 
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
@@ -78,6 +86,24 @@ const RegisterForm = () => {
           {
               pattern:'[a-zA-Z0-9.-]+@nyu\.edu',
               message: 'This is not an NYU email!',
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="role"
+        label="Role"
+        tooltip="either 'student' or 'professor' NO CAPS"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your role!',
+          },
+          {
+              pattern:'(?:professor|student)',
+              message: 'Input not valid! Check the tooltip!',
           }
         ]}
       >
