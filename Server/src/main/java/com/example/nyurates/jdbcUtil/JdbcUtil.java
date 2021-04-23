@@ -2,7 +2,7 @@ package com.example.nyurates.jdbcUtil;
 import java.sql.*;
 
 public class JdbcUtil {
-    private static String DRIVER = "com.mysql.jdbc.Driver";
+    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static String USERNAME = "nyurates";
     private static String PASSWORD = "Nyurates2020@";
     private static String URL = "jdbc:mysql//139.224.33.124:3306/nyurates";
