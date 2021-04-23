@@ -1,8 +1,8 @@
 package com.example.nyurates.service;
 
-import com.example.nyurates.entity.Student;
+import com.example.nyurates.dao.StudentDao;
 import com.example.nyurates.entity.Result;
-import com.example.nyurates.dao.studentDaoImpl.StudentDaoImpl;
+import com.example.nyurates.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ public class StudentServiceImpl implements StudentService{
 
     //植入dao层对象
     @Autowired
-    private StudentDaoImpl dao;
+    private StudentDao dao;
 
     /**
      * 注册

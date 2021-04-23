@@ -1,20 +1,19 @@
 package com.example.nyurates.entity;
 
-public class Student {
-
+public class Administrator {
     private String email;
     private String netid;
     private String name;
     private String password;
 
-    public Student(String email, String netid, String name, String password) {
+    public Administrator(String email, String netid, String name, String password) {
         this.email = email;
         this.netid = netid;
         this.name = name;
         this.password = password;
     }
 
-    public Student() {
+    public Administrator() {
         super();
     }
 
