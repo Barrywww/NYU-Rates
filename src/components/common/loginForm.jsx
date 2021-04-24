@@ -55,6 +55,10 @@ const layout = {
               required: true,
               message: 'Please input your registered email!',
             },
+            {
+                pattern:'[a-zA-Z0-9.-]+@nyu\.edu',
+                message: 'This is not an NYU email!',
+            },
           ]}
         >
           <Input />
@@ -70,7 +74,7 @@ const layout = {
             message: 'Please input your role!',
           },
           {
-              pattern:'(?:professor|student)',
+              pattern:'(^professor$|^student$)',
               message: 'Input not valid! Check the tooltip!',
           }
         ]}

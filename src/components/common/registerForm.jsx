@@ -102,7 +102,7 @@ const RegisterForm = () => {
             message: 'Please input your role!',
           },
           {
-              pattern:'(?:professor|student)',
+              pattern:'(^professor$|^student$)',
               message: 'Input not valid! Check the tooltip!',
           }
         ]}
