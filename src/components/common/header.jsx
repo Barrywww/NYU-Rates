@@ -11,6 +11,7 @@ const { TreeNode } = TreeSelect;
 class MainHeader extends React.Component{
     constructor(props){
         super(props)
+        const user = localStorage.getItem('userInfo'); //用给下面conditional rendering
     }
 
     render(){
@@ -108,12 +109,26 @@ class MainHeader extends React.Component{
 
 
                 <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                    <Menu.Item key="1">
-                        <Link to={"/login"}>Login</Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to={"/register"}>Register</Link>
-                    </Menu.Item>
+                    {!this.user && (        //------假设没login-----
+                        <React.Fragment>
+                            <Menu.Item key="1">
+                                <Link to={"/login"}>Login</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to={"/register"}>Register</Link>
+                            </Menu.Item>
+                        </React.Fragment>
+                    )}
+                    {this.user && (         //------假设login了-----
+                        <React.Fragment>
+                            <Menu.Item key="1">
+                                <Link to={"/profile"}>Hi,{user.name}!</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to={"/logout"}>Logout</Link>
+                            </Menu.Item>
+                        </React.Fragment>
+                    )}
                     <Menu.Item key="3">
                         <Link to={"/AboutUs"}>About Us</Link>
                     </Menu.Item>
