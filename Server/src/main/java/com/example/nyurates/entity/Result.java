@@ -17,15 +17,15 @@ public class Result<T> {
     private T detail;
 
     public String getMsg() {
-        return msg;
+        return this.msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public boolean getSuccess() {
+        return this.success;
     }
 
     public void setSuccess(boolean success) {
@@ -33,7 +33,7 @@ public class Result<T> {
     }
 
     public T getDetail() {
-        return detail;
+        return this.detail;
     }
 
     public void setDetail(T detail) {
