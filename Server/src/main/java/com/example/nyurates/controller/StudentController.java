@@ -1,6 +1,6 @@
 package com.example.nyurates.controller;
 
-import com.example.nyurates.entity.Result;
+import com.example.nyurates.entity.results.LoginResult;
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +21,20 @@ public class StudentController {
     /**
      * 注册
      * @param student 参数封装
-     * @return Result
+     * @return LoginResult
      */
     @PostMapping(value = "/regist")
-    public Result<Student> regist(Student student){
+    public LoginResult regist(Student student){
         return studentService.regist(student);
     }
 
     /**
      * 登录
      * @param student 参数封装
-     * @return Result
+     * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public Result<Student> login(Student student){
+    public LoginResult login(Student student){
         return studentService.login(student);
     }
 

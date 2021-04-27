@@ -47,4 +47,23 @@ public class StudentDaoImpl implements StudentDao{
         }
         return false;
     }
+
+    @Override
+    public Student searchByEmail(Student student){
+        String query = "SELECT netid, name FROM Student WHERE email = ?";
+        try{
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getEmail());
+            if (result.size() == 1) {
+                Map<String, Object> map = result.get(0);
+                student.setName((String) map.get("name"));
+                student.setNetid((String) map.get("netid"));
+                return student;
+            }
+        } catch (DataAccessException e){
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
 }

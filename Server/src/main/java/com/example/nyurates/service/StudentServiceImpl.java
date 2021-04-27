@@ -1,7 +1,7 @@
 package com.example.nyurates.service;
 
 import com.example.nyurates.dao.StudentDao;
-import com.example.nyurates.entity.Result;
+import com.example.nyurates.entity.results.LoginResult;
 import com.example.nyurates.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,53 +20,50 @@ public class StudentServiceImpl implements StudentService{
      * @param student 参数封装
      * @return Result
      */
-    public Result<Student> regist(Student student) {
-        Result<Student> result = new Result<>();
-        result.setSuccess(false);
-        result.setDetail(null);
+    public LoginResult regist(Student student) {
+        LoginResult loginResult = new LoginResult();
+        loginResult.setCode(400);
         try {
-//            Student existStudent = dao.studentLogin(student);
-            if(false){
-                //如果用户名已存在
-                result.setMsg("Email existed!");
+            Student existStudent = dao.searchByEmail(student);
+            if(existStudent != null){
+                // student already existed
+                loginResult.setMsg("The account has existed. Failed to register.");
             }else{
                 boolean r = dao.studentRegist(student);
                 if (r){
                     System.out.println(student.getNetid());
-                    result.setMsg("Successfully registered!");
-                    result.setSuccess(true);
-                    result.setDetail(student);
+                    loginResult.setMsg("Successfully registered!");
+                    loginResult.setCode(200);
                 }
             }
         } catch (Exception e) {
-            result.setMsg(e.getMessage());
+            loginResult.setMsg(e.getMessage());
             e.printStackTrace();
         }
-        return result;
+        return loginResult;
     }
+
     /**
-     * 登录
+     * Login
      * @param student 用户名和密码
-     * @return Result
+     * @return LoginResult
      */
-    public Result<Student> login(Student student) {
-        Result<Student> result = new Result<>();
-        result.setSuccess(false);
-        result.setDetail(null);
+    public LoginResult login(Student student) {
+        LoginResult loginResult = new LoginResult();
+        loginResult.setCode(400);
         try {
             Student std= dao.studentLogin(student);
             if(std == null){
-                result.setMsg("The email or the password is wrong!");
+                loginResult.setMsg("Unable to login with provided credentials.");
             }else{
-                result.setMsg("Successfully Logged in!");
-                result.setSuccess(true);
-                result.setDetail(std);
+                loginResult.setMsg("Successfully Logged in!");
+                loginResult.setCode(200);
             }
         } catch (Exception e) {
-            result.setMsg(e.getMessage());
+            loginResult.setMsg(e.getMessage());
             e.printStackTrace();
         }
-        return result;
+        return loginResult;
     }
 
 }

@@ -26,11 +26,11 @@ public class Student {
         this.email = email;
     }
 
-    public String getNetId() {
+    public String getNetid() {
         return this.netid;
     }
 
-    public void setNetId(String netid) {
+    public void setNetid(String netid) {
         this.netid = netid;
     }
 

@@ -1,9 +1,9 @@
 package com.example.nyurates.service;
 
-import com.example.nyurates.entity.Result;
+import com.example.nyurates.entity.results.LoginResult;
 import com.example.nyurates.entity.Student;
 
 public interface StudentService {
-    public Result regist(Student student);
-    public Result login(Student student);
+    public LoginResult regist(Student student);
+    public LoginResult login(Student student);
 }
