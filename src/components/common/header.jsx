@@ -112,7 +112,7 @@ class MainHeader extends React.Component{
                     {!this.user && (        //------假设没login-----
                         <React.Fragment>
                             <Menu.Item key="1">
-                                <Link to={"/login"}>Login</Link>
+                                <Link to={"/profile"}>Login</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to={"/register"}>Register</Link>

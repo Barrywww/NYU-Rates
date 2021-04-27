@@ -1,0 +1,15 @@
+#profile-bannerText{
+    color: #57068c;
+    font-family: "GothamBold";
+    font-size: 3rem;
+    position: relative;
+    text-align: center;
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+p{
+    text-align:center;
+    font-size: large;
+    color:rgb(12, 4, 4);
+}

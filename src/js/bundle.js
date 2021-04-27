@@ -12,6 +12,7 @@ const LoginPage = lazy(() => import("./Login"));
 const RegisterPage = lazy(() => import("./Register"));
 const AboutUsPage = lazy(() => import("./AboutUs"));
 const SearchPage = lazy(() => import("./search"));
+const ProfilePage = lazy(() => import("./profile"));
 
 class MainRouter extends React.Component{
 
@@ -35,6 +36,7 @@ class MainRouter extends React.Component{
                         <Route path="/login" component={LoginPage}/>
                         <Route path="/logout" component={Logout}/>
                         <Route path="/AboutUs" component={AboutUsPage}/>
+                        <Route path="/profile" component={ProfilePage}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/test" component={TestPage}/>
                         <Route path="/search" component={SearchPage}/>
