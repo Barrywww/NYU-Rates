@@ -28,6 +28,7 @@ public class StudentServiceImpl implements StudentService{
             if(existStudent != null){
                 // student already existed
                 loginResult.setMsg("The account has existed. Failed to register.");
+                loginResult.setCode(400);
             }else{
                 boolean r = dao.studentRegist(student);
                 if (r){
@@ -55,6 +56,7 @@ public class StudentServiceImpl implements StudentService{
             Student std= dao.studentLogin(student);
             if(std == null){
                 loginResult.setMsg("Unable to login with provided credentials.");
+                loginResult.setCode(400);
             }else{
                 loginResult.setMsg("Successfully Logged in!");
                 loginResult.setCode(200);
