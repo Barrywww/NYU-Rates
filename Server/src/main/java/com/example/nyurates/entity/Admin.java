@@ -1,19 +1,19 @@
 package com.example.nyurates.entity;
 
-public class Administrator {
+public class Admin {
     private String email;
     private String netid;
     private String name;
     private String password;
 
-    public Administrator(String email, String netid, String name, String password) {
+    public Admin(String email, String netid, String name, String password) {
         this.email = email;
         this.netid = netid;
         this.name = name;
         this.password = password;
     }
 
-    public Administrator() {
+    public Admin() {
         super();
     }
 
@@ -25,11 +25,11 @@ public class Administrator {
         this.email = email;
     }
 
-    public String getNetId() {
+    public String getNetid() {
         return this.netid;
     }
 
-    public void setNetId(String netid) {
+    public void setNetid(String netid) {
         this.netid = netid;
     }
 

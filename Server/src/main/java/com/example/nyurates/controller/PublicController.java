@@ -2,18 +2,18 @@ package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.LoginResult;
-import com.example.nyurates.service.StudentService;
+import com.example.nyurates.service.PublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @CrossOrigin
-@RequestMapping("/student")
-public class StudentController {
+@RequestMapping("/public")
+public class PublicController {
     //植入对象
     @Autowired
-    private StudentService studentService;
+    private PublicService publicService;
 
     /**
      * 注册
@@ -22,7 +22,7 @@ public class StudentController {
      */
     @PostMapping(value = "/regist")
     public LoginResult regist(@RequestBody Student student){
-        return studentService.regist(student);
+        return publicService.regist(student);
     }
 
     /**
@@ -32,7 +32,7 @@ public class StudentController {
      */
     @PostMapping(value = "/login")
     public LoginResult login(@RequestBody Student student){
-        return studentService.login(student);
+        return publicService.login(student);
     }
 
 }

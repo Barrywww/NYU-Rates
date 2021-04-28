@@ -1,6 +1,6 @@
 package com.example.nyurates.entity.results;
 
-public class LoginResult {
+public class LoginResult extends Result{
     /**
      * return message
      */
@@ -11,19 +11,7 @@ public class LoginResult {
      */
     private int code;
 
-    public String getMsg() {
-        return this.msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return this.code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
+    public LoginResult(){
+        super();
     }
 }
