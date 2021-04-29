@@ -1,0 +1,36 @@
+#loginPanel {
+    padding: 8% 0;
+    width: 320px;
+    margin: auto;
+}
+
+@media only screen and (max-width: 500px){
+    #loginPanel{
+        padding: 0;
+    }
+}
+
+#loginLogo{
+    background-image: none,url("../../public/images/logo_withtitle.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100px;
+}
+
+#loginPanel h1 {
+    font-family: "GothamBold";
+    text-align: center;
+    font-size: 28px;
+}
+
+#loginFormWrapper{
+    padding: 10%;
+    background-color: #fff;
+    border-radius: 5px;
+    font-family: "GothamBook";
+}
+
+#loginFormWrapper label{
+    font-size: 12px;
+}
