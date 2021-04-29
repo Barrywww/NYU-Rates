@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
-public class StudentServiceImpl implements StudentService{
+public class PublicServiceImpl implements PublicService {
 
     //植入dao层对象
     @Autowired
