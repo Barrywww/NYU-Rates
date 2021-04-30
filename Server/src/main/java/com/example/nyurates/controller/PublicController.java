@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/public")
+@CrossOrigin
 public class PublicController {
     //植入对象
     @Autowired

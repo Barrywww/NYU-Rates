@@ -5,7 +5,6 @@ import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 import IndexSearchWrapper from "../components/common/searchbar";
 import "../css/profile.css";
-import commentTable from '../components/common/commentTable';
 import {Table} from 'antd';
 import {data,columns,comments} from '../components/common/commentTable';
 
@@ -15,7 +14,7 @@ const {Option} = Select;
 class profile extends Component {
     constructor(props) {
         super(props);
-        const user = localStorage.getItem('userInfo');
+        this.state = {"user" : JSON.parse(localStorage.getItem('userInfo'))};
     }
 
     componentDidMount() {
@@ -34,7 +33,7 @@ class profile extends Component {
                             <p>email : kaan@nyu.edu</p>
                         </div>
                         <div style={{marginLeft:'70px',marginTop:'50px'}}>
-                            <h1 id='profile-bannerText'>Kaan's Personal Page</h1>
+                            <h1 id='profile-bannerText'>{this.state.user.username}'s Personal Page</h1>
                             <p>You can check and access you comment history here</p>
                         </div>
                     </div>

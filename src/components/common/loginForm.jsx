@@ -23,7 +23,7 @@ const layout = {
       try {
         console.log('Success:', values);
         const {data} = await login(values.email,values.role,values.password);
-        localStorage.setItem('userInfo',values);
+        localStorage.setItem('userInfo', JSON.stringify(data));
         window.location = '/';
 
       } catch (error) {

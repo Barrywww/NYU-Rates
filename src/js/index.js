@@ -24,14 +24,6 @@ class IndexPage extends Component{
                     <div id={"bannerWrapper"}>
                         <div id={"bannerShade"}/>
                         <div className="imageRow1">
-                            {/*<div class="imageColumn1">*/}
-                            {/*    <img src = "/images/pointingRight.png" width="100%;"/>*/}
-                            {/*    <p class="image1">This is where you can start!</p>*/}
-                            {/*</div>*/}
-                            {/*<div class="imageColumn1">*/}
-                            {/*    <p class="image1">这里放搜索框，先别吐槽我这块怎么弄的😂整个页面背景颜色调的跟我图片搭一点，几乎看不出来的那种。css里也可以改图片间距，依搜索框大小而定吧</p>*/}
-                            {/*</div>*/}
-                            {/*<img id="indexBanner" src="/images/index_banner2.jpg" width="100%"/>*/}
                         </div>
                         <h1 id='index-bannerText'>
                             Your ultimate registration rescuer.
