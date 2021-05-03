@@ -11,7 +11,7 @@ const { TreeNode } = TreeSelect;
 class MainHeader extends React.Component{
     constructor(props){
         super(props)
-        const user = localStorage.getItem('userInfo'); //用给下面conditional rendering
+        this.state = {"user":JSON.parse(localStorage.getItem('userInfo'))} //用给下面conditional rendering
     }
 
     render(){
@@ -98,9 +98,6 @@ class MainHeader extends React.Component{
                             <TreeNode value="Ethnographic Thinking" title="Ethnographic Thinking" />
                         </TreeNode>
                     </TreeNode>
-
-
-
                 </TreeSelect>
 
 
@@ -109,20 +106,20 @@ class MainHeader extends React.Component{
 
 
                 <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                    {!this.user && (        //------假设没login-----
+                    {!this.state.user && (        //------假设没login-----
                         <React.Fragment>
                             <Menu.Item key="1">
-                                <Link to={"/profile"}>Login</Link>
+                                <Link to={"/login"}>Login</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to={"/register"}>Register</Link>
                             </Menu.Item>
                         </React.Fragment>
                     )}
-                    {this.user && (         //------假设login了-----
+                    {this.state.user && (         //------假设login了-----
                         <React.Fragment>
                             <Menu.Item key="1">
-                                <Link to={"/profile"}>Hi,{user.name}!</Link>
+                                <Link to={"/profile"}>Hi,{this.state.user.username}!</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to={"/logout"}>Logout</Link>

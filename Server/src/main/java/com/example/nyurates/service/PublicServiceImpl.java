@@ -65,6 +65,7 @@ public class PublicServiceImpl implements PublicService {
             }else{
                 loginResult.setMsg("Successfully Logged in!");
                 loginResult.setCode(200);
+                loginResult.setUsername(std.getName());
             }
         } catch (Exception e) {
             loginResult.setMsg(e.getMessage());
