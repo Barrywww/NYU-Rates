@@ -1,4 +1,4 @@
-package com.example.nyurates.dao.studentDaoImpl;
+package com.example.nyurates.dao.DaoImpl;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
@@ -36,7 +36,7 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public boolean adminDeleteComment(int comment_id) {
-        String query = "DELETE FROM Comment WHERE comment_id = ?";
+        String query = "DELETE FROM Comments WHERE comment_id = ?";
         try{
             int result = jdbcTemplate.update(query, comment_id);
             return true;
