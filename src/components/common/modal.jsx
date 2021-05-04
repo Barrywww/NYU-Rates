@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 
-const GeneralModal = (props) => {
-    const [isModalVisible, setIsModalVisible] = useState(true);
-
-    const showModal = () => {
-        setIsModalVisible(true);
+class GeneralModal extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {isModalVisible: false, modalTitle: "", modalBody:""};
     };
 
-    const handleOk = () => {
-        setIsModalVisible(false);
+    showModal = (title, bodyText) => {
+        this.setState({modalTitle: title, modalBody: bodyText, isModalVisible: true});
     };
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
+    handleOk = () => {
+        this.setState({isModalVisible: false});
     };
 
-    return (
-        <>
-            <Modal title={props.title} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <p>{props.bodyText}</p>
-            </Modal>
-        </>
-    );
+    handleCancel = () => {
+        this.setState({isModalVisible: false});
+    };
+
+    render() {
+        return (
+            <>
+                <Modal title={this.state.modalTitle} visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
+                    <p>{this.state.modalBody}</p>
+                </Modal>
+            </>
+        );
+    }
 };
 
 export default GeneralModal;

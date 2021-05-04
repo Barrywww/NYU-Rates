@@ -1,5 +1,4 @@
 import React, {lazy} from 'react';
-import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {Divider, Layout, Button, Form, Checkbox, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
@@ -7,12 +6,15 @@ import GeneralModal from "../components/common/modal";
 import "../css/admin.css";
 
 const adminMain = lazy(() => import("./adminMain"));
+const adminStudentMgmt = lazy(() => import("../components/admin/studentMgmt"));
+
 let {Header, Content, Footer} = Layout;
 
 class adminBundle extends React.Component{
     constructor(props){
         super(props);
         this.state = {}
+        this.modalRef = React.createRef();
     }
 
     componentDidMount() {
@@ -40,7 +42,7 @@ class adminBundle extends React.Component{
         console.log('Failed:', errorInfo);
         const title = "Login Failed";
         const bodyText = "Please check your username and password!";
-        ReactDOM.render(<GeneralModal title={title} bodyText={bodyText}/>, document.getElementById("root"));
+        this.modalRef.current.showModal(title, bodyText);
     };
 
     render() {
@@ -92,6 +94,7 @@ class adminBundle extends React.Component{
                         </div>
                     </div>
                 </Content>
+               <GeneralModal ref={this.modalRef}/>
             </Layout>
         )
     }
@@ -112,6 +115,7 @@ class adminRouter extends React.Component{
             <Switch>
                 <Route path={this.props.match.url + "/login"} component={adminBundle}/>
                 <Route path={this.props.match.url + "/home"} component={adminMain} />
+                <Route path={this.props.match.url + "/studentMgmt"} component={adminStudentMgmt}/>
                 <Redirect to={this.props.match.url + "/login"} />
             </Switch>
         )
