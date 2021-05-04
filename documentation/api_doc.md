@@ -442,7 +442,7 @@ Used to handle like/dislike
 **Data constraints**
 ```json
 {
-    "action": " 'plus' or 'minus' ",
+    "isLike": " [true or false] ",
     "comment_id": "[corresponding comment id]"
 }
 ```
