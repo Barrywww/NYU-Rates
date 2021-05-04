@@ -4,7 +4,6 @@ public class SearchProfessorResult extends Result{
     private String professor_name;
     private String professor_id;
     private double rating;
-    private int visible;
 
     public SearchProfessorResult(){
         super();
@@ -32,13 +31,5 @@ public class SearchProfessorResult extends Result{
 
     public void setRating(double rating){
         this.rating = rating;
-    }
-
-    public int getVisible(){
-        return this.visible;
-    }
-
-    public void setVisible(int visible){
-        this.visible = visible;
     }
 }
