@@ -82,7 +82,7 @@ Used to view rating of a specified professor, within a specific timespan.
 
 ```json
 {
-    "course_id": "[valid professor_netid]",
+    "professor_id": "[valid professor_netid]",
     "timespan": [
         "[start_semester]",
         "[end_semester]"
