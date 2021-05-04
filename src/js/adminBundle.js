@@ -1,13 +1,15 @@
-import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import React, {lazy} from 'react';
+import ReactDOM from 'react-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {Divider, Layout, Button, Form, Checkbox, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
-
+import GeneralModal from "../components/common/modal";
 import "../css/admin.css";
 
+const adminMain = lazy(() => import("./adminMain"));
 let {Header, Content, Footer} = Layout;
 
-class adminLogin extends React.Component{
+class adminBundle extends React.Component{
     constructor(props){
         super(props);
         this.state = {}
@@ -18,12 +20,27 @@ class adminLogin extends React.Component{
         document.getElementById("root").style.minHeight = "100%";
     }
 
-    onFinish = (values) => {
+    onFinish = async (values) => {
         console.log('Success:', values);
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+            credentials: "include"
+        }
+        const response = await fetch("http://localhost:8081/admin/login/", requestOptions);
+        if (response.status !== 200){
+            this.props.history.push("home");
+        }
+        else{
+        }
     };
 
     onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        const title = "Login Failed";
+        const bodyText = "Please check your username and password!";
+        ReactDOM.render(<GeneralModal title={title} bodyText={bodyText}/>, document.getElementById("root"));
     };
 
     render() {
@@ -39,6 +56,7 @@ class adminLogin extends React.Component{
                                 className="login-form"
                                 initialValues={{ remember: true }}
                                 onFinish={this.onFinish}
+                                onFinishFailed={this.onFinishFailed}
                             >
                                 <Form.Item
                                     name="username"
@@ -91,9 +109,11 @@ class adminRouter extends React.Component{
 
     render(){
         return(
-            <BrowserRouter>
-                <Route path={this.props.match.url + "/login"} component={adminLogin}/>
-            </BrowserRouter>
+            <Switch>
+                <Route path={this.props.match.url + "/login"} component={adminBundle}/>
+                <Route path={this.props.match.url + "/home"} component={adminMain} />
+                <Redirect to={this.props.match.url + "/login"} />
+            </Switch>
         )
     }
 }

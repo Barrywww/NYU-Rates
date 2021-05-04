@@ -10,6 +10,26 @@
     }
 }
 
+@media only screen and (max-width: 600px){
+    .adminPanelThirdCol{
+        margin: 24px 0 !important;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    h1 {
+        font-size: 24px !important;
+    }
+
+    #adminMainWrapper{
+        padding: 10px !important;
+    }
+
+    .ant-statistic-title{
+        font-size: 12px !important;
+    }
+}
+
 #loginLogo{
     background-image: none,url("../../public/images/logo_withtitle.png");
     background-size: contain;
@@ -33,4 +53,79 @@
 
 #loginFormWrapper label{
     font-size: 12px;
+}
+
+#adminMainWrapper{
+    min-height: 100%;
+    background-color: #fff;
+    padding: 20px;
+    position: relative;
+}
+
+#adminBlankLogo{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20%;
+    opacity: 0.3;
+}
+
+.ant-statistic{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ant-card-head-title{
+    font-family: "GothamBook";
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.ant-statistic-title{
+    font-family: "GothamBook";
+    font-size: 16px;
+}
+
+.ant-statistic-content{
+    font-family: "GothamBook";
+    font-size: 18px;
+}
+
+.ant-card-body p{
+    font-size: 14px;
+    font-family: "GothanBook";
+}
+
+.adminButtonWrapper{
+    padding: 0 20px;
+}
+
+.adminButtonWrapper a{
+    position: relative;
+    display: block;
+    width:100%;
+    height: 80%;
+    margin: 5px 0;
+    padding: 5px 0;
+    text-align: center;
+    background-color: #1890ff;
+    color: #fff;
+    border-style:solid;
+    border-width:2px;
+    border-color:#fff;
+    font-family: "GothanBook";
+    border-radius: 5px;
+}
+
+  .adminButtonWrapper a:hover{
+      background-color: #40a9ff;
+  }
+
+a {
+    word-break: break-word;
+}
+
+h1 {
+    font-size: 32px;
 }
