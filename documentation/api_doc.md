@@ -471,8 +471,9 @@ Used to report the unvalid comments.
 
 ```json
 {
-    "professor_email": "[the valid professor's email]",
-    "professor_course": "[the couse the professor is teaching]"
+    "professor_email": "[valid professor's email]",
+    "professor_name": "[valid professor's name]",
+    "professor_dept": "[valid professor's department]"
 }
 ```
 
