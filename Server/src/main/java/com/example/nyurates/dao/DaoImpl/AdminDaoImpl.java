@@ -1,4 +1,4 @@
-package com.example.nyurates.dao.studentDaoImpl;
+package com.example.nyurates.dao.DaoImpl;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;

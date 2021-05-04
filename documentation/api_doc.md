@@ -82,7 +82,7 @@ Used to view rating of a specified professor, within a specific timespan.
 
 ```json
 {
-    "course_id": "[valid professor_netid]",
+    "professor_id": "[valid professor_netid]",
     "timespan": [
         "[start_semester]",
         "[end_semester]"
@@ -180,7 +180,7 @@ Used to dynamically load comments, if too many of them.
 
 ### Error Response
 
-**Condition** : Wrong input or professor not in database.
+**Condition** : Wrong input or comments not in database.
 
 **Code** : `400 BAD REQUEST`
 
@@ -189,7 +189,7 @@ Used to dynamically load comments, if too many of them.
 ```json
 {
     "err_msg": [
-        "Unable to query the input professor."
+        "Unable to query the comments."
     ]
 }
 ```
