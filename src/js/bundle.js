@@ -1,7 +1,10 @@
 import React, {lazy, Suspense} from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import "../css/fonts.css"
+import "../css/index.css";
 import 'antd/dist/antd.compact.css'
 import Logout from "../components/common/logout";
 
@@ -13,7 +16,9 @@ const RegisterPage = lazy(() => import("./Register"));
 const AboutUsPage = lazy(() => import("./AboutUs"));
 const SearchPage = lazy(() => import("./search"));
 const ProfilePage = lazy(() => import("./profile"));
-const adminRouter = lazy(() => import("./adminLogin"));
+const adminRouter = lazy(() => import("./adminBundle"));
+
+const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class MainRouter extends React.Component{
 
@@ -31,9 +36,8 @@ class MainRouter extends React.Component{
     render() {
         return(
             <BrowserRouter>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Spin id="fallBackLoading"  tip={"Loading..."} size="large"/>}>
                     <Switch>
-                        <Route exact path="/" component={IndexPage}/>
                         <Route path="/login" component={LoginPage}/>
                         <Route path="/logout" component={Logout}/>
                         <Route path="/AboutUs" component={AboutUsPage}/>
@@ -42,6 +46,7 @@ class MainRouter extends React.Component{
                         <Route path="/test" component={TestPage}/>
                         <Route path="/search" component={SearchPage}/>
                         <Route path="/admin" component={adminRouter}/>
+                        <Route path="/" component={IndexPage}/>
                     </Switch>
                 </Suspense>
             </BrowserRouter>

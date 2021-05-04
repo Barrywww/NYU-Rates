@@ -17,9 +17,9 @@ class MainHeader extends React.Component{
     render(){
         return (
             <Header className={"indexHeader"} style={{backgroundColor: 'white'}}>
-                <Link className="logo" to={"/"}>
+                <a className="logo" href="/">
                     <img src="/images/logo_withtitle.png" height="60px"/>
-                </Link>
+                </a>
 
                 <TreeSelect
                     showSearch={false}
@@ -101,12 +101,8 @@ class MainHeader extends React.Component{
                 </TreeSelect>
 
 
-
-
-
-
                 <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                    {!this.state.user && (        //------假设没login-----
+                    {!this.state.user && (
                         <React.Fragment>
                             <Menu.Item key="1">
                                 <Link to={"/login"}>Login</Link>

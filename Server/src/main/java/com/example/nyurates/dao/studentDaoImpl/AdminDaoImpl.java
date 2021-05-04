@@ -17,7 +17,7 @@ public class AdminDaoImpl implements AdminDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Admin adminLogin(Admin admin) {
+    public Admin adminBundle(Admin admin) {
         String query = "SELECT netid, name FROM Administrator WHERE email = ? AND password= ?";
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query, admin.getEmail(), admin.getPassword());
