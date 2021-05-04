@@ -401,11 +401,13 @@ Used to post a comment.
 
 ```json
 {
+    "student_id": "[valid student netid]"
     "professor_id": "[valid professor netid]",
     "course_code": "[valid course code]",
-    "time": "[valid semester id]",
+    "date": "[post_time]",
+    "semester": "[valid semester]"
     "rating": 5,
-    "comment_body": "[content body]"
+    "content": "[content body]"
 }
 ```
 ### Success Response
