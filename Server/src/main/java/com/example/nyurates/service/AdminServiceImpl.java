@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService{
         LoginResult loginResult = new LoginResult();
         loginResult.setCode(400);
         try {
-            Admin adm = dao.adminLogin(admin);
+            Admin adm = dao.adminBundle(admin);
             if(adm == null){
                 loginResult.setMsg("Unable to login with provided credentials.");
                 loginResult.setCode(400);

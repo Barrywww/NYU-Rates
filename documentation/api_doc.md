@@ -82,7 +82,7 @@ Used to view rating of a specified professor, within a specific timespan.
 
 ```json
 {
-    "course_id": "[valid professor_netid]",
+    "professor_id": "[valid professor_netid]",
     "timespan": [
         "[start_semester]",
         "[end_semester]"
@@ -180,7 +180,7 @@ Used to dynamically load comments, if too many of them.
 
 ### Error Response
 
-**Condition** : Wrong input or professor not in database.
+**Condition** : Wrong input or comments not in database.
 
 **Code** : `400 BAD REQUEST`
 
@@ -189,7 +189,7 @@ Used to dynamically load comments, if too many of them.
 ```json
 {
     "err_msg": [
-        "Unable to query the input professor."
+        "Unable to query the comments."
     ]
 }
 ```
@@ -401,11 +401,13 @@ Used to post a comment.
 
 ```json
 {
+    "student_id": "[valid student netid]"
     "professor_id": "[valid professor netid]",
     "course_code": "[valid course code]",
-    "time": "[valid semester id]",
+    "date": "[post_time]",
+    "semester": "[valid semester]"
     "rating": 5,
-    "comment_body": "[content body]"
+    "content": "[content body]"
 }
 ```
 ### Success Response
@@ -440,7 +442,7 @@ Used to handle like/dislike
 **Data constraints**
 ```json
 {
-    "action": " 'plus' or 'minus' ",
+    "isLike": " [true or false] ",
     "comment_id": "[corresponding comment id]"
 }
 ```
@@ -469,8 +471,9 @@ Used to report the unvalid comments.
 
 ```json
 {
-    "professor_email": "[the valid professor's email]",
-    "professor_course": "[the couse the professor is teaching]"
+    "professor_email": "[valid professor's email]",
+    "professor_name": "[valid professor's name]",
+    "professor_dept": "[valid professor's department]"
 }
 ```
 

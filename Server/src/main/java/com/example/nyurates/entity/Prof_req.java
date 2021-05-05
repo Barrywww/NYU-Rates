@@ -2,15 +2,15 @@ package com.example.nyurates.entity;
 
 public class Prof_req {
     private Long req_id;
-    private String prof_name;
-    private String prof_email;
-    private String prof_dept;
+    private String professor_name;
+    private String professor_email;
+    private String professor_dept;
 
-    public Prof_req(Long req_id, String prof_name, String prof_email, String prof_dept){
+    public Prof_req(Long req_id, String professor_name, String professor_email, String professor_dept){
         this.req_id = req_id;
-        this.prof_name = prof_name;
-        this.prof_email = prof_email;
-        this.prof_dept = prof_dept;
+        this.professor_name = professor_name;
+        this.professor_email = professor_email;
+        this.professor_dept = professor_dept;
     }
 
     public Prof_req(){
@@ -25,27 +25,27 @@ public class Prof_req {
         this.req_id = req_id;
     }
 
-    public String getProf_name(){
-        return this.prof_name;
+    public String getProfessor_name(){
+        return this.professor_name;
     }
 
-    public void setProf_name(String prof_name){
-        this.prof_name = prof_name;
+    public void setProfessor_name(String professor_name){
+        this.professor_name = professor_name;
     }
 
-    public String getProf_email(){
-        return this.prof_email;
+    public String getProfessor_email(){
+        return this.professor_email;
     }
 
-    public void setProf_email(String prof_email){
-        this.prof_email = prof_email;
+    public void setProfessor_email(String professor_email){
+        this.professor_email = professor_email;
     }
 
-    public String getProf_dept(){
-        return this.prof_dept;
+    public String getProfessor_dept(){
+        return this.professor_dept;
     }
 
-    public void setProf_dept(String prof_dept){
-        this.prof_dept = prof_dept;
+    public void setProfessor_dept(String prof_dept){
+        this.professor_dept = professor_dept;
     }
 }

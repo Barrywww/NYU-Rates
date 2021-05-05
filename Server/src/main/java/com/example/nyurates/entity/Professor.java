@@ -6,9 +6,9 @@ public class Professor {
     private String name;
     private String password;
     private String dept;
-    private boolean visible;
+    private int visible;
 
-    public Professor(String email, String netid, String name, String password, String dept, boolean visible){
+    public Professor(String email, String netid, String name, String password, String dept, int visible){
         this.email = email;
         this.netid = netid;
         this.name = name;
@@ -61,11 +61,11 @@ public class Professor {
         this.dept = dept;
     }
 
-    public boolean getVisible(){
+    public int getVisible(){
         return this.visible;
     }
 
-    public void setVisible(boolean visible){
+    public void setVisible(int visible){
         this.visible = visible;
     }
 }

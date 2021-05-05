@@ -1,11 +1,8 @@
 import React, {Component} from "react";
 import {Layout, Select, Row, Col} from 'antd';
-import "../css/index.css";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 import IndexSearchWrapper from "../components/common/searchbar";
-//import Like from '../components/common/like';
-//import Dislike from '../components/common/dislike';
 
 const {Content} = Layout;
 const {Option} = Select;
