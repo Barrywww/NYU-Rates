@@ -17,6 +17,9 @@ class SearchPage extends React.Component {
         this.state = {
             st:"", val:""
         }
+    }
+
+    componentDidMount() {
         console.log(this.props.location.search);
     }
 

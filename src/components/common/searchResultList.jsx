@@ -1,9 +1,9 @@
 import React from "react";
 import {Switch, List, Skeleton, Avatar} from "antd";
 import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import { Statistic, Row, Col } from 'antd';
 
-
-const listData = [];
+/*const listData = [];
 for (let i = 0; i < 3; i++) {
     listData.push({
         href: 'https://ant.design',
@@ -13,6 +13,19 @@ for (let i = 0; i < 3; i++) {
             'Ant Design, a design language for background applications, is refined by Ant UED Team.',
         content:
             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    });
+}*/
+
+const listData = [];
+for (let i = 0; i < 20; i++) {
+    listData.push({
+        course_name: `Barry ${i}`,
+        course_code: "yw3752",
+        course_link: 'https://ant.design',
+        comment: "I am Barry",
+        rating: 5.0,
+        likes: 100,
+        num_comments: 100,
     });
 }
 
@@ -43,34 +56,54 @@ class ResultsList extends React.Component {
                 <List
                     itemLayout="vertical"
                     size="large"
+                    pagination={{
+                        onChange: page => {
+                            console.log(page);
+                            document.body.scrollIntoView();
+                        },
+                        pageSize: 10,
+                    }}
                     dataSource={listData}
                     renderItem={item => (
                         <List.Item
                             key={item.title}
                             actions={
                                 !loading && [
-                                    <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                                    <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                                    <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                                    <IconText icon={LikeOutlined} text={item.likes} key="list-vertical-like-o" />,
+                                    <IconText icon={MessageOutlined} text={item.num_comments} key="list-vertical-message" />,
                                 ]
                             }
+
                             extra={
                                 !loading && (
-                                    <img
-                                        width={272}
-                                        alt="logo"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                                    />
+                                    <Row>
+                                        <Col span={200}>
+                                            <Statistic title="Rate"
+                                                       value={item.rating}
+                                                       prefix={<StarOutlined />}
+                                                       suffix=" / 5"
+                                                       valueStyle={{fontSize:"40px",marginTop:"15px"}}
+                                            />
+
+                                        </Col>
+                                    </Row>
+
                                 )
                             }
                         >
                             <Skeleton loading={loading} active avatar>
-                                <List.Item.Meta
-                                    avatar={<Avatar src={item.avatar} />}
-                                    title={<a href={item.href}>{item.title}</a>}
-                                    description={item.description}
-                                />
-                                {item.content}
+                                <Row style={{marginTop:"10px"}}>
+                                    <Col span={4}>
+                                        <List.Item.Meta
+                                            title={<a href={item.course_link} style={{fontSize:"18px"}}>{item.course_name}</a>}
+                                            description={item.course_code}
+                                        />
+                                    </Col>
+                                    <Col span={20}>
+                                        {item.comment}
+                                    </Col>
+                                </Row>
+
                             </Skeleton>
                         </List.Item>
                     )}
