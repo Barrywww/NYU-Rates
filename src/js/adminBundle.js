@@ -35,6 +35,7 @@ class adminBundle extends React.Component{
             this.props.history.push("home");
         }
         else{
+            alert("Login Failure. Please try again.")
         }
     };
 
@@ -114,9 +115,7 @@ class adminRouter extends React.Component{
         return(
             <Switch>
                 <Route path={this.props.match.url + "/login"} component={adminBundle}/>
-                <Route path={this.props.match.url + "/home"} component={adminMain} />
-                <Route path={this.props.match.url + "/studentMgmt"} component={adminStudentMgmt}/>
-                <Redirect to={this.props.match.url + "/login"} />
+                <Route path={this.props.match.url} component={adminMain} />
             </Switch>
         )
     }

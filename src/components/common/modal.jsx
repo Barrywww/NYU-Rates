@@ -23,7 +23,7 @@ class GeneralModal extends React.Component{
         return (
             <>
                 <Modal title={this.state.modalTitle} visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
-                    <p>{this.state.modalBody}</p>
+                    {this.state.modalBody}
                 </Modal>
             </>
         );
