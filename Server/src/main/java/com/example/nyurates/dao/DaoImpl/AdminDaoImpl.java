@@ -38,7 +38,7 @@ public class AdminDaoImpl implements AdminDao {
     public boolean adminDeleteComment(int comment_id) {
         String query = "DELETE FROM Comments WHERE comment_id = ?";
         try{
-            int result = jdbcTemplate.update(query, comment_id);
+            jdbcTemplate.update(query, comment_id);
             return true;
         }catch (DataAccessException e) {
             SQLException exception = (SQLException) e.getCause();
