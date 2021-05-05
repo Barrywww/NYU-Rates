@@ -18,18 +18,18 @@ public class PublicController {
     private PublicService publicService;
 
     /**
-     * 注册
-     * @param student 参数封装
+     * Register
+     * @param student
      * @return LoginResult
      */
     @PostMapping(value = "/regist")
-    public LoginResult regist(@RequestBody Student student){
+    public Result regist(@RequestBody Student student){
         return publicService.regist(student);
     }
 
     /**
-     * 登录
-     * @param student 参数封装
+     * Login
+     * @param student
      * @return LoginResult
      */
     @PostMapping(value = "/login")
@@ -42,8 +42,11 @@ public class PublicController {
         return publicService.view_course(course);
     }
 
-//    @GetMapping(value = "/view_professor")
-//
+    @GetMapping(value = "/view_professor")
+    public ViewProfessorResult view_professor(@RequestBody Professor professor){
+        return publicService.view_professor(professor);
+    }
+
     @GetMapping(value = "/load_comments")
     public CommentsResult load_comments(@RequestBody Course course){
         return publicService.load_comments(course);

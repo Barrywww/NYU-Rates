@@ -11,6 +11,13 @@ public class Result {
      */
     private String msg;
 
+    public Result(int code, String msg){
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Result(){ super(); }
+
     public int getCode() {
         return this.code;
     }

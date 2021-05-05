@@ -25,28 +25,28 @@ public class PublicServiceImpl implements PublicService {
      * @param student 参数封装
      * @return Result
      */
-    public LoginResult regist(Student student) {
-        LoginResult loginResult = new LoginResult();
-        loginResult.setCode(400);
+    public Result regist(Student student) {
+        Result result = new Result();
+        result.setCode(400);
         try {
             Student existStudent = dao.searchByEmail(student);
             if(existStudent != null){
                 // student already existed
-                loginResult.setMsg("The account has existed. Failed to register.");
-                loginResult.setCode(400);
+                result.setMsg("The account has existed. Failed to register.");
+                result.setCode(400);
             }else{
                 boolean r = dao.studentRegist(student);
                 if (r){
                     System.out.println(student.getNetid());
-                    loginResult.setMsg("Successfully registered!");
-                    loginResult.setCode(200);
+                    result.setMsg("Successfully registered!");
+                    result.setCode(200);
                 }
             }
         } catch (Exception e) {
-            loginResult.setMsg(e.getMessage());
+            result.setMsg(e.getMessage());
             e.printStackTrace();
         }
-        return loginResult;
+        return result;
     }
 
     /**
@@ -88,7 +88,7 @@ public class PublicServiceImpl implements PublicService {
                 viewCourseResult.setCode(200);
                 viewCourseResult.setCourse_code(course.getCourse_code());
                 viewCourseResult.setCourse_name(course.getCourse_name());
-                ArrayList<Comment> comments = dao.searchCourseComments(course);
+                ArrayList<Comment> comments = dao.searchComments(course);
                 viewCourseResult.setComments(comments);
                 double rating = dao.searchAverageRating(course);
                 viewCourseResult.setRating(rating);
@@ -102,12 +102,45 @@ public class PublicServiceImpl implements PublicService {
         return viewCourseResult;
     }
 
+    public ViewProfessorResult view_professor(Professor professor){
+        ViewProfessorResult viewProfessorResult = new ViewProfessorResult();
+        viewProfessorResult.setCode(400);
+
+        try{
+            professor = dao.searchProfessor(professor);
+            if(professor == null){
+                viewProfessorResult.setMsg("Unable to query the professor.");
+                viewProfessorResult.setCode(400);
+            }else{
+                viewProfessorResult.setMsg("Successfully get professor!");
+                viewProfessorResult.setCode(200);
+                viewProfessorResult.setProfessor_name(professor.getName());
+                viewProfessorResult.setDepartment(professor.getDept());
+
+                double rating = dao.searchAverageRating(professor);
+                viewProfessorResult.setRating(rating);
+
+                ArrayList<Comment> comments = dao.searchComments(professor);
+                viewProfessorResult.setComments(comments);
+                viewProfessorResult.setTotal_comments(comments.size());
+
+                ArrayList<Course> courses = dao.searchProfessorCourse(professor);
+                viewProfessorResult.setCourses(courses);
+            }
+        } catch (Exception e) {
+            viewProfessorResult.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return viewProfessorResult;
+    }
+
     public CommentsResult load_comments(Course course){
         CommentsResult commentsResult = new CommentsResult();
         commentsResult.setCode(400);
 
         try{
-            ArrayList<Comment> comments = dao.searchCourseComments(course);
+            ArrayList<Comment> comments = dao.searchComments(course);
             if(comments.size() > 0){
                 commentsResult.setMsg("Successfully get comments");
                 commentsResult.setCode(200);
@@ -159,7 +192,6 @@ public class PublicServiceImpl implements PublicService {
                 searchProfessorResult.setCode(200);
                 searchProfessorResult.setProfessor_name(professor.getName());
                 searchProfessorResult.setProfessor_id(professor.getNetid());
-                searchProfessorResult.setVisible(professor.getVisible());
                 double rating = dao.searchAverageRating(professor);
                 searchProfessorResult.setRating(rating);
             }

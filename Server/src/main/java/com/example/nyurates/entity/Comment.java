@@ -1,11 +1,12 @@
 package com.example.nyurates.entity;
 
-import java.util.Date;
+import java.time.*;
+
 
 public class Comment {
     private Long comment_id;
     private String content;
-    private Date date;
+    private LocalDateTime date;
     private Long likes;
     private Long dislikes;
     private double rate;
@@ -14,7 +15,7 @@ public class Comment {
     private String professor_id;
     private String student_id;
 
-    public Comment(Long comment_id, String content, Date date, Long likes, Long dislikes, double rate, String course_code, String semester, String professor_id, String student_id){
+    public Comment(Long comment_id, String content, LocalDateTime date, Long likes, Long dislikes, double rate, String course_code, String semester, String professor_id, String student_id){
         this.comment_id = comment_id;
         this.content = content;
         this.date = date;
@@ -47,11 +48,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Date getDate(){
+    public LocalDateTime getDate(){
         return this.date;
     }
 
-    public void setDate(Date date){
+    public void setDate(LocalDateTime date){
         this.date = date;
     }
 

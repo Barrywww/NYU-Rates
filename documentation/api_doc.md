@@ -401,11 +401,13 @@ Used to post a comment.
 
 ```json
 {
+    "student_id": "[valid student netid]"
     "professor_id": "[valid professor netid]",
     "course_code": "[valid course code]",
-    "time": "[valid semester id]",
+    "date": "[post_time]",
+    "semester": "[valid semester]"
     "rating": 5,
-    "comment_body": "[content body]"
+    "content": "[content body]"
 }
 ```
 ### Success Response
@@ -440,7 +442,7 @@ Used to handle like/dislike
 **Data constraints**
 ```json
 {
-    "action": " 'plus' or 'minus' ",
+    "isLike": " [true or false] ",
     "comment_id": "[corresponding comment id]"
 }
 ```
@@ -469,8 +471,9 @@ Used to report the unvalid comments.
 
 ```json
 {
-    "professor_email": "[the valid professor's email]",
-    "professor_course": "[the couse the professor is teaching]"
+    "professor_email": "[valid professor's email]",
+    "professor_name": "[valid professor's name]",
+    "professor_dept": "[valid professor's department]"
 }
 ```
 
