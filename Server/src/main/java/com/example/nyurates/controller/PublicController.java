@@ -43,7 +43,7 @@ public class PublicController {
 
     @PostMapping(value = "/login")
     public LoginResult login(HttpSession session, @RequestBody Professor professor){
-        session.setAttribute("state", "loggedin");
+        session.setAttribute("loggedIn", "true");
         session.setAttribute("role", "professor");
         return publicService.login(professor);
     }
