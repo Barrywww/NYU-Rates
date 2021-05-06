@@ -1,5 +1,7 @@
 package com.example.nyurates.controller;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Student;
@@ -33,7 +35,9 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(@RequestBody Student student){
+    public LoginResult login(HttpSession session, @RequestBody Student student){
+        session.setAttribute("state", "loggedin");
+        session.setAttribute("role", "student");
         return publicService.login(student);
     }
 

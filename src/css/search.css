@@ -1,5 +1,5 @@
 #searchWrapperOuter{
-    height: 800px;
+    min-height: 800px;
     margin: 20px 8%;
     max-width: 1400px;
     font-family: "GothamBook";
@@ -12,4 +12,12 @@
     width: 100%;
     height: 100%;
     background-color: #fff;
+}
+
+.ant-statistic-title{
+    font-size:18px;
+}
+
+.ant-list-item-action{
+    margin-top: 24px !important;
 }
