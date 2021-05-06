@@ -74,6 +74,26 @@ public class PublicServiceImpl implements PublicService {
         return loginResult;
     }
 
+    public LoginResult login(Professor professor){
+        LoginResult loginResult = new LoginResult();
+        loginResult.setCode(400);
+        try {
+            Professor pro= dao.professorLogin(professor);
+            if(pro == null){
+                loginResult.setMsg("Unable to login with provided credentials.");
+                loginResult.setCode(400);
+            }else{
+                loginResult.setMsg("Successfully Logged in!");
+                loginResult.setCode(200);
+                loginResult.setUsername(pro.getName());
+            }
+        } catch (Exception e) {
+            loginResult.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+        return loginResult;
+    }
+
     public ViewCourseResult view_course(Course course){
         ViewCourseResult viewCourseResult = new ViewCourseResult();
         viewCourseResult.setCode(400);
