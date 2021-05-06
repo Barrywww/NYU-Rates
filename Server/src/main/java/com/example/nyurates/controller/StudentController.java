@@ -1,6 +1,7 @@
 package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
+import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,16 @@ public class StudentController {
         int comid = (Integer) params.get("comment_id");
         Long comment_id = new Long(comid);
         return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
+    }
+
+    /**
+     * Report comments
+     * @param report
+     * @return Result
+     */
+    @PostMapping(value = "/reportcomment")
+    public Result report_comment(@RequestBody Report report){
+        return studentService.report_comment(report);
     }
 
 

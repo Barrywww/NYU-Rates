@@ -18,4 +18,5 @@ public interface PublicDao {
     public boolean postComment(Comment comment);
     public boolean handleLike(Long comment_id, boolean isLike);
 //    public boolean addprofessor(Prof_req prof_req);
+    public boolean reportComment(Report report);
 }

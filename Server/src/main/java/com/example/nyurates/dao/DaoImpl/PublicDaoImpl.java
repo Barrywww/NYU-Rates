@@ -322,4 +322,17 @@ public class PublicDaoImpl implements PublicDao {
 //        String query = "INSERT INTO Student VALUES (?, ?, ?, ?)";
 //    }
 
+    @Override
+    public boolean reportComment(Report report){
+        String query = "INSERT INTO Report(comment_id, comment_user, report_date, report_reason, status) VALUES (?, ?, ?, ?, ?)";
+        try{
+            int result = jdbcTemplate.update(query, report.getComment_id(), report.getComment_user(), report.getReport_date(), report.getReport_reason(), report.getStatus());
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
 }
