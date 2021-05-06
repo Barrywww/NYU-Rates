@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public interface PublicDao {
     public Student studentLogin(Student student);
+    public Professor professorLogin(Professor professor);
     public boolean studentRegist(Student student);
     public Student searchByEmail(Student student);
     public Course searchCourse(Course course);
