@@ -2,14 +2,12 @@ package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
 import com.example.nyurates.entity.results.Result;
-import com.example.nyurates.entity.results.UnauthorizedResult;
 import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -26,14 +24,8 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/post_comment")
-    public Result post_comment(HttpSession session, @RequestBody Comment comment){
-        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin"){
+    public Result post_comment(@RequestBody Comment comment){
             return studentService.post_comment(comment);
-        }
-        else{
-            UnauthorizedResult failureResult = new UnauthorizedResult();
-            return failureResult;
-        }
     }
 
     /**
@@ -42,16 +34,10 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/handle_like")
-    public Result handle_like(HttpSession session, @RequestBody Map<String, Object> params){
-        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin"){
+    public Result handle_like(@RequestBody Map params){
             int comid = (Integer) params.get("comment_id");
             Long comment_id = Long.valueOf(comid);
             return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
-        }
-        else{
-            UnauthorizedResult failureResult = new UnauthorizedResult();
-            return failureResult;
-        }
     }
 
 
