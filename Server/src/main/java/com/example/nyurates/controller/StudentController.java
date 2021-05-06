@@ -7,6 +7,7 @@ import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
@@ -46,8 +47,13 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/reportcomment")
-    public Result report_comment(@RequestBody Report report){
+    public Result report_comment(HttpSession session, @RequestBody Report report){
+        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin") {
             return studentService.report_comment(report);
+        }else{
+            UnauthorizedResult failureResult = new UnauthorizedResult();
+            return failureResult;
+        }
     }
 
 
