@@ -112,10 +112,20 @@ class MainHeader extends React.Component{
                             </Menu.Item>
                         </React.Fragment>
                     )}
-                    {this.state.user && (         //------假设login了-----
+                    {this.state.user && this.state.user.role === 'student' &&( //------假设login了,是学生-----
                         <React.Fragment>
                             <Menu.Item key="1">
                                 <Link to={"/profile"}>Hi,{this.state.user.username}!</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to={"/logout"}>Logout</Link>
+                            </Menu.Item>
+                        </React.Fragment>
+                    )}
+                    {this.state.user && this.state.user.role === 'professor' &&( //------假设login了，是教授-----
+                        <React.Fragment>
+                            <Menu.Item key="1">
+                                <Link to={"/profprofile"}>Hi,{this.state.user.username}!</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to={"/logout"}>Logout</Link>

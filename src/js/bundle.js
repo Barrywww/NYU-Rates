@@ -16,6 +16,7 @@ const RegisterPage = lazy(() => import("./Register"));
 const AboutUsPage = lazy(() => import("./AboutUs"));
 const SearchPage = lazy(() => import("./search"));
 const ProfilePage = lazy(() => import("./profile"));
+const ProfProfilePage = lazy(() => import("./profProfile"));
 const adminRouter = lazy(() => import("./adminBundle"));
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -42,6 +43,7 @@ class MainRouter extends React.Component{
                         <Route path="/logout" component={Logout}/>
                         <Route path="/AboutUs" component={AboutUsPage}/>
                         <Route path="/profile" component={ProfilePage}/>
+                        <Route path="/profProfile" component={ProfProfilePage}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/test" component={TestPage}/>
                         <Route path="/search" component={SearchPage}/>
