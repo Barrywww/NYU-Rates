@@ -12,6 +12,7 @@ public interface PublicDao {
     public Course searchCourse(Course course);
     public ArrayList<Comment> searchComments(Course course);
     public ArrayList<Comment> searchComments(Professor professor);
+    public ArrayList<Comment> searchComments(Student student);
     public double searchAverageRating(Course course);
     public double searchAverageRating(Professor professor);
     public Professor searchProfessor(Professor professor);

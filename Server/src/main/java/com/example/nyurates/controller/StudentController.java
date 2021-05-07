@@ -2,13 +2,13 @@ package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
 import com.example.nyurates.entity.Report;
+import com.example.nyurates.entity.Student;
+import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.Result;
-import com.example.nyurates.entity.results.UnauthorizedResult;
 import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
@@ -26,14 +26,8 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/post_comment")
-    public Result post_comment(HttpSession session, @RequestBody Comment comment){
-        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin"){
-            return studentService.post_comment(comment);
-        }
-        else{
-            UnauthorizedResult failureResult = new UnauthorizedResult();
-            return failureResult;
-        }
+    public Result post_comment(@RequestBody Comment comment){
+        return studentService.post_comment(comment);
     }
 
     /**
@@ -42,16 +36,10 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/handle_like")
-    public Result handle_like(HttpSession session, @RequestBody Map<String, Object> params){
-        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin"){
-            int comid = (Integer) params.get("comment_id");
-            Long comment_id = Long.valueOf(comid);
-            return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
-        }
-        else{
-            UnauthorizedResult failureResult = new UnauthorizedResult();
-            return failureResult;
-        }
+    public Result handle_like(@RequestBody Map<String, Object> params){
+        int comid = (Integer) params.get("comment_id");
+        Long comment_id = Long.valueOf(comid);
+        return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
     }
 
     /**
@@ -60,13 +48,13 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/reportcomment")
-    public Result report_comment(HttpSession session, @RequestBody Report report){
-        if ((String) session.getAttribute("role") == "student" & (String) session.getAttribute("state") == "loggedin") {
-            return studentService.report_comment(report);
-        }else{
-            UnauthorizedResult failureResult = new UnauthorizedResult();
-            return failureResult;
-        }
+    public Result report_comment(@RequestBody Report report){
+        return studentService.report_comment(report);
+    }
+
+    @GetMapping(value = "/viewhistory")
+    public CommentsResult view_history(@RequestBody Student student){
+        return studentService.view_history(student);
     }
 
 

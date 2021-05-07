@@ -41,12 +41,17 @@ public class PublicController {
         return publicService.login(student);
     }
 
-    @PostMapping(value = "/login")
-    public LoginResult login(HttpSession session, @RequestBody Professor professor){
-        session.setAttribute("state", "loggedin");
-        session.setAttribute("role", "professor");
-        return publicService.login(professor);
-    }
+//    @PostMapping(value = "/login")
+//    public LoginResult login(HttpSession session, @RequestBody Professor professor){
+//        session.setAttribute("state", "loggedin");
+//        session.setAttribute("role", "professor");
+//        return publicService.login(professor);
+//    }
+
+//    @PostMapping(value = "/logout")
+//    public Result logout(HttpSession session, @RequestBody Student student){
+//
+//    }
 
     @GetMapping(value = "/view_course")
     public ViewCourseResult view_course(@RequestBody Course course){
