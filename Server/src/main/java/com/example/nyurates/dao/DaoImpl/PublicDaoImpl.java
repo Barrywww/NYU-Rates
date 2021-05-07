@@ -198,6 +198,36 @@ public class PublicDaoImpl implements PublicDao {
     }
 
     @Override
+    public ArrayList<Comment> searchComments(Student student){
+        String query = "SELECT * FROM Comments WHERE user_id = ?";
+        ArrayList<Comment> comments = new ArrayList<Comment>();
+        try{
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getNetid());
+            if (result.size() > 0) {
+                for (int i = 0; i < result.size(); i ++){
+                    Comment comment = new Comment();
+                    Map<String, Object> map = result.get(i);
+                    comment.setComment_id((Long) map.get("comment_id"));
+                    comment.setContent((String) map.get("content"));
+                    comment.setDate((LocalDateTime) map.get("time"));
+                    comment.setLikes((Long) map.get("likes"));
+                    comment.setDislikes((Long) map.get("dislikes"));
+                    comment.setRate((Double) map.get("rate"));
+                    comment.setCourse_code((String) map.get("course_code"));
+                    comment.setSemester((String) map.get("semester"));
+                    comment.setProfessor_id((String) map.get("professor_id"));
+                    comment.setStudent_id((String) map.get("user_id"));
+                    comments.add(comment);
+                }
+            }
+        } catch (DataAccessException e){
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return comments;
+    }
+
+    @Override
     public double searchAverageRating(Course course){
         String query = "SELECT AVG(rate) AS AverageRate FROM Comments WHERE course_code = ?";
         double rating = 0;

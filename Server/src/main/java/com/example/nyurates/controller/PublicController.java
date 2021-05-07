@@ -22,7 +22,7 @@ public class PublicController {
     private PublicService publicService;
 
     /**
-     * Register
+     * Registery
      * @param student
      * @return LoginResult
      */
@@ -37,18 +37,61 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(HttpSession session, @RequestBody Student student){
-        session.setAttribute("loggedIn", "true");
-        session.setAttribute("role", "student");
-        return publicService.login(student);
+    public LoginResult login(HttpSession session, @RequestBody Map<String, Object> params){
+        // session.setAttribute("loggedIn", "true");
+        // session.setAttribute("role", "student");
+        // return publicService.login(student);
+        LoginResult result;
+        
+        if (((String) params.get("role")).equals("student")){
+            Student student = new Student();
+            student.setEmail((String) params.get("email"));
+            student.setPassword((String) params.get("password"));
+            result = publicService.loginStudent(student);
+            if (result.getCode() == 200){
+                session.setAttribute("loggedIn", "true");
+                session.setAttribute("role", "student");
+            }
+            return result;
+        }
+        else if (((String) params.get("role")).equals("professor")){
+            Professor professor = new Professor();
+            professor.setEmail((String) params.get("email"));
+            professor.setPassword((String) params.get("password"));
+            result = publicService.loginProfessor(professor);
+            if (result.getCode() == 200){
+                session.setAttribute("loggedIn", "true");
+                session.setAttribute("role", "professor");
+            }
+            return result;
+        }
+        else{
+            result = new LoginResult();
+            result.setCode(400);
+            result.setMsg("Invalid Login Request.");
+            return result;
+        }
     }
 
-    // @PostMapping(value = "/login")
-    // public LoginResult login(HttpSession session, @RequestBody Professor professor){
-    //     session.setAttribute("loggedIn", "true");
-    //     session.setAttribute("role", "professor");
-    //     return publicService.login(professor);
-    // }
+   @PostMapping(value = "/logout")
+   public Result logout(HttpSession session, @RequestBody Student student){
+        try{
+            session.removeAttribute("role");
+            session.removeAttribute("loggedIn");
+            session.invalidate();
+            Result result = new Result();
+            result.setCode(200);
+            result.setMsg("Successfully logged out.");
+            return result;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Result result = new Result();
+            result.setCode(400);
+            return result;
+        }
+
+   }
 
     @GetMapping(value = "/view_course")
     public ViewCourseResult view_course(@RequestBody Course course){

@@ -2,6 +2,8 @@ package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
 import com.example.nyurates.entity.Report;
+import com.example.nyurates.entity.Student;
+import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class StudentController {
      */
     @PostMapping(value = "/post_comment")
     public Result post_comment(@RequestBody Comment comment){
-            return studentService.post_comment(comment);
+        return studentService.post_comment(comment);
     }
 
     /**
@@ -35,9 +37,9 @@ public class StudentController {
      */
     @PostMapping(value = "/handle_like")
     public Result handle_like(@RequestBody Map<String, Object> params){
-            int comid = (Integer) params.get("comment_id");
-            Long comment_id = Long.valueOf(comid);
-            return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
+        int comid = (Integer) params.get("comment_id");
+        Long comment_id = Long.valueOf(comid);
+        return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
     }
 
     /**
@@ -47,7 +49,12 @@ public class StudentController {
      */
     @PostMapping(value = "/reportcomment")
     public Result report_comment(@RequestBody Report report){
-            return studentService.report_comment(report);
+        return studentService.report_comment(report);
+    }
+
+    @GetMapping(value = "/viewhistory")
+    public CommentsResult view_history(@RequestBody Student student){
+        return studentService.view_history(student);
     }
 
 
