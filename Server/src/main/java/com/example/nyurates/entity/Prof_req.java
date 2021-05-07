@@ -46,6 +46,6 @@ public class Prof_req {
     }
 
     public void setProfessor_dept(String prof_dept){
-        this.professor_dept = professor_dept;
+        this.professor_dept = prof_dept;
     }
 }

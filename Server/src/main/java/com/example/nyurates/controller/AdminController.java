@@ -1,8 +1,7 @@
 package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Admin;
-import com.example.nyurates.entity.results.LoginResult;
-import com.example.nyurates.entity.results.Result;
+import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,18 @@ public class AdminController {
         return adminService.login(admin);
     }
 
+    @RequestMapping(value = "/getreports")
+    public ReportResult getReports(@RequestBody Map<String, Object> params){
+        return adminService.getReports();
+    }
+
     @PostMapping(value = "/reviewcomment")
-    public Result reviewComment(@RequestBody Map params) {
+    public Result reviewComment(@RequestBody Map<String, Object> params) {
         return adminService.reviewComment((Integer) params.get("comment_id"), (Boolean) params.get("validity"));
     }
+
+    @RequestMapping (value="/getprofrequests")
+    public Result getProfRequests(@RequestBody Map<String, Object> params){
+        return adminService.getProfRequests();
+    } 
 }

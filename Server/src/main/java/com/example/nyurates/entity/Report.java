@@ -51,8 +51,8 @@ public class Report {
         return this.report_date;
     }
 
-    public void setReport_date(LocalDateTime report_date){
-        this.report_date = report_date;
+    public void setReport_date(LocalDateTime localDateTime){
+        this.report_date = localDateTime;
     }
 
     public String getReport_reason(){

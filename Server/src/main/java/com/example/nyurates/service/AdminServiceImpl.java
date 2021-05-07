@@ -1,8 +1,12 @@
 package com.example.nyurates.service;
 
+import java.util.ArrayList;
+
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
+import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.results.LoginResult;
+import com.example.nyurates.entity.results.ReportResult;
 import com.example.nyurates.entity.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +63,27 @@ public class AdminServiceImpl implements AdminService{
             e.printStackTrace();
         }
 
+        return result;
+    }
+
+    public ReportResult getReports() {
+        ReportResult result = new ReportResult();
+        ArrayList<Report> reports;
+        try{
+            reports = dao.getReports();
+            if (reports.size() > 0){
+                result.setCode(200);
+                result.setMsg("Successfully got reports");
+                result.setReportsArray(reports);
+            }
+            else{
+                result.setCode(400);
+                result.setMsg("Failed to get reports");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
 }

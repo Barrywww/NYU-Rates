@@ -34,7 +34,7 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/handle_like")
-    public Result handle_like(@RequestBody Map params){
+    public Result handle_like(@RequestBody Map<String, Object> params){
             int comid = (Integer) params.get("comment_id");
             Long comment_id = Long.valueOf(comid);
             return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));

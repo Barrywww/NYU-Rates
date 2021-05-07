@@ -1,16 +1,20 @@
 package com.example.nyurates.entity;
 
+import java.util.Map;
+
 public class Admin {
     private String email;
     private String netid;
     private String name;
     private String password;
+    private Map<String, Object> action;
 
-    public Admin(String email, String netid, String name, String password) {
+    public Admin(String email, String netid, String name, String password, Map<String, Object> action) {
         this.email = email;
         this.netid = netid;
         this.name = name;
         this.password = password;
+        this.action = action;
     }
 
     public Admin() {
@@ -47,5 +51,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public void setAction (Map<String, Object> action){
+        this.action = action;
+    }
+
+    public Map<String,Object> getAction(){
+        return this.action;
     }
 }
