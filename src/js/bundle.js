@@ -18,6 +18,7 @@ const SearchPage = lazy(() => import("./search"));
 const ProfilePage = lazy(() => import("./profile"));
 const ProfProfilePage = lazy(() => import("./profProfile"));
 const adminRouter = lazy(() => import("./adminBundle"));
+// const Logout = lazy(() => import("../components/common/logout"));
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
