@@ -1,7 +1,7 @@
 //Register Service
 import http from './httpService';
 
-const apiEndpoint = 'xxx';
+const apiEndpoint = 'http://localhost:8081/public/register';
 
 export function register(user){
     return http.post(apiEndpoint,{
