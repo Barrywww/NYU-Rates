@@ -8,6 +8,8 @@ import com.example.nyurates.service.PublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 @RestController
 @RequestMapping("/public")
@@ -33,8 +35,17 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(@RequestBody Student student){
+    public LoginResult login(HttpSession session, @RequestBody Student student){
+        session.setAttribute("loggedIn", "true");
+        session.setAttribute("role", "student");
         return publicService.login(student);
+    }
+
+    @PostMapping(value = "/login")
+    public LoginResult login(HttpSession session, @RequestBody Professor professor){
+        session.setAttribute("state", "loggedin");
+        session.setAttribute("role", "professor");
+        return publicService.login(professor);
     }
 
     @GetMapping(value = "/view_course")

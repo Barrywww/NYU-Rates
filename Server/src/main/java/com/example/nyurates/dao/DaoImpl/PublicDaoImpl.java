@@ -59,6 +59,24 @@ public class PublicDaoImpl implements PublicDao {
     }
 
     @Override
+    public Professor professorLogin(Professor professor){
+        String query = "SELECT netid, name FROM Professor WHERE email = ? AND password= ?";
+        try{
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, professor.getEmail(), professor.getPassword());
+            if (result.size() == 1) {
+                Map<String, Object> map = result.get(0);
+                professor.setName((String) map.get("name"));
+                professor.setNetid((String) map.get("netid"));
+                return professor;
+            }
+        } catch (DataAccessException e){
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public boolean studentRegist(Student student) {
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //        String encodedPassword = passwordEncoder.encode(student.getPassword().trim());
@@ -321,5 +339,18 @@ public class PublicDaoImpl implements PublicDao {
 //    public boolean addprofessor(Prof_req prof_req){
 //        String query = "INSERT INTO Student VALUES (?, ?, ?, ?)";
 //    }
+
+    @Override
+    public boolean reportComment(Report report){
+        String query = "INSERT INTO Report(comment_id, comment_user, report_date, report_reason, status) VALUES (?, ?, ?, ?, ?)";
+        try{
+            int result = jdbcTemplate.update(query, report.getComment_id(), report.getComment_user(), report.getReport_date(), report.getReport_reason(), report.getStatus());
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
+    }
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public interface PublicDao {
     public Student studentLogin(Student student);
+    public Professor professorLogin(Professor professor);
     public boolean studentRegist(Student student);
     public Student searchByEmail(Student student);
     public Course searchCourse(Course course);
@@ -18,4 +19,5 @@ public interface PublicDao {
     public boolean postComment(Comment comment);
     public boolean handleLike(Long comment_id, boolean isLike);
 //    public boolean addprofessor(Prof_req prof_req);
+    public boolean reportComment(Report report);
 }

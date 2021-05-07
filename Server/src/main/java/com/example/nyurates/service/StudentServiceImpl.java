@@ -2,6 +2,7 @@ package com.example.nyurates.service;
 
 import com.example.nyurates.dao.PublicDao;
 import com.example.nyurates.entity.Comment;
+import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,4 +73,23 @@ public class StudentServiceImpl implements StudentService{
 //
 //        return result;
 //    }
+
+    public Result report_comment(Report report){
+        Result result = new Result();
+        result.setCode(400);
+        try {
+            boolean isSuccess = dao.reportComment(report);
+            if (isSuccess){
+                result.setMsg("Successful!");
+                result.setCode(200);
+            }else{
+                result.setMsg("Unable to report comment");
+            }
+        } catch (Exception e) {
+            result.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }
