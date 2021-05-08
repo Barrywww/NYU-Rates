@@ -7,6 +7,7 @@ import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.PublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/public")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class PublicController {
     //植入对象
     @Autowired
@@ -51,6 +52,8 @@ public class PublicController {
             if (result.getCode() == 200){
                 session.setAttribute("loggedIn", "true");
                 session.setAttribute("role", "student");
+                System.out.println(session.getAttribute("role"));
+                System.out.println(session.getAttribute("loggedIn"));
             }
             return result;
         }
@@ -74,11 +77,14 @@ public class PublicController {
     }
 
    @PostMapping(value = "/logout")
-   public Result logout(HttpSession session, @RequestBody Student student){
+   public Result logout(HttpSession session, SessionStatus sessionStatus, @RequestBody Student student){
         try{
+            System.out.println(session.getAttribute("role"));
+            System.out.println(session.getAttribute("loggedIn"));
             session.removeAttribute("role");
             session.removeAttribute("loggedIn");
             session.invalidate();
+            sessionStatus.setComplete();
             Result result = new Result();
             result.setCode(200);
             result.setMsg("Successfully logged out.");

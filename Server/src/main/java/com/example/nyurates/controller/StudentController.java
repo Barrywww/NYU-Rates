@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class StudentController {
     //植入对象
     @Autowired
