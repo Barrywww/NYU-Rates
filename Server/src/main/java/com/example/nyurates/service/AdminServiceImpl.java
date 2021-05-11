@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
+import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Report;
+import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.LoginResult;
+import com.example.nyurates.entity.results.ProfListResult;
+import com.example.nyurates.entity.results.ProfReqResult;
 import com.example.nyurates.entity.results.ReportResult;
 import com.example.nyurates.entity.results.Result;
+import com.example.nyurates.entity.results.StudentListResult;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +38,7 @@ public class AdminServiceImpl implements AdminService{
                 loginResult.setMsg("Unable to login with provided credentials.");
                 loginResult.setCode(400);
             }else{
+                loginResult.setUsername(adm.getName());
                 loginResult.setMsg("Successfully Logged in!");
                 loginResult.setCode(200);
             }
@@ -66,6 +73,36 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
+    public StudentListResult studentList(String name, String netid, String email){
+        StudentListResult result = new StudentListResult();
+        result.setCode(400);
+        try{
+            ArrayList<Student> student =  dao.studentList(name, netid, email);
+            result.setStudent_list(student);
+            result.setCode(200);
+            result.setMsg("Successfully got student list");
+        }
+        catch (Exception e){
+            result.setMsg("Unable to get student list.");
+        }
+        return result;
+    }
+
+    public ProfListResult profList(String name, String netid, String email, String department){
+        ProfListResult result = new ProfListResult();
+        result.setCode(400);
+        try{
+            ArrayList<Professor> professor =  dao.profList(name, netid, email, department);
+            result.setProfList(professor);
+            result.setCode(200);
+            result.setMsg("Successfully got professor list");
+        }
+        catch (Exception e){
+            result.setMsg("Unable to get professor list.");
+        }
+        return result;
+    }
+
     public ReportResult getReports() {
         ReportResult result = new ReportResult();
         ArrayList<Report> reports;
@@ -84,6 +121,11 @@ public class AdminServiceImpl implements AdminService{
         catch (Exception e){
             e.printStackTrace();
         }
+        return result;
+    }
+
+    public ProfReqResult getProfRequests(){
+        ProfReqResult result = new ProfReqResult();
         return result;
     }
 }

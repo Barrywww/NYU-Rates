@@ -15,23 +15,43 @@ const { Header, Content, Sider } = Layout;
 
 const AdminHome = lazy(() => import("../components/admin/home"));
 const StudentMgmt = lazy(() => import("../components/admin/studentMgmt"));
+const ProfMgmt = lazy(() => import("../components/admin/profMgmt"));
 
 class adminMain extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             collapsed: false,
-            username:"Barry Wang",
-            account:"yw3752@nyu.edu",
-            role:"Site Administrator",
+            username:"",
+            account:"",
+            role:"",
             selectedKey: "0"
         }
+        fetch("http://localhost:8081/admin/validate", {credentials: "include"}).then((response) => {
+            if (response.status !== 200){
+                this.props.history.push("/admin/login");
+            }
+            else{
+                return response.json();
+            }
+        }).then((result) => {
+            if (result.code !== 200){
+                this.props.history.push("/admin/login");
+            }
+        })
     }
 
     componentDidMount() {
         window.addEventListener("resize", this.handleResize.bind(this));
         this.handleResize();
-        console.log(this.props.match.url);
+        let adminStatus = JSON.parse(sessionStorage.getItem("adminStatus"));
+        if (adminStatus !== null){
+            this.setState({username: adminStatus.username, account:adminStatus.email, role:"Site Administrator"});
+        }
+        else{
+            // this.props.history.push("/admin/login");
+        }
+        
     }
 
     shouldComponentUpdate(nextProps, nextState){
@@ -89,7 +109,7 @@ class adminMain extends React.Component {
                             </SubMenu>
                             <SubMenu key="sub2" icon={<TeamOutlined />} title="Professor">
                                 <Menu.Item key="5">New Requests</Menu.Item>
-                                <Menu.Item key="6">Professor Management</Menu.Item>
+                                <Menu.Item key="6"><Link to={"./profMgmt"}>Professor Management</Link> </Menu.Item>
                                 <Menu.Item key="7">option7</Menu.Item>
                                 <Menu.Item key="8">option8</Menu.Item>
                             </SubMenu>
@@ -118,6 +138,9 @@ class adminMain extends React.Component {
                         <Route path={this.props.match.url + "/studentMgmt" }
                                render={() =>
                                    <StudentMgmt menuHandler={this.handleMenuKey.bind(this)}/>}/>
+                        <Route path={this.props.match.url + "/profMgmt"}
+                                render={() => <ProfMgmt menuHandler={this.handleMenuKey.bind(this)}/>}
+                        />
                         <Redirect to={this.props.match.url + "/home"} />
                     </Switch>
                 </Layout>

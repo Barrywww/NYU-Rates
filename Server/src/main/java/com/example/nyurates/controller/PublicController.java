@@ -11,6 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -38,37 +39,46 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(HttpSession session, @RequestBody Map<String, Object> params){
+    public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
         // session.setAttribute("loggedIn", "true");
         // session.setAttribute("role", "student");
         // return publicService.login(student);
         LoginResult result;
         
-        if (((String) params.get("role")).equals("student")){
-            Student student = new Student();
-            student.setEmail((String) params.get("email"));
-            student.setPassword((String) params.get("password"));
-            result = publicService.loginStudent(student);
-            if (result.getCode() == 200){
-                session.setAttribute("loggedIn", "true");
-                session.setAttribute("role", "student");
-                System.out.println(session.getAttribute("role"));
-                System.out.println(session.getAttribute("loggedIn"));
+        try{
+            if (((String) params.get("role")).equals("student")){
+                Student student = new Student();
+                student.setEmail((String) params.get("email"));
+                student.setPassword((String) params.get("password"));
+                result = publicService.loginStudent(student);
+                if (result.getCode() == 200){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("role", "student");
+                    System.out.println(session.getAttribute("role"));
+                    System.out.println(session.getAttribute("loggedIn"));
+                }
+                return result;
             }
-            return result;
-        }
-        else if (((String) params.get("role")).equals("professor")){
-            Professor professor = new Professor();
-            professor.setEmail((String) params.get("email"));
-            professor.setPassword((String) params.get("password"));
-            result = publicService.loginProfessor(professor);
-            if (result.getCode() == 200){
-                session.setAttribute("loggedIn", "true");
-                session.setAttribute("role", "professor");
+            else if (((String) params.get("role")).equals("professor")){
+                Professor professor = new Professor();
+                professor.setEmail((String) params.get("email"));
+                professor.setPassword((String) params.get("password"));
+                result = publicService.loginProfessor(professor);
+                if (result.getCode() == 200){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("role", "professor");
+                }
+                return result;
             }
-            return result;
-        }
-        else{
+            else{
+                result = new LoginResult();
+                result.setCode(400);
+                result.setMsg("Invalid Login Request.");
+                return result;
+            }}
+        catch (NullPointerException e){
             result = new LoginResult();
             result.setCode(400);
             result.setMsg("Invalid Login Request.");
