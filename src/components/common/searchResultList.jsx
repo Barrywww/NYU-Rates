@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, List, Skeleton, Avatar} from "antd";
+import {Switch, List, Skeleton, Avatar, Space} from "antd";
 import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
 
@@ -66,6 +66,7 @@ class ResultsList extends React.Component {
                     dataSource={listData}
                     renderItem={item => (
                         <List.Item
+                            className="listItemGeneral"
                             key={item.title}
                             actions={
                                 !loading && [
@@ -83,6 +84,7 @@ class ResultsList extends React.Component {
                                                        prefix={<StarOutlined />}
                                                        suffix=" / 5"
                                                        valueStyle={{fontSize:"40px",marginTop:"15px"}}
+                                                       className="statisticsGeneral"
                                             />
 
                                         </Col>
