@@ -54,7 +54,7 @@ public class PublicServiceImpl implements PublicService {
      * @param student 用户名和密码
      * @return LoginResult
      */
-    public LoginResult login(Student student) {
+    public LoginResult loginStudent(Student student) {
         LoginResult loginResult = new LoginResult();
         loginResult.setCode(400);
         try {
@@ -66,6 +66,26 @@ public class PublicServiceImpl implements PublicService {
                 loginResult.setMsg("Successfully Logged in!");
                 loginResult.setCode(200);
                 loginResult.setUsername(std.getName());
+            }
+        } catch (Exception e) {
+            loginResult.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+        return loginResult;
+    }
+
+    public LoginResult loginProfessor(Professor professor){
+        LoginResult loginResult = new LoginResult();
+        loginResult.setCode(400);
+        try {
+            Professor pro= dao.professorLogin(professor);
+            if(pro == null){
+                loginResult.setMsg("Unable to login with provided credentials.");
+                loginResult.setCode(400);
+            }else{
+                loginResult.setMsg("Successfully Logged in!");
+                loginResult.setCode(200);
+                loginResult.setUsername(pro.getName());
             }
         } catch (Exception e) {
             loginResult.setMsg(e.getMessage());

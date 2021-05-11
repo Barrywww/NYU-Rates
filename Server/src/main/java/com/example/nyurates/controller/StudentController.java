@@ -1,6 +1,9 @@
 package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
+import com.example.nyurates.entity.Report;
+import com.example.nyurates.entity.Student;
+import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 
 @RestController
 @RequestMapping("/student")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class StudentController {
     //植入对象
     @Autowired
@@ -33,11 +38,47 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/handle_like")
-    public Result handle_like(@RequestBody Map params){
+    public Result handle_like(@RequestBody Map<String, Object> params){
         int comid = (Integer) params.get("comment_id");
-        Long comment_id = new Long(comid);
+        Long comment_id = Long.valueOf(comid);
         return studentService.handle_like(comment_id, (Boolean) params.get("isLike"));
     }
 
+    /**
+     * Report comments
+     * @param report
+     * @return Result
+     */
+    @PostMapping(value = "/reportcomment")
+    public Result report_comment(@RequestBody Report report){
+        return studentService.report_comment(report);
+    }
+
+    @GetMapping(value = "/viewhistory")
+    public CommentsResult view_history(@RequestBody Student student){
+        return studentService.view_history(student);
+    }
+
+    @GetMapping(value= "/validate")
+    public Result validate_role(HttpSession session){
+        Result result = new Result();
+        try{
+            if (((String) session.getAttribute("role")).equals("student")){
+                result.setCode(200);
+                result.setMsg("Validation success!");
+                return result;
+            }
+            else{
+                result.setCode(400);
+                result.setMsg("Validation failed!");
+                return result;
+            }
+        }
+        catch (NullPointerException e){
+            result.setCode(400);
+            result.setMsg("Validation failed!");
+            return result;
+        }
+    }
 
 }

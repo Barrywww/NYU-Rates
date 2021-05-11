@@ -7,18 +7,24 @@ import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.PublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
 @RequestMapping("/public")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class PublicController {
     //植入对象
     @Autowired
     private PublicService publicService;
 
     /**
-     * Register
+     * Registery
      * @param student
      * @return LoginResult
      */
@@ -33,9 +39,75 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(@RequestBody Student student){
-        return publicService.login(student);
+    public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
+        // session.setAttribute("loggedIn", "true");
+        // session.setAttribute("role", "student");
+        // return publicService.login(student);
+        LoginResult result;
+        
+        try{
+            if (((String) params.get("role")).equals("student")){
+                Student student = new Student();
+                student.setEmail((String) params.get("email"));
+                student.setPassword((String) params.get("password"));
+                result = publicService.loginStudent(student);
+                if (result.getCode() == 200){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("role", "student");
+                    System.out.println(session.getAttribute("role"));
+                    System.out.println(session.getAttribute("loggedIn"));
+                }
+                return result;
+            }
+            else if (((String) params.get("role")).equals("professor")){
+                Professor professor = new Professor();
+                professor.setEmail((String) params.get("email"));
+                professor.setPassword((String) params.get("password"));
+                result = publicService.loginProfessor(professor);
+                if (result.getCode() == 200){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("role", "professor");
+                }
+                return result;
+            }
+            else{
+                result = new LoginResult();
+                result.setCode(400);
+                result.setMsg("Invalid Login Request.");
+                return result;
+            }}
+        catch (NullPointerException e){
+            result = new LoginResult();
+            result.setCode(400);
+            result.setMsg("Invalid Login Request.");
+            return result;
+        }
     }
+
+   @PostMapping(value = "/logout")
+   public Result logout(HttpSession session, SessionStatus sessionStatus, @RequestBody Student student){
+        try{
+            System.out.println(session.getAttribute("role"));
+            System.out.println(session.getAttribute("loggedIn"));
+            session.removeAttribute("role");
+            session.removeAttribute("loggedIn");
+            session.invalidate();
+            sessionStatus.setComplete();
+            Result result = new Result();
+            result.setCode(200);
+            result.setMsg("Successfully logged out.");
+            return result;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Result result = new Result();
+            result.setCode(400);
+            return result;
+        }
+
+   }
 
     @GetMapping(value = "/view_course")
     public ViewCourseResult view_course(@RequestBody Course course){

@@ -29,12 +29,12 @@ class profile extends Component {
                     <div style={{ display:"flex",justifyContent:'center',margin:'40px 0px'}}>
                         <div>
                             <img src = "/images/userprofile.jpeg" style={{display:"block",borderRadius:'80px'}} />
-                            <p style={{marginBottom:'2px'}}>student profile</p>
-                            <p>email : kaan@nyu.edu</p>
+                            <p style={{marginBottom:'2px'}}>Student Profile</p>
+                            <p>email : {this.state.user.email}</p>
                         </div>
                         <div style={{marginLeft:'70px',marginTop:'50px'}}>
                             <h1 id='profile-bannerText'>{this.state.user.username}'s Personal Page</h1>
-                            <p>You can check and access you comment history here</p>
+                            <p>You can check your comment history here</p>
                         </div>
                     </div>
                    {/*这个div是comment历史表*/}

@@ -13,8 +13,45 @@ class MainHeader extends React.Component{
         super(props)
         this.state = {"user":JSON.parse(localStorage.getItem('userInfo'))} //用给下面conditional rendering
     }
-
+    
     render(){
+        let conditionMenu = (
+                <React.Fragment>
+                    <Menu.Item key="1">
+                        <Link to={"/login"}>Login</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                        <Link to={"/register"}>Register</Link>
+                    </Menu.Item>
+                </React.Fragment>
+        );
+        if (this.state.user !== null){
+            if (this.state.user.role == "student"){
+                conditionMenu = (
+                    <React.Fragment>
+                        <Menu.Item key="1">
+                            <Link to={"/profile"}>Hi, {this.state.user.username}!</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={"/logout"}>Logout</Link>
+                        </Menu.Item>
+                    </React.Fragment> 
+                )
+            }
+            else if (this.state.user.role == "professor"){
+                conditionMenu = (
+                    <React.Fragment>
+                        <Menu.Item key="1">
+                            <Link to={"/profprofile"}>Hi, {this.state.user.username}!</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={"/logout"}>Logout</Link>
+                        </Menu.Item>
+                    </React.Fragment>
+                )
+            }
+        }
+
         return (
             <Header className={"indexHeader"} style={{backgroundColor: 'white'}}>
                 <a className="logo" href="/">
@@ -102,26 +139,7 @@ class MainHeader extends React.Component{
 
 
                 <Menu className="headerMenu menus" theme="light" mode="horizontal">
-                    {!this.state.user && (
-                        <React.Fragment>
-                            <Menu.Item key="1">
-                                <Link to={"/login"}>Login</Link>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Link to={"/register"}>Register</Link>
-                            </Menu.Item>
-                        </React.Fragment>
-                    )}
-                    {this.state.user && (         //------假设login了-----
-                        <React.Fragment>
-                            <Menu.Item key="1">
-                                <Link to={"/profile"}>Hi,{this.state.user.username}!</Link>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Link to={"/logout"}>Logout</Link>
-                            </Menu.Item>
-                        </React.Fragment>
-                    )}
+                    {conditionMenu}
                     <Menu.Item key="3">
                         <Link to={"/AboutUs"}>About Us</Link>
                     </Menu.Item>
