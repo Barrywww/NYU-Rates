@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import com.example.nyurates.entity.Report;
 
-public class ReportResult extends Result{
+public class ReportListResult extends Result{
     private ArrayList<Report> reportsArray;
 
-    public ReportResult(){
+    public ReportListResult(){
         super();
     }
 

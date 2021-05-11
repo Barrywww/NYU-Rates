@@ -74,8 +74,25 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public ArrayList<Report> getReports(){
-        String query = "SELECT report_id, comment_id, comment_user, report_date FROM Report ;";
+    public ArrayList<Report> getReports(Long report_id, Long comment_id, String comment_user, String course_code){
+        String query = "SELECT report_id, Report.comment_id, content, course_code, comment_user, report_date FROM Report, Comments WHERE Report.comment_id=Comments.comment_id ";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        if (report_id != null){
+            query += "AND report_id = :report_id ";
+            params.addValue("report_id", report_id);
+        }
+        if (comment_id != null){
+            query += "AND comment_id = :comment_id ";
+            params.addValue("comment_id", comment_id);
+        }
+        if (comment_user != null){
+            query += "AND user_id = :comment_user ";
+            params.addValue("comment_user", comment_user);
+        }
+        if (course_code != null){
+            query += "AND course_code = :course_code ";
+            params.addValue("course_code", course_code);
+        }
         ArrayList<Report> comments = new ArrayList<Report>();
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
@@ -87,6 +104,9 @@ public class AdminDaoImpl implements AdminDao {
                     report.setComment_user((String) map.get("comment_user"));
                     report.setReport_date((LocalDateTime) map.get("report_date"));
                     report.setReport_reason((String) map.get("report_reason"));
+                    report.setComment_content((String) map.get("content"));
+                    report.setCourse_code((String) map.get("course_code"));
+                    comments.add(report);
                 }
             }
         } catch (DataAccessException e){

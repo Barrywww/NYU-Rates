@@ -10,7 +10,7 @@ import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.LoginResult;
 import com.example.nyurates.entity.results.ProfListResult;
 import com.example.nyurates.entity.results.ProfReqResult;
-import com.example.nyurates.entity.results.ReportResult;
+import com.example.nyurates.entity.results.ReportListResult;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.entity.results.StudentListResult;
 
@@ -103,11 +103,11 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
-    public ReportResult getReports() {
-        ReportResult result = new ReportResult();
+    public ReportListResult getReports(Long report_id, Long comment_id, String comment_user, String course_code) {
+        ReportListResult result = new ReportListResult();
         ArrayList<Report> reports;
         try{
-            reports = dao.getReports();
+            reports = dao.getReports(report_id, comment_id, comment_user, course_code);
             if (reports.size() > 0){
                 result.setCode(200);
                 result.setMsg("Successfully got reports");
