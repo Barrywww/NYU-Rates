@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 
 @RestController
 @RequestMapping("/student")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class StudentController {
     //植入对象
     @Autowired
@@ -57,5 +59,26 @@ public class StudentController {
         return studentService.view_history(student);
     }
 
+    @GetMapping(value= "/validate")
+    public Result validate_role(HttpSession session){
+        Result result = new Result();
+        try{
+            if (((String) session.getAttribute("role")).equals("student")){
+                result.setCode(200);
+                result.setMsg("Validation success!");
+                return result;
+            }
+            else{
+                result.setCode(400);
+                result.setMsg("Validation failed!");
+                return result;
+            }
+        }
+        catch (NullPointerException e){
+            result.setCode(400);
+            result.setMsg("Validation failed!");
+            return result;
+        }
+    }
 
 }

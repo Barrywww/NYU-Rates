@@ -21,14 +21,20 @@ const layout = {
   const LoginForm = () => {
     const onFinish = async(values) => {
       try {
-        console.log('Success:', values);
-        const {data} = await login(values.email,values.role,values.password);
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        window.location = '/';
-
+        // console.log('Success:', values);
+        login(values.email,values.role,values.password).then((response) => {
+          if (response.data.code == 200){
+            response.data["role"] = values.role;
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+            window.location = '/';
+          }
+          else{
+            alert("Login failed. Please try again.")
+          }
+        })
       } catch (error) {
-        if (error.response && error.response.status == 400){
-            alert(error.response.data);
+        if (error.response){
+          alert("Login failed. Please try again.")
         }
       }
     };

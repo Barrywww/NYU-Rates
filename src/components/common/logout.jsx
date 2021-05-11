@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {login} from '../../services/authService';
+import {logout} from '../../services/authService';
 
 
 class Logout extends Component {
 
-    async componentDidMount() {
+    componentDidMount() {
         localStorage.removeItem('userInfo');
-        await login();
+        logout();
         window.location = '/';
     }
     render() { 

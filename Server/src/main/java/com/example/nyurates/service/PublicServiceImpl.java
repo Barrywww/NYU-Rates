@@ -54,7 +54,7 @@ public class PublicServiceImpl implements PublicService {
      * @param student 用户名和密码
      * @return LoginResult
      */
-    public LoginResult login(Student student) {
+    public LoginResult loginStudent(Student student) {
         LoginResult loginResult = new LoginResult();
         loginResult.setCode(400);
         try {
@@ -74,7 +74,7 @@ public class PublicServiceImpl implements PublicService {
         return loginResult;
     }
 
-    public LoginResult login(Professor professor){
+    public LoginResult loginProfessor(Professor professor){
         LoginResult loginResult = new LoginResult();
         loginResult.setCode(400);
         try {

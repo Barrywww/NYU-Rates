@@ -1,16 +1,19 @@
 package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Admin;
-import com.example.nyurates.entity.results.LoginResult;
-import com.example.nyurates.entity.results.Result;
+import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.AdminService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
@@ -22,12 +25,50 @@ public class AdminController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    public LoginResult login(@RequestBody Admin admin){
-        return adminService.login(admin);
+    public LoginResult login(HttpServletRequest request, @RequestBody Admin admin){
+        LoginResult result = adminService.login(admin);
+        if (result.getCode() == 200){
+            HttpSession session = request.getSession();
+            session.setAttribute("loggedIn", "true");
+            session.setAttribute("role", "admin");
+            return result;
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/student_list")
+    public StudentListResult studentList(@RequestBody Map<String, String> params){
+        return adminService.studentList(params.get("name"), params.get("netrd"), params.get("email"));
+    }
+
+    @PostMapping(value = "/prof_list")
+    public ProfListResult profList(@RequestBody Map<String, String> params){
+        return adminService.profList(params.get("name"), params.get("netrd"), params.get("email"), params.get("department"));
+    }
+
+    @RequestMapping(value = "/getreports")
+    public ReportResult getReports(@RequestBody Map<String, Object> params){
+        return adminService.getReports();
     }
 
     @PostMapping(value = "/reviewcomment")
-    public Result reviewComment(@RequestBody Map params) {
+    public Result reviewComment(@RequestBody Map<String, Object> params) {
         return adminService.reviewComment((Integer) params.get("comment_id"), (Boolean) params.get("validity"));
+    }
+
+    @RequestMapping (value="/getprofrequests")
+    public Result getProfRequests(@RequestBody Map<String, Object> params){
+        return adminService.getProfRequests();
+    } 
+
+    @GetMapping (value="/validate")
+    public Result validateAdmin(HttpSession session){
+        Result result = new Result();
+        if(((String) session.getAttribute("role")).equals("admin")){
+            result.setCode(200);
+            result.setMsg("Validate Success");
+            return result;
+        }
+        return result;
     }
 }
