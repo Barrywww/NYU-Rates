@@ -5,6 +5,7 @@ import com.example.nyurates.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -18,6 +19,9 @@ public class PublicDaoImpl implements PublicDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    NamedParameterJdbcTemplate namedJdbcTemplate;
 
     @Override
     public Student studentLogin(Student student) {
@@ -270,7 +274,7 @@ public class PublicDaoImpl implements PublicDao {
     }
 
     @Override
-    public Professor searchProfessor(Professor professor){
+    public Professor matchProfessor(Professor professor){
         String queryProfessorName = "SELECT name, department FROM Professor WHERE netid = ? AND visible = 1";
         String queryProfessorID = "SELECT netid, department FROM Professor WHERE name = ? AND visible = 1";
         try{
@@ -296,6 +300,37 @@ public class PublicDaoImpl implements PublicDao {
             exception.printStackTrace();
         }
         return null;
+    }
+
+
+    @Override
+    public ArrayList<Professor> searchProfessor(Professor professor){
+        String query= "SELECT name, netid, department, " +
+        "(SELECT content FROM Comments WHERE Comments.professor_id = Professor.netid ORDER BY likes DESC LIMIT 1) AS hot_comment, " + 
+        "(SELECT AVG(rate) FROM Comments WHERE professor_id = Professor.netid) AS rate " + 
+        "FROM Professor WHERE (netid LIKE ? OR name LIKE ?) AND visible = 1";
+        ArrayList<Professor> resultList = new ArrayList<Professor>();
+        try{
+            if(professor.getNetid() != null){
+                List<Map<String, Object>> result = jdbcTemplate.queryForList(query, "%"+professor.getNetid()+"%", "%"+professor.getName()+"%");
+                if (result.size() > 0) {
+                    for (int i=0; i<result.size(); i++){
+                        Map<String, Object> map = result.get(i);
+                        professor.setName((String) map.get("name"));
+                        professor.setNetid((String) map.get("netid"));
+                        professor.setDept((String) map.get("department"));
+                        professor.setHot_comment((String) map.get("hot_comment"));
+                        professor.setRate((double) map.get("rate"));
+                        resultList.add(professor);
+                    }
+                    return resultList;
+                }
+            }
+        } catch (DataAccessException e){
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return resultList;
     }
 
     @Override

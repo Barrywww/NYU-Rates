@@ -43,12 +43,12 @@ public class AdminController {
 
     @PostMapping(value = "/prof_list")
     public ProfListResult profList(@RequestBody Map<String, String> params){
-        return adminService.profList(params.get("name"), params.get("netrd"), params.get("email"), params.get("department"));
+        return adminService.profList(params.get("name"), params.get("netid"), params.get("email"), params.get("department"));
     }
 
     @RequestMapping(value = "/getreports")
-    public ReportResult getReports(@RequestBody Map<String, Object> params){
-        return adminService.getReports();
+    public ReportListResult getReports(@RequestBody Map<String, Object> params){
+        return adminService.getReports((Long) params.get("report_id"), (Long) params.get("comment_id"), (String) params.get("comment_user"), (String) params.get("course_code"));
     }
 
     @PostMapping(value = "/reviewcomment")

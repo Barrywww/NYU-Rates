@@ -7,14 +7,18 @@ public class Professor {
     private String password;
     private String dept;
     private int visible;
+    private String hot_comment;
+    private double rate;
 
-    public Professor(String email, String netid, String name, String password, String dept, int visible){
+    public Professor(String email, String netid, String name, String password, String dept, int visible, String hot_comment, double rate){
         this.email = email;
         this.netid = netid;
         this.name = name;
         this.password = password;
         this.dept = dept;
         this.visible = visible;
+        this.hot_comment = hot_comment;
+        this.rate = rate;
     }
 
     public Professor(){
@@ -67,5 +71,21 @@ public class Professor {
 
     public void setVisible(int visible){
         this.visible = visible;
+    }
+
+    public String getHot_comment(){
+        return this.hot_comment;
+    }
+
+    public void setHot_comment(String comment){
+        this.hot_comment = comment;
+    }
+
+    public double getRate(){
+        return this.rate;
+    }
+
+    public void setRate(double rate){
+        this.rate = rate;
     }
 }

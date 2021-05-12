@@ -13,5 +13,6 @@ public interface PublicService {
     public ViewProfessorResult view_professor(Professor professor);
     public CommentsResult load_comments(Course course);
     public SearchCourseResult search_course(Course course);
-    public SearchProfessorResult search_professor(Professor professor);
+    // public SearchProfessorResult search_professor(Professor professor);
+    public ProfListResult search_professor(Professor professor);
 }

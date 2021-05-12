@@ -127,7 +127,7 @@ public class PublicServiceImpl implements PublicService {
         viewProfessorResult.setCode(400);
 
         try{
-            professor = dao.searchProfessor(professor);
+            professor = dao.matchProfessor(professor);
             if(professor == null){
                 viewProfessorResult.setMsg("Unable to query the professor.");
                 viewProfessorResult.setCode(400);
@@ -199,28 +199,43 @@ public class PublicServiceImpl implements PublicService {
         return searchCourseResult;
     }
 
-    public SearchProfessorResult search_professor(Professor professor){
-        SearchProfessorResult searchProfessorResult = new SearchProfessorResult();
-        searchProfessorResult.setCode(400);
+    // public SearchProfessorResult search_professor(Professor professor){
+    //     SearchProfessorResult searchProfessorResult = new SearchProfessorResult();
+    //     searchProfessorResult.setCode(400);
 
+    //     try{
+    //         professor = dao.searchProfessor(professor);
+    //         if(professor == null){
+    //             searchProfessorResult.setMsg("Unable to query professor");
+    //         }else{
+    //             searchProfessorResult.setMsg("Successfully searched course");
+    //             searchProfessorResult.setCode(200);
+    //             searchProfessorResult.setProfessor_name(professor.getName());
+    //             searchProfessorResult.setProfessor_id(professor.getNetid());
+    //             double rating = dao.searchAverageRating(professor);
+    //             searchProfessorResult.setRating(rating);
+    //         }
+    //     } catch (Exception e) {
+    //         searchProfessorResult.setMsg(e.getMessage());
+    //         e.printStackTrace();
+    //     }
+
+    //     return searchProfessorResult;
+    // }
+
+    public ProfListResult search_professor(Professor professor){
+        ProfListResult result = new ProfListResult();
+        result.setCode(400);
         try{
-            professor = dao.searchProfessor(professor);
-            if(professor == null){
-                searchProfessorResult.setMsg("Unable to query professor");
-            }else{
-                searchProfessorResult.setMsg("Successfully searched course");
-                searchProfessorResult.setCode(200);
-                searchProfessorResult.setProfessor_name(professor.getName());
-                searchProfessorResult.setProfessor_id(professor.getNetid());
-                double rating = dao.searchAverageRating(professor);
-                searchProfessorResult.setRating(rating);
-            }
-        } catch (Exception e) {
-            searchProfessorResult.setMsg(e.getMessage());
-            e.printStackTrace();
+            ArrayList<Professor> daoResult = dao.searchProfessor(professor);
+            result.setProfList(daoResult);
+            result.setCode(200);
+            result.setMsg("Suceess");
         }
-
-        return searchProfessorResult;
+        catch (Exception e){
+            return result;
+        }
+        return result;
     }
 
 }

@@ -1,58 +1,38 @@
 import React from "react";
-import {Switch, List, Skeleton, Avatar, Space} from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import {List, Skeleton} from "antd";
+import { StarOutlined} from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
-
-/*const listData = [];
-for (let i = 0; i < 3; i++) {
-    listData.push({
-        href: 'https://ant.design',
-        title: `ant design part ${i}`,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        description:
-            'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-        content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    });
-}*/
 
 const listData = [];
 for (let i = 0; i < 20; i++) {
     listData.push({
-        course_name: `Barry ${i}`,
-        course_code: "yw3752",
-        course_link: 'https://ant.design',
-        comment: "I am Barry",
+        professor_name: "",
+        department: "",
+        professor_link: '/',
+        comment: "",
         rating: 5.0,
-        likes: 100,
-        num_comments: 100,
     });
 }
 
-const IconText = ({ icon, text }) => (
-    <span>
-    {React.createElement(icon, { style: { marginRight: 8 } })}
-        {text}
-  </span>
-);
-
-
 class ResultsList extends React.Component {
-    state = {
-        loading: true,
-    };
-
-    onChange = checked => {
-        this.setState({ loading: !checked });
-    };
+    constructor(props){
+        super(props)
+        this.state = {loading: true, data: listData};
+    }
+    
+    static getDerivedStateFromProps(nextProps, prevState){
+        if (nextProps.loading === false){
+            console.log(nextProps.data);
+            return {data: nextProps.data, loading: false};
+        }
+        return null;
+    }
 
     render() {
-        const { loading } = this.state;
+        const loading  = this.state.loading;
 
         return (
             <>
-                <Switch checked={!loading} onChange={this.onChange} />
-
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -63,17 +43,11 @@ class ResultsList extends React.Component {
                         },
                         pageSize: 10,
                     }}
-                    dataSource={listData}
+                    dataSource={this.state.data}
                     renderItem={item => (
                         <List.Item
                             className="listItemGeneral"
                             key={item.title}
-                            actions={
-                                !loading && [
-                                    <IconText icon={LikeOutlined} text={item.likes} key="list-vertical-like-o" />,
-                                    <IconText icon={MessageOutlined} text={item.num_comments} key="list-vertical-message" />,
-                                ]
-                            }
 
                             extra={
                                 !loading && (
@@ -97,8 +71,8 @@ class ResultsList extends React.Component {
                                 <Row style={{marginTop:"10px"}}>
                                     <Col span={4}>
                                         <List.Item.Meta
-                                            title={<a href={item.course_link} style={{fontSize:"18px"}}>{item.course_name}</a>}
-                                            description={item.course_code}
+                                            title={<a href={item.professor_link} style={{fontSize:"18px"}}>{item.professor_name}</a>}
+                                            description={item.department}
                                         />
                                     </Col>
                                     <Col span={20}>
