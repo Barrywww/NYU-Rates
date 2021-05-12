@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @RestController
@@ -35,7 +34,7 @@ public class PublicController {
 
     /**
      * Login
-     * @param student
+     * @param params
      * @return LoginResult
      */
     @PostMapping(value = "/login")
@@ -125,7 +124,7 @@ public class PublicController {
     }
 
     @PostMapping(value = "/search_course")
-    public SearchCourseResult search_course(@RequestBody Course course){
+    public CourseListResult search_course(@RequestBody Course course){
         return publicService.search_course(course);
     }
 

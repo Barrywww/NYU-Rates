@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NyuRatesApplicationTests {
-
+public class ProfessorServiceTests {
     @Test
-    void contextLoads() {
-    }
+    public void testGet_course_stats() throws Exception{
 
+    }
 }

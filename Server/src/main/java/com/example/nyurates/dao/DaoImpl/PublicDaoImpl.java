@@ -115,7 +115,7 @@ public class PublicDaoImpl implements PublicDao {
     }
 
     @Override
-    public Course searchCourse(Course course){
+    public Course matchCourse(Course course){
         String queryCourseName = "SELECT course_name FROM Course WHERE code = ?";
         String queryCourseCode = "SELECT code FROM Course WHERE course_name = ?";
         try{
@@ -139,6 +139,34 @@ public class PublicDaoImpl implements PublicDao {
             exception.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<Course> searchCourse(Course course){
+        String query= "SELECT course_name, code, department, " +
+                "(SELECT content FROM Comments WHERE Comments.course_code = Course.code ORDER BY likes DESC LIMIT 1) AS hot_comment, " +
+                "(SELECT AVG(rate) FROM Comments WHERE course_code = Course.code) AS rate " +
+                "FROM Course WHERE (code LIKE ? OR course_name LIKE ?)";
+        ArrayList<Course> resultList = new ArrayList<Course>();
+        try{
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, "%"+course.getCourse_code()+"%", "%"+course.getCourse_name()+"%");
+            if (result.size() > 0) {
+                for (int i=0; i<result.size(); i++){
+                    Map<String, Object> map = result.get(i);
+                    course.setCourse_name((String) map.get("course_name"));
+                    course.setCourse_code((String) map.get("code"));
+                    course.setDept_name((String) map.get("department"));
+                    course.setHot_comment((String) map.get("hot_comment"));
+                    course.setRate((double) map.get("rate"));
+                    resultList.add(course);
+                }
+                return resultList;
+            }
+        } catch (DataAccessException e){
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return resultList;
     }
 
     @Override
@@ -311,20 +339,18 @@ public class PublicDaoImpl implements PublicDao {
         "FROM Professor WHERE (netid LIKE ? OR name LIKE ?) AND visible = 1";
         ArrayList<Professor> resultList = new ArrayList<Professor>();
         try{
-            if(professor.getNetid() != null){
-                List<Map<String, Object>> result = jdbcTemplate.queryForList(query, "%"+professor.getNetid()+"%", "%"+professor.getName()+"%");
-                if (result.size() > 0) {
-                    for (int i=0; i<result.size(); i++){
-                        Map<String, Object> map = result.get(i);
-                        professor.setName((String) map.get("name"));
-                        professor.setNetid((String) map.get("netid"));
-                        professor.setDept((String) map.get("department"));
-                        professor.setHot_comment((String) map.get("hot_comment"));
-                        professor.setRate((double) map.get("rate"));
-                        resultList.add(professor);
-                    }
-                    return resultList;
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, "%"+professor.getNetid()+"%", "%"+professor.getName()+"%");
+            if (result.size() > 0) {
+                for (int i=0; i<result.size(); i++){
+                    Map<String, Object> map = result.get(i);
+                    professor.setName((String) map.get("name"));
+                    professor.setNetid((String) map.get("netid"));
+                    professor.setDept((String) map.get("department"));
+                    professor.setHot_comment((String) map.get("hot_comment"));
+                    professor.setRate((double) map.get("rate"));
+                    resultList.add(professor);
                 }
+                return resultList;
             }
         } catch (DataAccessException e){
             SQLException exception = (SQLException) e.getCause();
