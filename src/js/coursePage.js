@@ -29,6 +29,7 @@ import { Button, Radio } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Rate } from 'antd'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 
 // function App() {return <h1>Hello World!</h1>}
@@ -36,26 +37,21 @@ const { Header, Content, Footer } = Layout;
 const {Option} = Select;
 
 const listData = {
-    course_name:"Introduce To Computer Porgramming",
+    course_name:"",
+    course_code:"",
     rating:5.0,
     comment:[],
-    total_comments:23,
-    offered_semesters:["Spring 2020","Spring 2020","Spring 2020","Spring 2020","Spring 2020"]
+    total_comments:0,
+    offered_semesters:[]
 }
 for (let i = 0; i < listData.total_comments; i++) {
     listData.comment.push({
-        time: "2021-05-06 01:53",
-        username:`Barry ${i}`,
-        rating: "5",
-        content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+        time: "",
+        username: "",
+        rating: 5,
+        content: ""
     });
 }
-
-function handleChange(value) {
-    console.log(`selected ${value}`);
-}
-
 
 const IconText = ({ icon, text, onClick, style }) => (
     <span onClick={onClick} style={style}>
@@ -68,7 +64,7 @@ class LikeBtn extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            like:100,
+            like:0,
             liked:null,
         };
     }
@@ -199,20 +195,80 @@ const Report = () => {
 
 
 
-class AboutUs extends React.Component{
+class CoursePage extends React.Component{
+    constructor(props){
+        super(props)        
+        let param = this.props.location.search.slice(1).split("=");
+        this.state = {listData: listData, param:param};
+        param[1] = param[1].replace("%20", " ");
+        if (param[0] !== "v"){
+            alert("Request not allowed!");
+            window.location.href = "/";
+        }
+        console.log(param);
+    }
+
+    componentDidMount(){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({course_code: this.state.param[1]}),
+            credentials: "include"
+			}
+        fetch("http://localhost:8081/public/view_course", requestOptions)
+        .then(response => {
+            if (response.status === 200){
+                return response.json();
+            }
+        })
+        .then(json => {
+            console.log(json);
+            if (json.code === 200){
+                console.log("setting");
+                listData.course_name = json.course_name;
+                listData.course_code = json.course_code;
+                listData.rating = json.rating;
+                listData.total_comments = json.total_comments;
+                for (let c of json.comments){
+                    listData.comment.push({
+                        time: c.date.slice(0,3).join("-"),
+                        course_code:c.course_code,
+                        username:c.student_id,
+                        rating: c.rate,
+                        content: c.content,
+                    });
+                }
+                for (let s of json.offered_in){
+                    listData.offered_semesters.push(s);
+                }
+                
+                this.setState({listData: listData})
+                console.log(this.state.listData)
+            }
+        })
+    }
 
     render(){
         let arr = listData.offered_semesters
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
+                <Breadcrumb style={{margin:"20px 8%"}}>
+                        <Breadcrumb.Item>
+                            <Link to="/">Home</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            Course
+                        </Breadcrumb.Item>
+                </Breadcrumb>
                 <Content className='ContentArea'>
                     <Row style={{marginTop:"10px"}}>
 
-                        <Col span={7} offset={3}>
+                        <Col span={7} offset={2}>
 
                             <Row style={{height:"160px", marginTop:"20px" ,marginBottom:"80px"}}>
                                 <h1 style={{fontSize:"2.0rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{listData.course_name} </h1>
+                                <h3 style={{fontSize:"1rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{listData.course_code} </h3>
                                 <Statistic style={{fontFamily:"GothamBook"}}
                                            value={listData.rating}
                                            suffix={" / 5 based on " + listData.total_comments +" comments"}
@@ -235,14 +291,10 @@ class AboutUs extends React.Component{
                                     }
                                 </ul>
                             </Row>
-
-                            <p>
-                                <h2 style={{fontSize:"1.0rem",width:"400px"}}>
+                            <h2 style={{fontSize:"1.0rem",width:"400px"}}>
                                     Rate This Course below
                                     <DownCircleOutlined style={{marginLeft: "10px"}}/>
-                                </h2>
-
-                            </p>
+                            </h2>
 
 
                             <Form
@@ -274,7 +326,7 @@ class AboutUs extends React.Component{
                             </Form>
                         </Col>
 
-                        <Col span={11}>
+                        <Col span={13}>
 
                             <List
                                 itemLayout="vertical"
@@ -302,7 +354,7 @@ class AboutUs extends React.Component{
                                             <Row>
                                                 <Col span={200}>
                                                     <Statistic title="Rate"
-                                                               value={5}
+                                                               value={item.rating}
                                                                prefix={<StarOutlined />}
                                                                suffix=" / 5"
                                                                valueStyle={{fontSize:"40px",marginTop:"15px"}}
@@ -314,7 +366,6 @@ class AboutUs extends React.Component{
                                     >
                                         <List.Item.Meta
                                             className="listItemMetaGeneral"
-                                            avatar={<Avatar icon={<UserOutlined/>} />}
                                             title={<a href={item.href}>{item.username}</a>}
                                             description={item.time}
                                         />
@@ -335,4 +386,4 @@ class AboutUs extends React.Component{
     }
 }
 
-export default AboutUs;
+export default CoursePage;

@@ -10,6 +10,7 @@ public class ViewCourseResult extends Result{
     private ArrayList<Comment> comments;
     private double rating;
     private int comments_num;
+    private ArrayList<String> offered_in;
 
     public ViewCourseResult(){
         super();
@@ -53,6 +54,14 @@ public class ViewCourseResult extends Result{
 
     public void setComments_num(int comments_num){
         this.comments_num = comments_num;
+    }
+
+    public ArrayList<String> getOffered_in(){
+        return this.offered_in;
+    }
+
+    public void setOffered_in(ArrayList<String> offered){
+        this.offered_in = offered;
     }
 
 

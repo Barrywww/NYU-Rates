@@ -24,6 +24,7 @@ const IconText = ({ icon, text }) => (
 
 class ResultsList extends React.Component {
 	constructor(props){
+        super(props)
 		this.state = {loading: true, data: listData};
 	}
 	
@@ -36,8 +37,6 @@ class ResultsList extends React.Component {
     }
 
     render() {
-        const loading = this.state.loading;
-
         return (
             <>
                 <List
@@ -57,7 +56,7 @@ class ResultsList extends React.Component {
                             key={item.title}
 
                             extra={
-                                !loading && (
+                                !this.state.loading && (
                                     <Row>
                                         <Col span={200}>
                                             <Statistic title="Rate"
@@ -74,17 +73,17 @@ class ResultsList extends React.Component {
                                 )
                             }
                         >
-                            <Skeleton loading={loading} active avatar>
+                            <Skeleton loading={this.state.loading} active avatar>
                                 <Row style={{marginTop:"10px"}}>
                                     <Col span={4}>
                                         <List.Item.Meta
-                                            title={<a href={item.course_link} style={{fontSize:"18px"}}>{item.course_name}</a>}
+                                            title={<a href={item.course_link} style={{fontSize:"24px"}}>{item.course_name}</a>}
                                             description={item.course_code}
                                         />
                                     </Col>
                                     <Col span={20}>
-										<h3>Hot Comment</h3>
-                                        {item.comment}
+										<h2>- Hot Comment -</h2>
+                                        <h3>{item.comment}</h3>
                                     </Col>
                                 </Row>
 

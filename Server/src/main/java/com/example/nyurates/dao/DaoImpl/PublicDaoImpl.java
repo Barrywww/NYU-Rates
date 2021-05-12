@@ -142,11 +142,33 @@ public class PublicDaoImpl implements PublicDao {
     }
 
     @Override
+    public ArrayList<String> getOfferedSemester(Course course){
+        String query = "SELECT semester FROM Course WHERE code = ?";
+        ArrayList<String> result = new ArrayList<String>();
+        try{
+            if(course.getCourse_code() != null){
+                List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(query, course.getCourse_code());
+                for (int i=0; i<queryResult.size(); i++){
+                    Map<String, Object> map = queryResult.get(i);
+                    String semester = (String) map.get("semester");
+                    result.add(semester);
+                }
+                return result;
+            }
+        }
+        catch (DataAccessException e){
+            return result;
+        }
+        return result;
+    }
+
+    @Override
     public ArrayList<Course> searchCourse(Course course){
-        String query= "SELECT course_name, code, department, " +
-                "(SELECT content FROM Comments WHERE Comments.course_code = Course.code ORDER BY likes DESC LIMIT 1) AS hot_comment, " +
-                "(SELECT AVG(rate) FROM Comments WHERE course_code = Course.code) AS rate " +
-                "FROM Course WHERE (code LIKE ? OR course_name LIKE ?)";
+        // String query= "SELECT course_name, code, department, " +
+        //         "(SELECT content FROM Comments WHERE Comments.course_code = Course.code ORDER BY likes DESC LIMIT 1) AS hot_comment, " +
+        //         "IFNULL((SELECT AVG(rate) FROM Comments WHERE course_code = Course.code AND Comments.semester = Course.semester), 0.0) AS rate " +
+        //         "FROM Course WHERE (code LIKE ? OR course_name LIKE ?)";
+        String query = "SELECT * FROM SearchCourse WHERE (code LIKE ? OR course_name LIKE ?)";
         ArrayList<Course> resultList = new ArrayList<Course>();
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query, "%"+course.getCourse_code()+"%", "%"+course.getCourse_name()+"%");
@@ -261,7 +283,7 @@ public class PublicDaoImpl implements PublicDao {
 
     @Override
     public double searchAverageRating(Course course){
-        String query = "SELECT AVG(rate) AS AverageRate FROM Comments WHERE course_code = ?";
+        String query = "SELECT ROUND(AVG(rate), 2) AS AverageRate FROM Comments WHERE course_code = ?";
         double rating = 0;
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query, course.getCourse_code());
@@ -335,7 +357,7 @@ public class PublicDaoImpl implements PublicDao {
     public ArrayList<Professor> searchProfessor(Professor professor){
         String query= "SELECT name, netid, department, " +
         "(SELECT content FROM Comments WHERE Comments.professor_id = Professor.netid ORDER BY likes DESC LIMIT 1) AS hot_comment, " + 
-        "(SELECT AVG(rate) FROM Comments WHERE professor_id = Professor.netid) AS rate " + 
+        "(SELECT ROUND(AVG(rate), 2) FROM Comments WHERE professor_id = Professor.netid) AS rate " + 
         "FROM Professor WHERE (netid LIKE ? OR name LIKE ?) AND visible = 1";
         ArrayList<Professor> resultList = new ArrayList<Professor>();
         try{

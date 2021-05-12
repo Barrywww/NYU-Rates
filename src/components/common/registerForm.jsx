@@ -92,23 +92,21 @@ const RegisterForm = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="role"
-        label="Role"
-        tooltip="either 'student' or 'professor' NO CAPS"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your role!',
-          },
-          {
-              pattern:'(^professor$|^student$)',
-              message: 'Input not valid! Check the tooltip!',
-          }
-        ]}
-      >
-        <Input />
-      </Form.Item>
+      <Form.Item name="role" label="Role" rules={[
+            {
+              required: true,
+              message: 'Please select a role!'
+            },
+          ]}>
+          <Select
+              placeholder="Select a role"
+              onChange={console.log(0)}
+              allowClear
+          >
+              <Option value="student">Student</Option>
+              <Option value="professor">Professor</Option>
+          </Select>
+        </Form.Item>
 
       <Form.Item
         name="password"
@@ -150,41 +148,17 @@ const RegisterForm = () => {
       </Form.Item>
 
       <Form.Item
-        name="nickname"
-        label="Nickname"
-        tooltip="What do you want others to call you?"
+        name="name"
+        label="Name"
         rules={[
           {
             required: true,
-            message: 'Please input your (appropriate) nickname!',
+            message: 'Please input your name!',
             whitespace: true,
           },
         ]}
       >
         <Input />
-      </Form.Item>
-
-
-      <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the captcha you got!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button>Get captcha</Button>
-          </Col>
-        </Row>
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>

@@ -23,4 +23,5 @@ public interface PublicDao {
     public boolean handleLike(Long comment_id, boolean isLike);
 //    public boolean addprofessor(Prof_req prof_req);
     public boolean reportComment(Report report);
+    public ArrayList<String> getOfferedSemester(Course course);
 }

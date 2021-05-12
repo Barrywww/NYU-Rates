@@ -23,7 +23,7 @@ public class ProfessorServiceImpl implements ProfessorService{
         courseStatsResult.setCode(400);
 
         try{
-            course = dao.searchCourse(course);
+            course = dao.matchCourse(course);
             if(course == null){
                 courseStatsResult.setMsg("Unable to query the provided course code.");
                 courseStatsResult.setCode(400);

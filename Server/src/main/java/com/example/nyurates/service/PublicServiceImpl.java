@@ -112,6 +112,8 @@ public class PublicServiceImpl implements PublicService {
                 viewCourseResult.setComments(comments);
                 double rating = dao.searchAverageRating(course);
                 viewCourseResult.setRating(rating);
+                ArrayList<String> offered = dao.getOfferedSemester(course);
+                viewCourseResult.setOffered_in(offered);
                 viewCourseResult.setComments_num(comments.size());
             }
         } catch (Exception e) {

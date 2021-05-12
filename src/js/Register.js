@@ -6,6 +6,7 @@ import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button,
 import RegisterForm from '../components/common/registerForm';
 import "../css/login.css";
 import MainHeader from "../components/common/header";
+import MainFooter from "../components/common/footer";
 
 // function App() {return <h1>Hello World!</h1>}
 const { Header, Content, Footer } = Layout;
@@ -16,19 +17,23 @@ class Register extends React.Component{
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
-                <h1 id='login-bannerText'>
-                    Register Here! 
-                </h1>
-                <div id="reminderText">Note: only NYU emails will be accepted</div>
-                <div className = "RegisterSection" style={{marginTop:"40px"}}>
-                    <RegisterForm />
-                </div>
-                <Row align={"middle"} justify={"center"} style={{marginTop:"15px"}}>
-                        <Col span={8}>
-                            <img src = "/images/register.png" style={{display:"block", margin:"20px auto", width:"50%"}} />
+                <Content>
+                    <Row align={"middle"} justify={"center"}>
+                        <Col span={15}>
+                            <h1 id='login-bannerText'>
+                                Register 
+                            </h1>
+                            <div id="reminderText">Note: only NYU emails will be accepted</div>
+                            <div className = "RegisterSection" style={{marginTop:"20px"}}>
+                                <RegisterForm />
+                            </div>
                         </Col>
-                </Row>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Ant UED</Footer>
+                        <Col span={9}>
+                            <img src = "/images/register.png" style={{display:"block", width:"50%"}} />
+                        </Col>
+                    </Row>
+                </Content>
+                <MainFooter />
             </Layout>
             
         )

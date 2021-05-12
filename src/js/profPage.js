@@ -28,6 +28,7 @@ import { Button, Radio } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Rate } from 'antd'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 
 import "../css/profPage.css";
@@ -257,10 +258,18 @@ class ProfPage extends React.Component{
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
+                <Breadcrumb style={{margin:"20px 8%"}}>
+                        <Breadcrumb.Item>
+                            <Link to="/">Home</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            Professor
+                        </Breadcrumb.Item>
+                </Breadcrumb>
                 <Content className='ContentArea'>
                     <Row style={{marginTop:"10px"}}>
 
-                        <Col span={7} offset={3}>
+                        <Col span={7} offset={1}>
 
                             <Row style={{height:"160px",marginTop:"20px" ,marginBottom:"80px"}}>
                                 <h1 style={{fontSize:"2.0rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{this.state.listData.professor_name} </h1>
@@ -329,7 +338,7 @@ class ProfPage extends React.Component{
                             </Form>
                         </Col>
 
-                        <Col span={11}>
+                        <Col span={15}>
 
                             <List
                                 itemLayout="vertical"
@@ -355,7 +364,7 @@ class ProfPage extends React.Component{
                                         ]}
                                         extra={
                                             <Row>
-                                                <Col span={200}>
+                                                <Col span={24}>
                                                     <Statistic title="Rate"
                                                                value={item.rating}
                                                                prefix={<StarOutlined />}

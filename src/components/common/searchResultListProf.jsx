@@ -4,7 +4,7 @@ import { StarOutlined} from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
 
 const listData = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) {
     listData.push({
         professor_name: "",
         department: "",
@@ -71,13 +71,13 @@ class ResultsList extends React.Component {
                                 <Row style={{marginTop:"10px"}}>
                                     <Col span={4}>
                                         <List.Item.Meta
-                                            title={<a href={item.professor_link} style={{fontSize:"18px"}}>{item.professor_name}</a>}
+                                            title={<a href={item.professor_link} style={{fontSize:"24px"}}>{item.professor_name}</a>}
                                             description={item.department}
                                         />
                                     </Col>
                                     <Col span={20}>
-										<h3>- Hot Comment -</h3>
-                                        {item.comment}
+										<h2>- Hot Comment -</h2>
+                                        <h3>{item.comment}</h3>
                                     </Col>
                                 </Row>
 
