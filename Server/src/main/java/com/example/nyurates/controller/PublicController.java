@@ -1,5 +1,6 @@
 package com.example.nyurates.controller;
 
+import com.example.nyurates.annotation.RsaSecurityParameter;
 import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Student;
@@ -38,6 +39,7 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
+    @RsaSecurityParameter
     public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
         // session.setAttribute("loggedIn", "true");
         // session.setAttribute("role", "student");
