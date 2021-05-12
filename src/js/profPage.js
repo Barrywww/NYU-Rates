@@ -13,7 +13,6 @@ import {
     Checkbox,
     List, Statistic
 } from 'antd';
-import "../css/AboutUs.css";
 import MainHeader from "../components/common/header";
 import {
     LikeOutlined,
@@ -31,52 +30,29 @@ import { Rate } from 'antd'
 import { useState } from 'react';
 import { Modal } from 'antd';
 
+import "../css/profPage.css";
+
 // function App() {return <h1>Hello World!</h1>}
 const { Header, Content, Footer } = Layout;
 const {Option} = Select;
 
-
-
-// const listData = [];
-// for (let i = 0; i < 23; i++) {
-//     listData.push({
-//         href: 'https://ant.design',
-//         title: `ant design part ${i}`,
-//         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-//         description:
-//             'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//         content:
-//             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-//     });
-// }
-
 const listData = {
-    professor_name:"Ratan Dey",
-    department:"Computer Science",
+    professor_name:"",
+    department:"",
     rating:5.0,
     comment:[],
-    total_comments:23,
-    course_history:[
-        {course_name:"Computer Science Independent Study",course_code:"whl317",semester:"Spring 2020"},
-        {course_name:"Databases",course_code:"whl317",semester:"Spring 2020"},
-        {course_name:"Data Structures",course_code:"whl317",semester:"Spring 2020"}
-    ]
+    total_comments:0,
+    course_history:[]
 }
 for (let i = 0; i < listData.total_comments; i++) {
     listData.comment.push({
-        time: "2021-05-06 01:53",
-        course_code:"whl317",
-        username:`Barry ${i}`,
-        rating: "5",
-        content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+        time: "",
+        course_code:"",
+        username:"",
+        rating: 5.0,
+        content: '',
     });
 }
-
-function handleChange(value) {
-    console.log(`selected ${value}`);
-}
-
 
 const IconText = ({ icon, text, onClick, style }) => (
     <span onClick={onClick} style={style}>
@@ -89,7 +65,7 @@ class LikeBtn extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            like:100,
+            like:0,
             liked:null,
         };
     }
@@ -135,7 +111,7 @@ class DisLikeBtn extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            dislike:100,
+            dislike:0,
             disliked:null,
         };
     }
@@ -203,13 +179,12 @@ const Report = () => {
                     name="basic"
                     style={{fontSize:"3.0rem",fontWeight:"bolder", fontFamily:"GothamBook"}}
                 >
-
                     <Form.Item
                         label="Report reason"
                         name="Reason"
                         rules={[{ required: true, message: 'Please leave your reason!' }]}
                     >
-                        <Input.TextArea bordered={false} placeholder="Leave your comment here!" style={{height:"80px",width:"350px"}}/>
+                        <Input.TextArea bordered={false} placeholder="Report reason..." style={{height:"80px",width:"350px"}}/>
                     </Form.Item>
 
                 </Form>
@@ -222,12 +197,63 @@ const Report = () => {
 
 
 
-class AboutUs extends React.Component{
+class ProfPage extends React.Component{
+    constructor(props){
+        super(props)        
+        let param = this.props.location.search.slice(1).split("=");
+        this.state = {listData: listData, param:param};
+        if (param[0] !== "v"){
+            alert("Request not allowed!");
+            window.location.href = "/";
+        }
+    }
 
-
+    componentDidMount(){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({netid: this.state.param[1]}),
+            credentials: "include"
+			}
+        fetch("http://localhost:8081/public/view_professor", requestOptions)
+        .then(response => {
+            if (response.status === 200){
+                return response.json();
+            }
+        })
+        .then(json => {
+            console.log(json);
+            if (json.code === 200){
+                console.log("setting");
+                listData.professor_name = json.professor_name;
+                listData.department = json.department;
+                listData.rating = json.rating;
+                listData.total_comments = json.total_comments;
+                for (let h of json.courses){
+                    listData.course_history.push({
+                        course_name: h.course_name,
+                        course_code: h.course_code,
+                        semester:h.semester})
+                }
+                for (let c of json.comments){
+                    listData.comment.push({
+                        time: c.date.slice(0,3).join("-"),
+                        course_code:c.course_code,
+                        username:c.student_id,
+                        rating: c.rate,
+                        content: c.content,
+                    });
+                }
+                
+                this.setState({listData: listData})
+                console.log(this.state.listData)
+            }
+        })
+    }
 
     render(){
-        let arr = listData.course_history
+        let arr = this.state.listData.course_history;
+        console.log("arr",arr);
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
@@ -237,36 +263,31 @@ class AboutUs extends React.Component{
                         <Col span={7} offset={3}>
 
                             <Row style={{height:"160px",marginTop:"20px" ,marginBottom:"80px"}}>
-                                <h1 style={{fontSize:"2.0rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{listData.professor_name} </h1>
-                                <h3 style={{fontSize:"1.5rem",fontWeight:"bold", fontFamily:"GothamBook",width:"400px"}}>{"from "+listData.department} </h3>
+                                <h1 style={{fontSize:"2.0rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{this.state.listData.professor_name} </h1>
+                                <h3 style={{fontSize:"1.5rem",fontWeight:"bold", fontFamily:"GothamBook",width:"400px"}}>{"from "+this.state.listData.department} </h3>
                                 <Statistic style={{fontFamily:"GothamBook"}}
-                                           value={listData.rating}
-                                           suffix={" / 5 based on " + listData.total_comments +" comments"}
+                                           value={this.state.listData.rating}
+                                           suffix={" / 5 based on " + this.state.listData.total_comments +" comments"}
                                            valueStyle={{fontSize:"60px"}}
                                 />
                             </Row>
 
-
-
                             <Row style={{marginTop:"40px"}}>
                                 <h3 style={{fontSize:"1.0rem",fontWeight:"bolder",width:"400px"}}>
-                                    {"Professor " + listData.professor_name + " has taught: "}
+                                    {"Professor " + this.state.listData.professor_name + " has taught: "}
                                 </h3>
 
                                 <ul style={{fontSize:"1.0rem",fontWeight:"normal",width:"400px"}}>
                                     {
                                         arr.map((item, index) => {
                                             return <li key={index} style={{marginBottom:"5px"}}>
-                                                {item.course_name}
+                                                {item.course_name + ", " + item.semester}
                                                 <ul style={{fontSize:"12px"}}>
                                                     <li>
                                                         {"Course Code: "+item.course_code}
                                                     </li>
                                                 </ul>
-
-
                                             </li>
-
                                         })
                                     }
                                 </ul>
@@ -277,9 +298,7 @@ class AboutUs extends React.Component{
                                     Rate This Professor Blow
                                     <DownCircleOutlined style={{marginLeft: "10px"}}/>
                                 </h2>
-
                             </div>
-
 
                             <Form
                                 name="basic"
@@ -310,10 +329,6 @@ class AboutUs extends React.Component{
                             </Form>
                         </Col>
 
-
-
-
-
                         <Col span={11}>
 
                             <List
@@ -326,7 +341,7 @@ class AboutUs extends React.Component{
                                     },
                                     pageSize: 5,
                                 }}
-                                dataSource={listData.comment}
+                                dataSource={this.state.listData.comment}
 
                                 renderItem={item => (
                                     <List.Item
@@ -342,7 +357,7 @@ class AboutUs extends React.Component{
                                             <Row>
                                                 <Col span={200}>
                                                     <Statistic title="Rate"
-                                                               value={5}
+                                                               value={item.rating}
                                                                prefix={<StarOutlined />}
                                                                suffix=" / 5"
                                                                valueStyle={{fontSize:"40px",marginTop:"15px"}}
@@ -354,25 +369,20 @@ class AboutUs extends React.Component{
                                     >
                                         <List.Item.Meta
                                             className="listItemMetaGeneral"
-                                            avatar={<Avatar icon={<UserOutlined/>} />}
-                                            title={<a href={item.href}>{item.username+" from Course "+item.course_code}</a>}
+                                            title={<p>{item.username+" from Course "+item.course_code}</p>}
                                             description={item.time}
                                         />
                                         {item.content}
                                     </List.Item>
                                 )}
                             />
-
-
                         </Col>
                     </Row>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Ant UED</Footer>
+                <Footer style={{ textAlign: 'center' }}>NYU Rates © 2021</Footer>
             </Layout>
-
-
         )
     }
 }
 
-export default AboutUs;
+export default ProfPage;

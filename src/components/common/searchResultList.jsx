@@ -3,29 +3,14 @@ import {Switch, List, Skeleton, Avatar, Space} from "antd";
 import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
 
-/*const listData = [];
-for (let i = 0; i < 3; i++) {
-    listData.push({
-        href: 'https://ant.design',
-        title: `ant design part ${i}`,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        description:
-            'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-        content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    });
-}*/
-
 const listData = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) {
     listData.push({
-        course_name: `Barry ${i}`,
-        course_code: "yw3752",
-        course_link: 'https://ant.design',
-        comment: "I am Barry",
-        rating: 5.0,
-        likes: 100,
-        num_comments: 100,
+        course_name: "",
+        course_code: "",
+        course_link: '/',
+        comment: "",
+        rating: 5.0
     });
 }
 
@@ -38,21 +23,23 @@ const IconText = ({ icon, text }) => (
 
 
 class ResultsList extends React.Component {
-    state = {
-        loading: true,
-    };
-
-    onChange = checked => {
-        this.setState({ loading: !checked });
-    };
+	constructor(props){
+		this.state = {loading: true, data: listData};
+	}
+	
+    static getDerivedStateFromProps(nextProps, prevState){
+        if (nextProps.loading === false){
+            console.log(nextProps.data);
+            return {data: nextProps.data, loading: false};
+        }
+        return null;
+    }
 
     render() {
-        const { loading } = this.state;
+        const loading = this.state.loading;
 
         return (
             <>
-                <Switch checked={!loading} onChange={this.onChange} />
-
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -63,17 +50,11 @@ class ResultsList extends React.Component {
                         },
                         pageSize: 10,
                     }}
-                    dataSource={listData}
+                    dataSource={this.state.data}
                     renderItem={item => (
                         <List.Item
                             className="listItemGeneral"
                             key={item.title}
-                            actions={
-                                !loading && [
-                                    <IconText icon={LikeOutlined} text={item.likes} key="list-vertical-like-o" />,
-                                    <IconText icon={MessageOutlined} text={item.num_comments} key="list-vertical-message" />,
-                                ]
-                            }
 
                             extra={
                                 !loading && (
@@ -102,6 +83,7 @@ class ResultsList extends React.Component {
                                         />
                                     </Col>
                                     <Col span={20}>
+										<h3>Hot Comment</h3>
                                         {item.comment}
                                     </Col>
                                 </Row>

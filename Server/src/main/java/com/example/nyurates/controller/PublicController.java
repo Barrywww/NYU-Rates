@@ -109,12 +109,12 @@ public class PublicController {
 
    }
 
-    @GetMapping(value = "/view_course")
+    @PostMapping(value = "/view_course")
     public ViewCourseResult view_course(@RequestBody Course course){
         return publicService.view_course(course);
     }
 
-    @GetMapping(value = "/view_professor")
+    @PostMapping(value = "/view_professor")
     public ViewProfessorResult view_professor(@RequestBody Professor professor){
         return publicService.view_professor(professor);
     }

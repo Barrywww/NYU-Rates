@@ -76,6 +76,7 @@ class ResultsList extends React.Component {
                                         />
                                     </Col>
                                     <Col span={20}>
+										<h3>- Hot Comment -</h3>
                                         {item.comment}
                                     </Col>
                                 </Row>
