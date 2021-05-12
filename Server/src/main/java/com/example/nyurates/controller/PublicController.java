@@ -130,7 +130,7 @@ public class PublicController {
     }
 
     @PostMapping(value = "/search_professor")
-    public SearchProfessorResult search_professor(@RequestBody Professor professor){
+    public ProfListResult search_professor(@RequestBody Professor professor){
         return publicService.search_professor(professor);
     }
 }

@@ -1,0 +1,66 @@
+.ContentArea{
+    background-color:white;
+}
+
+#aboutUs-bannerText{
+    color: #57068c;
+    font-family: "GothamBold";
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 20px;
+    padding-left: 20px;
+    align-self: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.paraWrapper{
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 40px;
+    padding-right: 200px;
+    padding-left: 200px;
+    align-self: center;
+    text-align: center;
+}
+
+.param{
+    font-family: "GothamMedium";
+    font-size: 0.5rem;
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    padding-top: 20px;
+    text-align: left;
+}
+
+
+
+
+.listItemGeneral .ant-list-item-action{
+    margin-top: 30px!important;
+
+}
+
+.ant-pagination{
+    margin-right: 350px!important;
+    margin-bottom: 15px!important;
+}
+
+.listItemMetaGeneral .ant-list-item-meta-content{
+    margin-bottom: 5px!important;
+}
+
+
+.ant-statistic-content-suffix{
+    font-size: 20px;
+}
+
+#RateButton{
+    height: 50px;
+    width: 250px;
+}

@@ -15,7 +15,8 @@ public interface PublicDao {
     public ArrayList<Comment> searchComments(Student student);
     public double searchAverageRating(Course course);
     public double searchAverageRating(Professor professor);
-    public Professor searchProfessor(Professor professor);
+    public ArrayList<Professor> searchProfessor(Professor professor);
+    public Professor matchProfessor(Professor professor);
     public ArrayList<Course> searchProfessorCourse(Professor professor);
     public boolean postComment(Comment comment);
     public boolean handleLike(Long comment_id, boolean isLike);

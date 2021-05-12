@@ -58,7 +58,8 @@ class IndexSearchWrapper extends React.Component{
 
     handleSearch(){
         console.log(this.inputRef.current);
-        this.props.history.push("/search?st="+this.state.selectedType + "&v=" + this.inputRef.current.state.value);
+        // this.props.history.push("/search?st="+this.state.selectedType + "&v=" + this.inputRef.current.state.value);
+        window.location.href = "/search?st="+this.state.selectedType + "&v=" + this.inputRef.current.state.value;
     }
 
 
