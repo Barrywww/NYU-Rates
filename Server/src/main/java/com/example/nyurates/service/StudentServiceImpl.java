@@ -69,7 +69,7 @@ public class StudentServiceImpl implements StudentService{
                 result.setMsg("Successful!");
                 result.setCode(200);
             }else{
-                result.setMsg("Unable to like/dislike");
+                result.setMsg("Unable to add professor");
             }
         } catch (Exception e) {
             result.setMsg(e.getMessage());
