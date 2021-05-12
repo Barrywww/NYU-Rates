@@ -448,10 +448,18 @@ public class PublicDaoImpl implements PublicDao {
         return false;
     }
 
-//    @Override
-//    public boolean addprofessor(Prof_req prof_req){
-//        String query = "INSERT INTO Student VALUES (?, ?, ?, ?)";
-//    }
+    @Override
+    public boolean addprofessor(Prof_req prof_req){
+        String query = "INSERT INTO Prof_req(professor_name, professor_department, professor_email, professor_course_name, professor_course_code, professor_course_semester) VALUES (?, ?, ?, ?, ?, ?)";
+        try{
+            jdbcTemplate.update(query, prof_req.getProfessor_name(), prof_req.getProfessor_dept(), prof_req.getProfessor_email(), prof_req.getProfessor_course_name(), prof_req.getProfessor_course_code(), prof_req.getProfessor_course_semester());
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
+    }
 
     @Override
     public boolean reportComment(Report report){

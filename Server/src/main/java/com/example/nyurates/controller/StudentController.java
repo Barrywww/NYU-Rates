@@ -1,6 +1,7 @@
 package com.example.nyurates.controller;
 
 import com.example.nyurates.entity.Comment;
+import com.example.nyurates.entity.Prof_req;
 import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.CommentsResult;
@@ -9,9 +10,8 @@ import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @RestController
@@ -52,6 +52,11 @@ public class StudentController {
     @PostMapping(value = "/reportcomment")
     public Result report_comment(@RequestBody Report report){
         return studentService.report_comment(report);
+    }
+
+    @PostMapping(value = "/addprofessor")
+    public Result addprofessor(@RequestBody Prof_req prof_req){
+        return studentService.addprofessor(prof_req);
     }
 
     @GetMapping(value = "/viewhistory")
