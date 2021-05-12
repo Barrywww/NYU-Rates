@@ -2,6 +2,7 @@ package com.example.nyurates.service;
 
 import com.example.nyurates.dao.PublicDao;
 import com.example.nyurates.entity.Comment;
+import com.example.nyurates.entity.Prof_req;
 import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.CommentsResult;
@@ -58,25 +59,25 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
-//    public Result addprofessor(Prof_req prof_req){
-//        Result result = new Result();
-//        result.setCode(400);
-//
-//        try {
-//            boolean isSuccess = dao.addprofessor(prof_req);
-//            if (isSuccess){
-//                result.setMsg("Successful!");
-//                result.setCode(200);
-//            }else{
-//                result.setMsg("Unable to like/dislike");
-//            }
-//        } catch (Exception e) {
-//            result.setMsg(e.getMessage());
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
+    public Result addprofessor(Prof_req prof_req){
+        Result result = new Result();
+        result.setCode(400);
+
+        try {
+            boolean isSuccess = dao.addprofessor(prof_req);
+            if (isSuccess){
+                result.setMsg("Successful!");
+                result.setCode(200);
+            }else{
+                result.setMsg("Unable to like/dislike");
+            }
+        } catch (Exception e) {
+            result.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     public Result report_comment(Report report){
         Result result = new Result();
