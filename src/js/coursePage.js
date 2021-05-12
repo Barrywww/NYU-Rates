@@ -13,7 +13,7 @@ import {
     Checkbox,
     List, Statistic
 } from 'antd';
-import "../css/AboutUs.css";
+import "../css/profPage.css";
 import MainHeader from "../components/common/header";
 import {
     LikeOutlined,
@@ -34,25 +34,6 @@ import { Modal } from 'antd';
 // function App() {return <h1>Hello World!</h1>}
 const { Header, Content, Footer } = Layout;
 const {Option} = Select;
-
-
-
-
-
-
-
-// const listData = [];
-// for (let i = 0; i < 23; i++) {
-//     listData.push({
-//         href: 'https://ant.design',
-//         title: `ant design part ${i}`,
-//         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-//         description:
-//             'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//         content:
-//             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-//     });
-// }
 
 const listData = {
     course_name:"Introduce To Computer Porgramming",

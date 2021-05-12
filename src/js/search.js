@@ -37,36 +37,70 @@ class SearchPage extends React.Component {
     }
 
     componentDidMount(){
-        const requestOptions = {
+		if (this.state.st === "Professor"){
+			const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({netid: this.state.val, name:this.state.val}),
             credentials: "include"
-        }
-        fetch("http://localhost:8081/public/search_professor/", requestOptions)
-        .then(response => {
-            if (response.status === 200) {
-                return response.json()
-            }
-            else{
-                alert("Search Failed. Please try again!");
-            }
-        }).then(json => {
-            if (json.code === 200){
-                const listData = [];
-                for (let p of json.profList){
-                    listData.push({
-                        professor_name: p.name,
-                        department: p.dept,
-                        professor_link: `/profPage?v=${p.netid}`,
-                        comment: p.hot_comment,
-                        rating: p.rate
-                    })
-                }
-                setTimeout(()=>{this.setState({result: listData, loading: false})}, 1000);
-                console.log(this.state);
-            }
-        })
+			}
+			fetch("http://localhost:8081/public/search_professor/", requestOptions)
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+				else{
+					alert("Search Failed. Please try again!");
+				}
+			}).then(json => {
+				if (json.code === 200){
+					const listData = [];
+					for (let p of json.profList){
+						listData.push({
+							professor_name: p.name,
+							department: p.dept,
+							professor_link: `/profPage?v=${p.netid}`,
+							comment: p.hot_comment,
+							rating: p.rate
+						})
+					}
+					setTimeout(()=>{this.setState({result: listData, loading: false})}, 1000);
+					console.log(this.state);
+				}
+			})
+		}
+		else if (this.state.st === "Course"){
+			const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({course_code: this.state.val, course_name:this.state.val}),
+            credentials: "include"
+			}
+			fetch("http://localhost:8081/public/search_course/", requestOptions)
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+				else{
+					alert("Search Failed. Please try again!");
+				}
+			}).then(json => {
+				if (json.code === 200){
+					const listData = [];
+					for (let p of json.profList){
+						listData.push({
+							professor_name: p.name,
+							department: p.dept,
+							professor_link: `/profPage?v=${p.netid}`,
+							comment: p.hot_comment,
+							rating: p.rate
+						})
+					}
+					setTimeout(()=>{this.setState({result: listData, loading: false})}, 1000);
+					console.log(this.state);
+				}
+			})
+		}
     }
 
     render(){
