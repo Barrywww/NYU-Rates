@@ -124,7 +124,7 @@ public class PublicController {
     }
 
     @PostMapping(value = "/search_course")
-    public SearchCourseResult search_course(@RequestBody Course course){
+    public CourseListResult search_course(@RequestBody Course course){
         return publicService.search_course(course);
     }
 

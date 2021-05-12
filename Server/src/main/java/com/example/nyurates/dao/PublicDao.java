@@ -9,7 +9,8 @@ public interface PublicDao {
     public Professor professorLogin(Professor professor);
     public boolean studentRegist(Student student);
     public Student searchByEmail(Student student);
-    public Course searchCourse(Course course);
+    public Course matchCourse(Course course);
+    public ArrayList<Course> searchCourse(Course course);
     public ArrayList<Comment> searchComments(Course course);
     public ArrayList<Comment> searchComments(Professor professor);
     public ArrayList<Comment> searchComments(Student student);

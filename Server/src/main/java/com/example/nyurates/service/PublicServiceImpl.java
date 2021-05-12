@@ -99,7 +99,7 @@ public class PublicServiceImpl implements PublicService {
         viewCourseResult.setCode(400);
 
         try{
-            course = dao.searchCourse(course);
+            course = dao.matchCourse(course);
             if(course == null){
                 viewCourseResult.setMsg("Unable to query the provided course code.");
                 viewCourseResult.setCode(400);
@@ -175,28 +175,21 @@ public class PublicServiceImpl implements PublicService {
         return commentsResult;
     }
 
-    public SearchCourseResult search_course(Course course){
-        SearchCourseResult searchCourseResult = new SearchCourseResult();
-        searchCourseResult.setCode(400);
+    public CourseListResult search_course(Course course){
+        CourseListResult courseListResult = new CourseListResult();
+        courseListResult.setCode(400);
 
         try{
-            course = dao.searchCourse(course);
-            if(course == null){
-                searchCourseResult.setMsg("Unable to query comments");
-            }else{
-                searchCourseResult.setMsg("Successfully searched course");
-                searchCourseResult.setCode(200);
-                searchCourseResult.setCourse_name(course.getCourse_name());
-                searchCourseResult.setCourse_code(course.getCourse_code());
-                double rating = dao.searchAverageRating(course);
-                searchCourseResult.setRating(rating);
-            }
+            ArrayList<Course> daoResult = dao.searchCourse(course);
+            courseListResult.setCourse_list(daoResult);
+            courseListResult.setCode(200);
+            courseListResult.setMsg("Suceess");
         } catch (Exception e) {
-            searchCourseResult.setMsg(e.getMessage());
+            courseListResult.setMsg(e.getMessage());
             e.printStackTrace();
         }
 
-        return searchCourseResult;
+        return courseListResult;
     }
 
     // public SearchProfessorResult search_professor(Professor professor){

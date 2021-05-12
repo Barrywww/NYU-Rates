@@ -7,14 +7,18 @@ public class Course {
     private String location;
     private String semester;
     private String professor_id;
+    private String hot_comment;
+    private double rate;
 
-    public Course(String course_name, String course_code, String dept_name, String location, String semester, String professor_id){
+    public Course(String course_name, String course_code, String dept_name, String location, String semester, String professor_id, String hot_comment, double rate){
         this.course_name = course_name;
         this.course_code = course_code;
         this.dept_name = dept_name;
         this.location = location;
         this.semester = semester;
         this.professor_id = professor_id;
+        this.hot_comment = hot_comment;
+        this.rate = rate;
     }
 
     public Course(){
@@ -67,5 +71,21 @@ public class Course {
 
     public void setProfessor_id(String professor_id){
         this.professor_id = professor_id;
+    }
+
+    public String getHot_comment(){
+        return this.hot_comment;
+    }
+
+    public void setHot_comment(String comment){
+        this.hot_comment = comment;
+    }
+
+    public double getRate(){
+        return this.rate;
+    }
+
+    public void setRate(double rate){
+        this.rate = rate;
     }
 }
