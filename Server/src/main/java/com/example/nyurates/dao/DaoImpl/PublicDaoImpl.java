@@ -2,8 +2,7 @@ package com.example.nyurates.dao.DaoImpl;
 
 import com.example.nyurates.dao.PublicDao;
 import com.example.nyurates.entity.*;
-
-import org.apache.commons.lang3.ObjectUtils.Null;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,7 +49,7 @@ public class PublicDaoImpl implements PublicDao {
 //        }
         String query = "SELECT netid, name FROM Student WHERE email = ? AND password= ?";
         try{
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getEmail(), student.getPassword());
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getEmail(), DigestUtils.md5Hex(student.getPassword()));
             if (result.size() == 1) {
                 Map<String, Object> map = result.get(0);
                 student.setName((String) map.get("name"));
@@ -68,7 +67,7 @@ public class PublicDaoImpl implements PublicDao {
     public Professor professorLogin(Professor professor){
         String query = "SELECT netid, name FROM Professor WHERE email = ? AND password= ?";
         try{
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, professor.getEmail(), professor.getPassword());
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, professor.getEmail(), DigestUtils.md5Hex(professor.getPassword()));
             if (result.size() == 1) {
                 Map<String, Object> map = result.get(0);
                 professor.setName((String) map.get("name"));
@@ -89,7 +88,7 @@ public class PublicDaoImpl implements PublicDao {
 //        student.setPassword(encodedPassword);
         String query = "INSERT INTO Student VALUES (?, ?, ?, ?)";
         try{
-            jdbcTemplate.update(query, student.getEmail(), student.getNetid(), student.getName(), student.getPassword());
+            jdbcTemplate.update(query, student.getEmail(), student.getNetid(), student.getName(), DigestUtils.md5Hex(student.getPassword()));
             return true;
         } catch (DataAccessException e) {
             SQLException exception = (SQLException) e.getCause();
