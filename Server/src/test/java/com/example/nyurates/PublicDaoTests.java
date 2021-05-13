@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PublicDaoTests {
@@ -20,13 +20,14 @@ class PublicDaoTests {
     @Test
     public void testStudentLogin() throws Exception{
         Student student1 = new Student();
-        student1.setEmail("student0@nyu.edu");
+        student1.setEmail("zy1190@nyu.edu");
         student1.setPassword("root");
 
         Student result = dao.studentLogin(student1);
 
-        assertEquals("Student0", result.getName());
-        assertEquals("student0", result.getNetid());
+
+        assertEquals("Zhao Yang", result.getName());
+        assertEquals("zy1190", result.getNetid());
     }
 
     @Test
@@ -44,10 +45,10 @@ class PublicDaoTests {
     @Test
     public void testStudnetRegist() throws Exception{
         Student s1 = new Student();
-        s1.setEmail("student5@nyu.edu");
+        s1.setEmail("zy1190@nyu.edu");
         s1.setPassword("root");
-        s1.setNetid("student5");
-        s1.setName("student5");
+        s1.setNetid("zy1190");
+        s1.setName("Zhao Yang");
 
         boolean r = dao.studentRegist(s1);
         assertTrue(r);
@@ -221,17 +222,55 @@ class PublicDaoTests {
 
     @Test
     public void testPostComment() throws Exception{
-        Comment c = new Comment();
-        c.setContent("I like this course");
-        c.setDate(LocalDateTime.now());
-        double rate = 5.0;
-        c.setRate(rate);
-        c.setCourse_code("CENG-SHU 201");
-        c.setSemester("Fall 2020");
-        c.setProfessor_id("pam32");
-        c.setStudent_id("student0");
+//        for (int i = 0; i < 3; i++){
+//            Comment c = new Comment();
+//            c.setContent("Useful Course");
+//            c.setDate(LocalDateTime.now());
+//            double rate = 5.0;
+//            c.setRate(rate);
+//            c.setCourse_code("CSCI-SHU 215");
+//            c.setSemester("Fall 2020");
+//            c.setProfessor_id("ogm2");
+//            c.setStudent_id(String.format("student%d", i));
+//            assertTrue(dao.postComment(c));
+//        }
+//
+//        for (int j= 3; j < 6; j++){
+//            Comment c = new Comment();
+//            c.setContent("Learned a lot!");
+//            c.setDate(LocalDateTime.now());
+//            double rate = 5.0;
+//            c.setRate(rate);
+//            c.setCourse_code("CSCI-SHU 220");
+//            c.setSemester("Fall 2020");
+//            c.setProfessor_id("sg191");
+//            c.setStudent_id(String.format("student%d", j));
+//            assertTrue(dao.postComment(c));
+//        }
 
-        assertTrue(dao.postComment(c));
+        Comment c1 = new Comment();
+        c1.setContent("Interesting course.");
+        c1.setDate(LocalDateTime.now());
+        double rate1 = 5.0;
+        c1.setRate(rate1);
+        c1.setCourse_code("INTM-SHU 101");
+        c1.setSemester("Fall 2019");
+        c1.setProfessor_id("iil2");
+        c1.setStudent_id("student1");
+
+        assertTrue(dao.postComment(c1));
+
+        Comment c2 = new Comment();
+        c2.setContent("Interesting course.");
+        c2.setDate(LocalDateTime.now());
+        double rate2 = 5.0;
+        c2.setRate(rate2);
+        c2.setCourse_code("INTM-SHU 101");
+        c2.setSemester("Fall 2019");
+        c2.setProfessor_id("iil2");
+
+        assertFalse(dao.postComment(c2));
+
 
     }
 
