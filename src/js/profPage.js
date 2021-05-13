@@ -243,6 +243,8 @@ class ProfPage extends React.Component{
                         username:c.student_id,
                         rating: c.rate,
                         content: c.content,
+                        likes: c.likes,
+                        dislikes: c.dislikes
                     });
                 }
                 
@@ -267,7 +269,7 @@ class ProfPage extends React.Component{
                         </Breadcrumb.Item>
                 </Breadcrumb>
                 <Content className='ContentArea'>
-                    <Row style={{marginTop:"10px"}}>
+                    <Row style={{marginTop:"10px", minHeight:"100%"}}>
 
                         <Col span={7} offset={1}>
 
@@ -301,44 +303,9 @@ class ProfPage extends React.Component{
                                     }
                                 </ul>
                             </Row>
-
-                            <div>
-                                <h2 style={{fontSize:"1.0rem",width:"400px"}}>
-                                    Rate This Professor Blow
-                                    <DownCircleOutlined style={{marginLeft: "10px"}}/>
-                                </h2>
-                            </div>
-
-                            <Form
-                                name="basic"
-
-                                style={{fontSize:"3.0rem",fontWeight:"bolder", fontFamily:"GothamBook"}}
-                            >
-                                <Form.Item
-                                    label="Rate"
-                                    name="rate"
-                                    rules={[{ required: true, message: 'Please input your rate!' }]}
-                                >
-                                    <Rate style={{marginLeft:"35px"}}/>
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="Comment"
-                                    name="comment"
-                                    rules={[{ required: true, message: 'Please leave your comment!' }]}
-                                >
-                                    <Input.TextArea placeholder="Leave your comment here!" style={{height:"120px",width:"280px"}}/>
-                                </Form.Item>
-
-                                <Form.Item >
-                                    <Button type="primary" htmlType="submit" >
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
                         </Col>
 
-                        <Col span={15}>
+                        <Col span={15} style={{minHeight: "100%"}}>
 
                             <List
                                 itemLayout="vertical"
@@ -351,15 +318,15 @@ class ProfPage extends React.Component{
                                     pageSize: 5,
                                 }}
                                 dataSource={this.state.listData.comment}
-
+                                style={{minHeight: "100%"}}
                                 renderItem={item => (
                                     <List.Item
                                         className="listItemGeneral"
                                         style = {{marginTop:"15px",minHeight:"150px"}}
                                         key={item.title}
                                         actions={[
-                                            <LikeBtn/>,
-                                            <DisLikeBtn/>,
+                                            <LikeBtn num={item.likes}/>,
+                                            // <DisLikeBtn/>,
                                             <Report/>
                                         ]}
                                         extra={

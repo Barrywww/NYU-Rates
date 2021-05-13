@@ -12,9 +12,11 @@ public class SessionInterceptorStudent implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception{
         try{
-            String loggedIn = (String) httpServletRequest.getSession(false).getAttribute("loggedIn");
+            System.out.println(httpServletRequest);
+            System.out.println(httpServletRequest.getSession(false));
             String role = (String) httpServletRequest.getSession(false).getAttribute("role");
-            if (loggedIn.equals("true") && role.equals("student")){
+            System.out.println(role);
+            if (role.equals("student")){
                 return true;
             }
             else{

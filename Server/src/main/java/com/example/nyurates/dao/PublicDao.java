@@ -8,6 +8,7 @@ public interface PublicDao {
     public Student studentLogin(Student student);
     public Professor professorLogin(Professor professor);
     public boolean studentRegist(Student student);
+    public boolean professorRegist(Professor professor, boolean is_member);
     public Student searchByEmail(Student student);
     public Course matchCourse(Course course);
     public ArrayList<Course> searchCourse(Course course);
@@ -24,4 +25,6 @@ public interface PublicDao {
     public boolean addprofessor(Prof_req prof_req);
     public boolean reportComment(Report report);
     public ArrayList<String> getOfferedSemester(Course course);
+    public String getProfByCourse(String code, String semester);
+    public String getUserByComment(Long comment_id);
 }

@@ -58,7 +58,7 @@ class ResultsList extends React.Component {
                             extra={
                                 !this.state.loading && (
                                     <Row>
-                                        <Col span={200}>
+                                        <Col span={24}>
                                             <Statistic title="Rate"
                                                        value={item.rating}
                                                        prefix={<StarOutlined />}
@@ -75,13 +75,13 @@ class ResultsList extends React.Component {
                         >
                             <Skeleton loading={this.state.loading} active avatar>
                                 <Row style={{marginTop:"10px"}}>
-                                    <Col span={4}>
+                                    <Col span={6}>
                                         <List.Item.Meta
                                             title={<a href={item.course_link} style={{fontSize:"24px"}}>{item.course_name}</a>}
                                             description={item.course_code}
                                         />
                                     </Col>
-                                    <Col span={20}>
+                                    <Col span={18}>
 										<h2>- Hot Comment -</h2>
                                         <h3>{item.comment}</h3>
                                     </Col>

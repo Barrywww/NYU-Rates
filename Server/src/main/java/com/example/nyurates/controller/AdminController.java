@@ -38,7 +38,7 @@ public class AdminController {
 
     @PostMapping(value = "/student_list")
     public StudentListResult studentList(@RequestBody Map<String, String> params){
-        return adminService.studentList(params.get("name"), params.get("netrd"), params.get("email"));
+        return adminService.studentList(params.get("name"), params.get("netid"), params.get("email"));
     }
 
     @PostMapping(value = "/prof_list")
@@ -47,18 +47,24 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/getreports")
-    public ReportListResult getReports(@RequestBody Map<String, Object> params){
+    public ReportListResult getReports(HttpSession session, @RequestBody Map<String, Object> params){
+        System.out.println(session.getAttribute("role"));
         return adminService.getReports((Long) params.get("report_id"), (Long) params.get("comment_id"), (String) params.get("comment_user"), (String) params.get("course_code"));
     }
 
     @PostMapping(value = "/reviewcomment")
     public Result reviewComment(@RequestBody Map<String, Object> params) {
-        return adminService.reviewComment((Integer) params.get("comment_id"), (Boolean) params.get("validity"));
+        return adminService.reviewComment((Integer) params.get("comment_id"), (Integer) params.get("report_id"), (Boolean) params.get("validity"));
     }
 
     @RequestMapping (value="/getprofrequests")
-    public Result getProfRequests(@RequestBody Map<String, Object> params){
+    public ProfReqResult getProfRequests(@RequestBody Map<String, Object> params){
         return adminService.getProfRequests();
+    } 
+
+    @RequestMapping (value="/handleprofrequests")
+    public Result handleProfRequests(@RequestBody Map<String, Object> params){
+        return adminService.handleProfReq((Integer) params.get("request_id"), (boolean) params.get("operation"));
     } 
 
     @GetMapping (value="/validate")

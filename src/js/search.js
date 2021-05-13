@@ -16,7 +16,8 @@ class SearchPage extends React.Component {
     constructor(props){
         super(props);
         console.log(this.props.location.search);
-        let param = this.props.location.search.slice(1).split("&");
+        let param = this.props.location.search.slice(1).replace("%20", " ");
+        param = param.split("&");
         let st;
         let val;
         for (let v of param){

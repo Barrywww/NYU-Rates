@@ -49,7 +49,9 @@ for (let i = 0; i < listData.total_comments; i++) {
         time: "",
         username: "",
         rating: 5,
-        content: ""
+        content: "",
+        likes: 0,
+        dislikes: 0
     });
 }
 
@@ -64,7 +66,7 @@ class LikeBtn extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            like:0,
+            like:props.num,
             liked:null,
         };
     }
@@ -110,7 +112,7 @@ class DisLikeBtn extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            dislike:100,
+            dislike:props.num,
             disliked:null,
         };
     }
@@ -152,16 +154,48 @@ class DisLikeBtn extends React.Component{
     }
 }
 
-const Report = () => {
+const Report = (props) => {
+    const [form] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
+        console.log(props.commentid);
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
-        setIsModalVisible(false);
+        form.submit();
     };
+
+    const onFinish = (values) => {
+        values.comment_id = props.commentid;
+        console.log("fin", values);
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+            credentials: "include"
+		}
+        fetch("http://localhost:8081/student/reportcomment", requestOptions)
+        .then(response => {
+            if (response.status === 200){
+                return response.json();
+            }
+            else{
+                alert("Report failed, please try again!");
+            }
+        })
+        .then(json => {
+            if (json.code === 200){
+                alert("Report Success!");
+            }
+            else{
+                alert("Report failed, please try again!");
+            }
+            setIsModalVisible(false);
+        })
+        
+    }
 
     const handleCancel = () => {
         setIsModalVisible(false);
@@ -175,13 +209,15 @@ const Report = () => {
                     Are you sure to report this comment?
                 </p>
                 <Form
+                    form={form}
                     name="basic"
+                    onFinish = {onFinish}
                     style={{fontSize:"3.0rem",fontWeight:"bolder", fontFamily:"GothamBook"}}
                 >
 
                     <Form.Item
                         label="Report reason"
-                        name="Reason"
+                        name="report_reason"
                         rules={[{ required: true, message: 'Please leave your reason!' }]}
                     >
                         <Input.TextArea bordered={false} placeholder="Leave your comment here!" style={{height:"80px",width:"350px"}}/>
@@ -228,15 +264,20 @@ class CoursePage extends React.Component{
                 listData.course_name = json.course_name;
                 listData.course_code = json.course_code;
                 listData.rating = json.rating;
-                listData.total_comments = json.total_comments;
-                for (let c of json.comments){
-                    listData.comment.push({
-                        time: c.date.slice(0,3).join("-"),
-                        course_code:c.course_code,
-                        username:c.student_id,
-                        rating: c.rate,
-                        content: c.content,
-                    });
+                listData.total_comments = json.comments_num;
+                if (json.comments.length > 0){
+                    for (let c of json.comments){
+                        listData.comment.push({
+                            time: c.date.slice(0,3).join("-"),
+                            comment_id: c.comment_id,
+                            course_code:c.course_code,
+                            username:c.student_id,
+                            rating: c.rate,
+                            content: c.content,
+                            likes: c.likes,
+                            dislikes: c.dislikes,
+                        });
+                    }
                 }
                 for (let s of json.offered_in){
                     listData.offered_semesters.push(s);
@@ -246,10 +287,44 @@ class CoursePage extends React.Component{
                 console.log(this.state.listData)
             }
         })
+    };
+
+    onFinish = (values) => {
+        values.course_code = this.state.param[1];
+        const requestOption = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+            credentials: "include"
+        }
+        fetch("http://localhost:8081/student/post_comment", requestOption).then(response => {
+            if (response.status === 200){
+                return response.json()
+            }
+            else if (response.status === 500){
+                alert("You haven't logged in. Please login first!")
+            }
+            else{
+                alert("Post failed, please try again.")
+            }
+        })
+        .then(json => {
+            if(json.code === 200){
+                window.location.reload();
+            }
+            else{
+                alert("Post failed, please try again.");
+            }
+        })
+    }
+    handleSelect = (values) =>{}
+
+    handleReport = (event) => {
+        console.log(event.target);
     }
 
     render(){
-        let arr = listData.offered_semesters
+        let arr = listData.offered_semesters;
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
@@ -264,19 +339,17 @@ class CoursePage extends React.Component{
                 <Content className='ContentArea'>
                     <Row style={{marginTop:"10px"}}>
 
-                        <Col span={7} offset={2}>
+                        <Col span={8} offset={1} style={{paddingTop:"20px"}}>
 
-                            <Row style={{height:"160px", marginTop:"20px" ,marginBottom:"80px"}}>
+                            <Row >
                                 <h1 style={{fontSize:"2.0rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{listData.course_name} </h1>
                                 <h3 style={{fontSize:"1rem",fontWeight:"bolder", fontFamily:"GothamBook",width:"400px"}}>{listData.course_code} </h3>
                                 <Statistic style={{fontFamily:"GothamBook"}}
                                            value={listData.rating}
                                            suffix={" / 5 based on " + listData.total_comments +" comments"}
-                                           valueStyle={{fontSize:"60px"}}
+                                           valueStyle={{fontSize:"48px"}}
                                 />
                             </Row>
-
-
 
                             <Row style={{marginTop:"40px"}}>
                                 <h3 style={{fontSize:"1.0rem",fontWeight:"bolder",width:"400px"}}>
@@ -295,11 +368,14 @@ class CoursePage extends React.Component{
                                     Rate This Course below
                                     <DownCircleOutlined style={{marginLeft: "10px"}}/>
                             </h2>
+                            <h5 style={{width:"400px"}}>
+                                    * Login required
+                            </h5>
 
 
                             <Form
                                 name="basic"
-
+                                onFinish={this.onFinish}
                                 style={{fontSize:"3.0rem",fontWeight:"bolder", fontFamily:"GothamBook"}}
                             >
                                 <Form.Item
@@ -307,15 +383,33 @@ class CoursePage extends React.Component{
                                     name="rate"
                                     rules={[{ required: true, message: 'Please input your rate!' }]}
                                 >
-                                    <Rate style={{marginLeft:"35px"}}/>
+                                    <Rate allowHalf style={{marginLeft:"35px"}}/>
+                                </Form.Item>
+
+                                <Form.Item name="semester" label="Semester" rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please select a semester'
+                                    },
+                                    ]}>
+                                    <Select
+                                        placeholder="Select a semester"
+                                        onChange={this.handleSelect}
+                                    >
+                                       {
+                                        arr.map((item, index) => {
+                                            return <Option value={item}>{item}</Option>
+                                        })
+                                        }
+                                    </Select>
                                 </Form.Item>
 
                                 <Form.Item
                                     label="Comment"
-                                    name="comment"
+                                    name="content"
                                     rules={[{ required: true, message: 'Please leave your comment!' }]}
                                 >
-                                    <Input.TextArea placeholder="Leave your comment here!" style={{height:"120px",width:"280px"}}/>
+                                    <Input.TextArea placeholder="Leave your comment here!" style={{height:"120px",width:"100%"}}/>
                                 </Form.Item>
 
                                 <Form.Item >
@@ -326,7 +420,7 @@ class CoursePage extends React.Component{
                             </Form>
                         </Col>
 
-                        <Col span={13}>
+                        <Col span={13} offset={1}>
 
                             <List
                                 itemLayout="vertical"
@@ -346,13 +440,13 @@ class CoursePage extends React.Component{
                                         style = {{marginTop:"15px",minHeight:"150px"}}
                                         key={item.title}
                                         actions={[
-                                            <LikeBtn/>,
-                                            <DisLikeBtn/>,
-                                            <Report/>
+                                            <LikeBtn num={item.likes}/>,
+                                            // <DisLikeBtn num={item.dislikes}/>,
+                                            <Report commentid={item.comment_id}/>
                                         ]}
                                         extra={
                                             <Row>
-                                                <Col span={200}>
+                                                <Col span={24}>
                                                     <Statistic title="Rate"
                                                                value={item.rating}
                                                                prefix={<StarOutlined />}
@@ -366,7 +460,7 @@ class CoursePage extends React.Component{
                                     >
                                         <List.Item.Meta
                                             className="listItemMetaGeneral"
-                                            title={<a href={item.href}>{item.username}</a>}
+                                            title={<p commentid={item.comment_id}>{item.username}</p>}
                                             description={item.time}
                                         />
                                         {item.content}

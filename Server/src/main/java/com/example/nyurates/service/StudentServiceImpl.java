@@ -33,8 +33,7 @@ public class StudentServiceImpl implements StudentService{
                 result.setMsg("Unable to post comment");
             }
         } catch (Exception e) {
-            result.setMsg(e.getMessage());
-            e.printStackTrace();
+            result.setMsg("Unable to post comment");
         }
         return result;
     }

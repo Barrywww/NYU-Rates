@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
+import com.example.nyurates.entity.Prof_req;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.Student;
@@ -49,15 +50,22 @@ public class AdminServiceImpl implements AdminService{
         return loginResult;
     }
 
-    public Result reviewComment(int comment_id, boolean validity){
+    public Result reviewComment(int comment_id, int report_id, boolean validity){
         Result result = new Result();
         result.setCode(400);
         try{
             if (validity){
                 result.setCode(200);
                 result.setMsg("This comment is valid");
+                boolean r = dao.deleteReport(report_id);
+                if (r){
+                    result.setCode(200);
+                    result.setMsg("Successfully delete invalid comment");
+                }else{
+                    result.setMsg("Unsuccessfully delete invalid comment");
+                }
             }else{
-                boolean r = dao.adminDeleteComment(comment_id);
+                boolean r = dao.adminDeleteComment(comment_id, report_id);
                 if (r){
                     result.setCode(200);
                     result.setMsg("Successfully delete invalid comment");
@@ -126,6 +134,38 @@ public class AdminServiceImpl implements AdminService{
 
     public ProfReqResult getProfRequests(){
         ProfReqResult result = new ProfReqResult();
-        return result;
+        result.setCode(400);
+        ArrayList<Prof_req> requests;
+        try{
+            requests = dao.getProfReq();
+            result.setCode(200);
+            result.setMsg("Success");
+            result.setProfRequests(requests);
+            return result;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return result;
+        }
+    }
+
+    public Result handleProfReq(int request_id, boolean operation){
+        Result result = new Result();
+        result.setCode(400);
+        try{
+            boolean r = dao.handleProfReq(request_id, operation); 
+            if (r){
+                result.setCode(200);
+                result.setMsg("Success");
+                return result;
+            }
+            else{
+                return result;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return result;
+        }
     }
 }

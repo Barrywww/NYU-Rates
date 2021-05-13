@@ -19,7 +19,6 @@ const ProfilePage = lazy(() => import("./profile"));
 const ProfProfilePage = lazy(() => import("./profProfile"));
 const adminRouter = lazy(() => import("./adminBundle"));
 const AddProf = lazy(() => import("./AddProf"));
-// const Logout = lazy(() => import("../components/common/logout"));
 const profPage = lazy(() => import("./profPage"));
 const coursePage = lazy(() => import("./coursePage"));
 
@@ -51,7 +50,7 @@ class MainRouter extends React.Component{
                         <Route path="/profPage" component={profPage} />
                         <Route path="/coursePage" component={coursePage} />
                         <Route path="/register" component={RegisterPage}/>
-                        <Route path="/AddProf" component={AddProf}/>
+                        <Route path="/addProf" component={AddProf}/>
                         <Route path="/test" component={TestPage}/>
                         <Route path="/search" component={SearchPage}/>
                         <Route path="/admin" component={adminRouter}/>

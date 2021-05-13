@@ -36,6 +36,7 @@ const tailFormItemLayout = {
 
 const RegisterForm = () => {
   const [form] = Form.useForm();
+  const [selectedRole, setSelectedRole] = useState("student");
 
   const onFinish = async(values) => {
       try {
@@ -48,20 +49,34 @@ const RegisterForm = () => {
       };
   };
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
+  const handleSelect = (value) => {
+    setSelectedRole(value);
   };
 
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
+  const professorDept = (
+    <Form.Item
+      name="department"
+      label="Department"
+      rules={[
+        {
+          required: true,
+          message: 'Please input your department',
+          whitespace: true,
+        },
+      ]}
+      >
+      <Input />
+   </Form.Item>
+  )
+    
+  let placeholder;
+  if (selectedRole === "professor")  {
+      placeholder = professorDept;
+  }
+  else{
+      placeholder = "";    
+  }
+
   return (
     <Form
       {...formItemLayout}
@@ -70,6 +85,22 @@ const RegisterForm = () => {
       onFinish={onFinish}
       scrollToFirstError
     >
+    <Form.Item name="role" label="Role" rules={[
+          {
+            required: true,
+            message: 'Please select a role!'
+          },
+        ]}>
+        <Select
+            placeholder="Select a role"
+            onChange={handleSelect}
+            allowClear
+        >
+            <Option value="student">Student</Option>
+            <Option value="professor">Professor</Option>
+        </Select>
+      </Form.Item>
+
       <Form.Item
         name="email"
         label="E-mail"
@@ -92,21 +123,7 @@ const RegisterForm = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item name="role" label="Role" rules={[
-            {
-              required: true,
-              message: 'Please select a role!'
-            },
-          ]}>
-          <Select
-              placeholder="Select a role"
-              onChange={console.log(0)}
-              allowClear
-          >
-              <Option value="student">Student</Option>
-              <Option value="professor">Professor</Option>
-          </Select>
-        </Form.Item>
+
 
       <Form.Item
         name="password"
@@ -160,6 +177,8 @@ const RegisterForm = () => {
       >
         <Input />
       </Form.Item>
+
+      {placeholder}
 
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">

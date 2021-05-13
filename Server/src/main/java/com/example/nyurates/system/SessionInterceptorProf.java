@@ -12,9 +12,8 @@ public class SessionInterceptorProf implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception{
         try{
-            String loggedIn = (String) httpServletRequest.getSession(false).getAttribute("loggedIn");
             String role = (String) httpServletRequest.getSession(false).getAttribute("role");
-            if (loggedIn.equals("true") && role.equals("professor")){
+            if (role.equals("professor")){
                 return true;
             }
             else{

@@ -31,9 +31,7 @@ class Login extends React.Component{
                     </Row>
                 </Content>
                 <MainFooter />
-            </Layout>
-
-            
+            </Layout>      
         )
     }
 }

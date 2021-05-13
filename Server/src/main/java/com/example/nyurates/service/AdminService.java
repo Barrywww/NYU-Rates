@@ -10,9 +10,10 @@ import com.example.nyurates.entity.results.ProfReqResult;
 
 public interface AdminService {
     public LoginResult login(Admin admin);
-    public Result reviewComment(int comment_id, boolean validity);
+    public Result reviewComment(int comment_id, int report_id, boolean validity);
     public StudentListResult studentList(String name, String netid, String email);
     public ProfListResult profList (String name, String netid, String email, String department);
     public ReportListResult getReports(Long report_id, Long comment_id, String comment_user, String course_code);
     public ProfReqResult getProfRequests();
+    public Result handleProfReq(int request_id, boolean operation);
 }

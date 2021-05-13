@@ -25,7 +25,7 @@ public class PublicServiceImpl implements PublicService {
      * @param student 参数封装
      * @return Result
      */
-    public Result regist(Student student) {
+    public Result regist_student(Student student) {
         Result result = new Result();
         result.setCode(400);
         try {
@@ -40,6 +40,43 @@ public class PublicServiceImpl implements PublicService {
                     System.out.println(student.getNetid());
                     result.setMsg("Successfully registered!");
                     result.setCode(200);
+                }
+            }
+        } catch (Exception e) {
+            result.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Result regist_prof(Professor professor){
+        Result result = new Result();
+        result.setCode(400);
+        try {
+            Professor existProfessor = dao.matchProfessor(professor);
+            if(existProfessor == null){
+                // professor does not exist
+                boolean r = dao.professorRegist(professor, false);
+                if (r){
+                    result.setMsg("Successfully registered!");
+                    result.setCode(200);
+                }
+                else{
+                    result.setMsg("Register failure.");
+                    result.setCode(400);
+                }
+            }
+            else{
+                if(existProfessor.getIs_member() == 0){
+                    boolean r = dao.professorRegist(professor, true);
+                    if (r){
+                        result.setMsg("Successfully registered!");
+                        result.setCode(200);
+                    }
+                    else{
+                        result.setMsg("Register failure.");
+                        result.setCode(400);
+                    }
                 }
             }
         } catch (Exception e) {

@@ -55,6 +55,23 @@ const layout = {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
+
+        <Form.Item name="role" label="Role" rules={[
+            {
+              required: true,
+              message: 'Please select a role!'
+            },
+          ]}>
+          <Select
+              placeholder="Select a role"
+              onChange={console.log(0)}
+              allowClear
+          >
+              <Option value="student">Student</Option>
+              <Option value="professor">Professor</Option>
+          </Select>
+        </Form.Item>
+        
         <Form.Item
           label="Email"
           name="email"
@@ -85,21 +102,7 @@ const layout = {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item name="role" label="Role" rules={[
-            {
-              required: true,
-              message: 'Please select a role!'
-            },
-          ]}>
-          <Select
-              placeholder="Select a role"
-              onChange={console.log(0)}
-              allowClear
-          >
-              <Option value="student">Student</Option>
-              <Option value="professor">Professor</Option>
-          </Select>
-        </Form.Item>
+
   
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
