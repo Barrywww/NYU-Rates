@@ -231,30 +231,6 @@ public class PublicServiceImpl implements PublicService {
         return courseListResult;
     }
 
-    // public SearchProfessorResult search_professor(Professor professor){
-    //     SearchProfessorResult searchProfessorResult = new SearchProfessorResult();
-    //     searchProfessorResult.setCode(400);
-
-    //     try{
-    //         professor = dao.searchProfessor(professor);
-    //         if(professor == null){
-    //             searchProfessorResult.setMsg("Unable to query professor");
-    //         }else{
-    //             searchProfessorResult.setMsg("Successfully searched course");
-    //             searchProfessorResult.setCode(200);
-    //             searchProfessorResult.setProfessor_name(professor.getName());
-    //             searchProfessorResult.setProfessor_id(professor.getNetid());
-    //             double rating = dao.searchAverageRating(professor);
-    //             searchProfessorResult.setRating(rating);
-    //         }
-    //     } catch (Exception e) {
-    //         searchProfessorResult.setMsg(e.getMessage());
-    //         e.printStackTrace();
-    //     }
-
-    //     return searchProfessorResult;
-    // }
-
     public ProfListResult search_professor(Professor professor){
         ProfListResult result = new ProfListResult();
         result.setCode(400);

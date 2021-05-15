@@ -222,32 +222,6 @@ class PublicDaoTests {
 
     @Test
     public void testPostComment() throws Exception{
-//        for (int i = 0; i < 3; i++){
-//            Comment c = new Comment();
-//            c.setContent("Useful Course");
-//            c.setDate(LocalDateTime.now());
-//            double rate = 5.0;
-//            c.setRate(rate);
-//            c.setCourse_code("CSCI-SHU 215");
-//            c.setSemester("Fall 2020");
-//            c.setProfessor_id("ogm2");
-//            c.setStudent_id(String.format("student%d", i));
-//            assertTrue(dao.postComment(c));
-//        }
-//
-//        for (int j= 3; j < 6; j++){
-//            Comment c = new Comment();
-//            c.setContent("Learned a lot!");
-//            c.setDate(LocalDateTime.now());
-//            double rate = 5.0;
-//            c.setRate(rate);
-//            c.setCourse_code("CSCI-SHU 220");
-//            c.setSemester("Fall 2020");
-//            c.setProfessor_id("sg191");
-//            c.setStudent_id(String.format("student%d", j));
-//            assertTrue(dao.postComment(c));
-//        }
-
         Comment c1 = new Comment();
         c1.setContent("Interesting course.");
         c1.setDate(LocalDateTime.now());
@@ -270,8 +244,6 @@ class PublicDaoTests {
         c2.setProfessor_id("iil2");
 
         assertFalse(dao.postComment(c2));
-
-
     }
 
     @Test

@@ -2,7 +2,7 @@ package com.example.nyurates.entity.results;
 
 public class Result {
     /**
-     * 数据是否正常请求
+     * status indicator
      */
     private int code;
 

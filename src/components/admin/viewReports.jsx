@@ -100,6 +100,9 @@ class ViewReports extends React.Component {
                 if (json.code !== 200){
                     alert("Operation Failed!");
                 }
+                else{
+                    this.fetchData({})
+                }
             })
         }
     }
@@ -133,7 +136,7 @@ class ViewReports extends React.Component {
                     alert("Operation Failed!");
                 }
                 else{
-                    window.location.reload();
+                    this.fetchData({})
                 }
             })
         }
