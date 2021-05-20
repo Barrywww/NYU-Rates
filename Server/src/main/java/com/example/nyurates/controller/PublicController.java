@@ -41,9 +41,6 @@ public class PublicController {
     @PostMapping(value = "/login")
     @RsaSecurityParameter
     public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
-        // session.setAttribute("loggedIn", "true");
-        // session.setAttribute("role", "student");
-        // return publicService.login(student);
         LoginResult result;
         
         try{
