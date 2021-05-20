@@ -244,8 +244,6 @@ class PublicDaoTests {
         c2.setProfessor_id("iil2");
 
         assertFalse(dao.postComment(c2));
-
-
     }
 
     @Test

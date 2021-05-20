@@ -16,7 +16,8 @@ class SearchPage extends React.Component {
     constructor(props){
         super(props);
         console.log(this.props.location.search);
-        let param = this.props.location.search.slice(1).split("&");
+        let param = this.props.location.search.slice(1).replace("%20", " ");
+        param = param.split("&");
         let st;
         let val;
         for (let v of param){
@@ -87,17 +88,17 @@ class SearchPage extends React.Component {
 			}).then(json => {
 				if (json.code === 200){
 					const listData = [];
-					for (let p of json.profList){
+					for (let p of json.courseList){
 						listData.push({
-							professor_name: p.name,
-							department: p.dept,
-							professor_link: `/profPage?v=${p.netid}`,
+							course_name: p.course_name,
+                            course_code: p.course_code,
+							course_link: `/coursePage?v=${p.course_code}`,
 							comment: p.hot_comment,
 							rating: p.rate
 						})
 					}
 					setTimeout(()=>{this.setState({result: listData, loading: false})}, 1000);
-					console.log(this.state);
+					console.log("set",this.state);
 				}
 			})
 		}
@@ -124,7 +125,7 @@ class SearchPage extends React.Component {
                             Search
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    <div id={"searchWrapperInner"}>
+                    <div id={"searchWrapperInner"} style={{minWidth: "100%"}}>
                         <h1>Showing Results For:  <span style={{fontSize:"1.8rem", fontFamily:"GothamBook"}}>{this.state.st + ", " + this.state.val}</span></h1>
                         <IndexSearchWrapper history={this.props.history} styles={{maxHeight: "50px", width:"70%", zIndex:"90", position: "relative", margin:"15px auto"}}/>
                         {resultList}

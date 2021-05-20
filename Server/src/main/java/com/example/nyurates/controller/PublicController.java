@@ -28,9 +28,14 @@ public class PublicController {
      * @param student
      * @return LoginResult
      */
-    @PostMapping(value = "/regist")
+    @PostMapping(value = "/regist_student")
     public Result regist(@RequestBody Student student){
-        return publicService.regist(student);
+        return publicService.regist_student(student);
+    }
+
+    @PostMapping(value = "/regist_professor")
+    public Result regist(@RequestBody Professor professor){
+        return publicService.regist_prof(professor);
     }
 
     /**
@@ -39,7 +44,7 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    @RsaSecurityParameter
+    // @RsaSecurityParameter
     public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
         LoginResult result;
         
@@ -51,10 +56,8 @@ public class PublicController {
                 result = publicService.loginStudent(student);
                 if (result.getCode() == 200){
                     HttpSession session = request.getSession();
-                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("email", (String) params.get("email"));
                     session.setAttribute("role", "student");
-                    System.out.println(session.getAttribute("role"));
-                    System.out.println(session.getAttribute("loggedIn"));
                 }
                 return result;
             }
@@ -65,7 +68,7 @@ public class PublicController {
                 result = publicService.loginProfessor(professor);
                 if (result.getCode() == 200){
                     HttpSession session = request.getSession();
-                    session.setAttribute("loggedIn", "true");
+                    session.setAttribute("email", (String) params.get("email"));
                     session.setAttribute("role", "professor");
                 }
                 return result;
@@ -87,10 +90,8 @@ public class PublicController {
    @PostMapping(value = "/logout")
    public Result logout(HttpSession session, SessionStatus sessionStatus, @RequestBody Student student){
         try{
-            System.out.println(session.getAttribute("role"));
-            System.out.println(session.getAttribute("loggedIn"));
             session.removeAttribute("role");
-            session.removeAttribute("loggedIn");
+            session.removeAttribute("email");
             session.invalidate();
             sessionStatus.setComplete();
             Result result = new Result();

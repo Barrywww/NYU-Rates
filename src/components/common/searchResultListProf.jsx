@@ -4,7 +4,7 @@ import { StarOutlined} from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
 
 const listData = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) {
     listData.push({
         professor_name: "",
         department: "",
@@ -31,8 +31,14 @@ class ResultsList extends React.Component {
     render() {
         const loading  = this.state.loading;
 
+        let fallback;
+        if (!loading & this.state.data.length === 0){
+            fallback = (<h3 style = {{textAlign: "center"}}><a href="/addProf">No Result? Try add a new profeesor here!</a></h3>)
+        }
+
         return (
-            <>
+            <div>
+                {fallback}
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -52,7 +58,7 @@ class ResultsList extends React.Component {
                             extra={
                                 !loading && (
                                     <Row>
-                                        <Col span={200}>
+                                        <Col span={24}>
                                             <Statistic title="Rate"
                                                        value={item.rating}
                                                        prefix={<StarOutlined />}
@@ -69,15 +75,15 @@ class ResultsList extends React.Component {
                         >
                             <Skeleton loading={loading} active avatar>
                                 <Row style={{marginTop:"10px"}}>
-                                    <Col span={4}>
+                                    <Col span={6}>
                                         <List.Item.Meta
-                                            title={<a href={item.professor_link} style={{fontSize:"18px"}}>{item.professor_name}</a>}
+                                            title={<a href={item.professor_link} style={{fontSize:"24px"}}>{item.professor_name}</a>}
                                             description={item.department}
                                         />
                                     </Col>
-                                    <Col span={20}>
-										<h3>- Hot Comment -</h3>
-                                        {item.comment}
+                                    <Col span={18}>
+										<h2>- Hot Comment -</h2>
+                                        <h3>{item.comment}</h3>
                                     </Col>
                                 </Row>
 
@@ -85,7 +91,7 @@ class ResultsList extends React.Component {
                         </List.Item>
                     )}
                 />
-            </>
+            </div>
         );
     }
 }

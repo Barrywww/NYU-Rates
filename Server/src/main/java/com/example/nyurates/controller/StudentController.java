@@ -10,6 +10,7 @@ import com.example.nyurates.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -28,7 +29,9 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/post_comment")
-    public Result post_comment(@RequestBody Comment comment){
+    public Result post_comment(HttpServletRequest request, @RequestBody Comment comment){
+        HttpSession session = request.getSession(false);
+        comment.setStudent_id(((String) session.getAttribute("email")).split("@")[0]);
         return studentService.post_comment(comment);
     }
 
@@ -50,13 +53,24 @@ public class StudentController {
      * @return Result
      */
     @PostMapping(value = "/reportcomment")
-    public Result report_comment(@RequestBody Report report){
-        return studentService.report_comment(report);
+    public Result report_comment(HttpSession session, @RequestBody Report report){
+        if(((String) session.getAttribute("role")).equals("student")){
+            return studentService.report_comment(report);
+        }
+        else{
+            return new Result();
+        }
+        
     }
 
     @PostMapping(value = "/addprofessor")
-    public Result addprofessor(@RequestBody Prof_req prof_req){
-        return studentService.addprofessor(prof_req);
+    public Result addprofessor(HttpSession session, @RequestBody Prof_req prof_req){
+        if(((String) session.getAttribute("role")).equals("student")){
+            return studentService.addprofessor(prof_req);
+        }
+        else{
+            return new Result();
+        }
     }
 
     @GetMapping(value = "/viewhistory")

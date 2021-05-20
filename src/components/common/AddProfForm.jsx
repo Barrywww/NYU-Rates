@@ -20,22 +20,30 @@ const layout = {
 
   const AddProfForm = () => {
     const onFinish = async(values) => {
-      try {
-        // console.log('Success:', values);
-        login(values.profName,values.Department).then((response) => {
-          if (response.data.code == 200){
-            alert("Adding request posted! Please wait for our review!")  //告知成功信息
-            window.location = '/';
-          }
-          else{
-            alert("Add failed. Please try again.")
-          }
-        })
-      } catch (error) {
-        if (error.response){
-          alert("Add failed. Please try again.")
-        }
+      // console.log('Success:', values);
+      const requestOption = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+        credentials: "include"
       }
+      fetch("http://localhost:8081/student/addprofessor", requestOption).then(response => {
+        if (response.status === 200){
+          return response.json();
+        }
+        else{
+          alert("Request failed, please try again!");
+        }
+      })
+      .then(json => {
+        if (json.code === 200){
+          alert("Your request has been post. Please wait for our review!");
+          window.location.href = "/";
+        }
+        else{
+          alert("Request failed, please try again!");
+        }
+      })
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -54,7 +62,7 @@ const layout = {
       >
         <Form.Item
           label="Professor Name"
-          name="profName"
+          name="professor_name"
           rules={[
             {
               required: true,
@@ -66,13 +74,65 @@ const layout = {
         </Form.Item>
 
         <Form.Item
-        name="Department"
-        label="Department"
-        tooltip="Input the department he/she works in"
+          label="Professor Email"
+          name="professor_email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input new professor email!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+        name="professor_dept"
+        label="Professor Department"
         rules={[
           {
             required: true,
             message: 'Please input his/her department!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="professor_course_name"
+        label="Course Name"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the course name that you rate.'
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      
+      <Form.Item
+        name="professor_course_code"
+        label="Course Code"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the course code that you rate.'
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="professor_course_semester"
+        label="Semester"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the course semester that you rate.'
           },
         ]}
       >

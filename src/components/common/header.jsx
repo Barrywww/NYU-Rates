@@ -58,7 +58,7 @@ class MainHeader extends React.Component{
                     <img src="/images/logo_withtitle.png" height="60px"/>
                 </a>
 
-                <TreeSelect
+                {/* <TreeSelect
                     showSearch={false}
                     style={{ width: '120px', marginTop: "22px" }}
                     dropdownStyle={{ maxHeight: 400, overflow: 'scroll', minWidth:"250px" }}
@@ -135,7 +135,7 @@ class MainHeader extends React.Component{
                             <TreeNode value="Ethnographic Thinking" title="Ethnographic Thinking" />
                         </TreeNode>
                     </TreeNode>
-                </TreeSelect>
+                </TreeSelect> */}
 
 
                 <Menu className="headerMenu menus" theme="light" mode="horizontal">

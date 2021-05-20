@@ -2,6 +2,8 @@ package com.example.nyurates.dao.DaoImpl;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
+import com.example.nyurates.entity.Course;
+import com.example.nyurates.entity.Prof_req;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.Student;
@@ -46,16 +48,44 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public boolean adminDeleteComment(int comment_id) {
-        String query = "DELETE FROM Comments WHERE comment_id = ?";
+    public boolean adminDeleteComment(int comment_id, int report_id) {
+        String query_com = "DELETE FROM Comments WHERE comment_id = ?";
         try{
-            jdbcTemplate.update(query, comment_id);
+            this.deleteReport(report_id);
+            jdbcTemplate.update(query_com, comment_id);
             return true;
         }catch (DataAccessException e) {
             SQLException exception = (SQLException) e.getCause();
             exception.printStackTrace();
         }
         return false;
+    }
+
+
+    @Override
+    public boolean professorRegist(Professor professor, boolean is_member){
+        if (is_member){
+            String query = "UPDATE Professor SET is_member = 1, visible = 1, password = ? WHERE email = ?";
+            try{
+                jdbcTemplate.update(query, professor.getPassword(), professor.getEmail());
+                return true;
+            } catch (DataAccessException e) {
+                SQLException exception = (SQLException) e.getCause();
+                exception.printStackTrace();
+            }
+            return false;
+        }
+        else{
+            String query = "INSERT INTO Professor VALUES (?, ?, ?, ?, ?, 1, 1)";
+            try{
+                jdbcTemplate.update(query, professor.getEmail(), professor.getNetid(), professor.getName(), "", professor.getDept());
+                return true;
+            } catch (DataAccessException e) {
+                SQLException exception = (SQLException) e.getCause();
+                exception.printStackTrace();
+            }
+            return false;
+        }
     }
 
     @Override
@@ -75,7 +105,7 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public ArrayList<Report> getReports(Long report_id, Long comment_id, String comment_user, String course_code){
-        String query = "SELECT report_id, Report.comment_id, content, course_code, comment_user, report_date FROM Report, Comments WHERE Report.comment_id=Comments.comment_id ";
+        String query = "SELECT report_id, Report.comment_id AS comment_id, content, course_code, comment_user, report_date, report_reason FROM Report, Comments WHERE Report.comment_id=Comments.comment_id ";
         MapSqlParameterSource params = new MapSqlParameterSource();
         if (report_id != null){
             query += "AND report_id = :report_id ";
@@ -100,6 +130,7 @@ public class AdminDaoImpl implements AdminDao {
                 for(int i=0; i<result.size(); i++){
                     Report report = new Report();
                     Map<String, Object> map = result.get(i);
+                    report.setReport_id(((Integer) map.get("report_id")).longValue());
                     report.setComment_id((Long) map.get("comment_id"));
                     report.setComment_user((String) map.get("comment_user"));
                     report.setReport_date((LocalDateTime) map.get("report_date"));
@@ -189,5 +220,133 @@ public class AdminDaoImpl implements AdminDao {
             e.printStackTrace();
         }
         return prof_list;
+    }
+
+    @Override
+    public boolean deleteReport(int report_id){
+        String query = "DELETE FROM Report WHERE report_id = ?";
+        try{
+            jdbcTemplate.update(query, report_id);
+            return true;
+        }catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public ArrayList<Prof_req> getProfReq(){
+        ArrayList<Prof_req> result = new ArrayList<Prof_req>();
+
+        String query = "SELECT * FROM Prof_req";
+        try{
+            List<Map<String, Object>> reqResult = jdbcTemplate.queryForList(query);
+            if (reqResult.size() > 0){
+                for (int i=0; i<reqResult.size(); i++){
+                    Map<String, Object> map = reqResult.get(i);
+                    Prof_req req = new Prof_req();
+                    req.setReq_id(Long.valueOf(String.valueOf(map.get("request_id"))));
+                    req.setProfessor_course_code((String) map.get("professor_course_code"));
+                    req.setProfessor_course_semester((String) map.get("professor_course_semester"));
+                    req.setProfessor_course_name((String) map.get("professor_course_name"));
+                    req.setProfessor_email((String) map.get("professor_email"));
+                    req.setProfessor_dept((String) map.get("professor_department"));
+                    req.setProfessor_name((String) map.get("professor_name"));
+                    result.add(req);
+                }
+                return result;
+            }
+        }catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Prof_req getProfReqById(int request_id){
+        Prof_req req = new Prof_req();
+        String query = "SELECT * FROM Prof_req WHERE request_id = ?";
+        try{
+            List<Map<String, Object>> result =  jdbcTemplate.queryForList(query, request_id);
+            System.out.println(request_id);
+            if(result.size() > 0){
+                Map<String, Object> map = result.get(0);
+                req.setReq_id(Long.valueOf(String.valueOf(map.get("request_id"))));
+                req.setProfessor_course_code((String) map.get("professor_course_code"));
+                req.setProfessor_course_semester((String) map.get("professor_course_semester"));
+                req.setProfessor_course_name((String) map.get("professor_course_name"));
+                req.setProfessor_email((String) map.get("professor_email"));
+                req.setProfessor_dept((String) map.get("professor_department"));
+                req.setProfessor_name((String) map.get("professor_name"));
+                return req;
+            }
+        }catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return req;
+    }
+
+    @Override
+    public boolean handleProfReq(int request_id, boolean operation){
+        if(operation){
+            Prof_req prof_req = this.getProfReqById(request_id);
+            Professor prof = new Professor();
+            Course course = new Course();
+            prof.setDept(prof_req.getProfessor_dept());
+            prof.setEmail(prof_req.getProfessor_email());
+            prof.setName(prof_req.getProfessor_name());
+            prof.setVisible(1);
+            prof.setNetid(prof_req.getProfessor_email().split("@")[0]);
+            course.setCourse_code(prof_req.getProfessor_course_code());
+            course.setCourse_name(prof_req.getProfessor_course_name());
+            course.setDept_name(prof_req.getProfessor_dept());
+            course.setLocation("PDNG");
+            course.setSemester(prof_req.getProfessor_course_semester());
+            course.setProfessor_id(prof_req.getProfessor_email().split("@")[0]);
+            this.professorRegist(prof, false);
+            this.addCourse(course);
+            this.deleteReq(request_id);
+            return true;
+        }
+        else{
+            this.deleteReq(request_id);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean addProfessor(Professor professor){
+        return true;
+    }
+
+    @Override
+    public boolean addCourse(Course course){
+        String query = "INSERT INTO Course VALUES (?, ?, ?, ?, ?, ?)";
+        try{
+            jdbcTemplate.update(query, course.getCourse_name(), course.getCourse_code(), course.getDept_name(), course.getLocation(), course.getSemester(), course.getProfessor_id());
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return true;
+
+    }
+
+    @Override
+    public boolean deleteReq(int request_id){
+        String query = "DELETE FROM Prof_req WHERE request_id = ?";
+        try{
+            System.out.println(request_id);
+            jdbcTemplate.update(query, request_id);
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
     }
 }
