@@ -4,8 +4,10 @@ import com.example.nyurates.entity.Admin;
 import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.AdminService;
 
+import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Map;
 
@@ -37,54 +39,170 @@ public class AdminController {
     }
 
     @GetMapping (value = "/stats")
-    public Result getStats(){
-        return adminService.getStatistics();    
+    public Result getStats(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.getStatistics();
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     }
 
     @PostMapping(value = "/student_list")
-    public StudentListResult studentList(@RequestBody Map<String, String> params){
-        return adminService.studentList(params.get("name"), params.get("netid"), params.get("email"));
+    public Result studentList(HttpServletRequest request, @RequestBody Map<String, String> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.studentList(params.get("name"), params.get("netid"), params.get("email"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
+
     }
 
     @PostMapping(value = "/prof_list")
-    public ProfListResult profList(@RequestBody Map<String, String> params){
-        return adminService.profList(params.get("name"), params.get("netid"), params.get("email"), params.get("department"));
+    public Result profList(HttpServletRequest request, @RequestBody Map<String, String> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.profList(params.get("name"), params.get("netid"), params.get("email"), params.get("department"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     }
 
     @RequestMapping(value = "/getreports")
-    public ReportListResult getReports(HttpSession session, @RequestBody Map<String, Object> params){
-        System.out.println(session.getAttribute("role"));
-        return adminService.getReports((Long) params.get("report_id"), (Long) params.get("comment_id"), (String) params.get("comment_user"), (String) params.get("course_code"));
+    public Result getReports(HttpServletRequest request, @RequestBody Map<String, Object> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.getReports((Long) params.get("report_id"), (Long) params.get("comment_id"), (String) params.get("comment_user"), (String) params.get("course_code"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     }
 
     @PostMapping(value = "/reviewcomment")
-    public Result reviewComment(@RequestBody Map<String, Object> params) {
-        return adminService.reviewComment((Integer) params.get("comment_id"), (Integer) params.get("report_id"), (Boolean) params.get("validity"));
+    public Result reviewComment(HttpServletRequest request, @RequestBody Map<String, Object> params) {
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.reviewComment((Integer) params.get("comment_id"), (Integer) params.get("report_id"), (Boolean) params.get("validity"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     }
 
     @RequestMapping (value="/getprofrequests")
-    public ProfReqResult getProfRequests(@RequestBody Map<String, Object> params){
-        return adminService.getProfRequests();
+    public Result getProfRequests(HttpServletRequest request, @RequestBody Map<String, Object> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.getProfRequests();
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     } 
 
     @RequestMapping (value="/handleprofrequests")
-    public Result handleProfRequests(@RequestBody Map<String, Object> params){
-        return adminService.handleProfReq((Integer) params.get("request_id"), (boolean) params.get("operation"));
-    } 
+    public Result handleProfRequests(HttpServletRequest request, @RequestBody Map<String, Object> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.handleProfReq((Integer) params.get("request_id"), (boolean) params.get("operation"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
+    }
 
     @RequestMapping (value="/deletestudent")
-    public Result deleteStudent(@RequestBody Map<String, String> params){
-        return adminService.deleteStudent(params.get("email"));
+    public Result deleteStudent(HttpServletRequest request, @RequestBody Map<String, String> params){
+        HttpSession session = request.getSession(false);
+        try{
+            if (((String) session.getAttribute("role")).equals("admin")){
+                return adminService.deleteStudent(params.get("email"));
+            }
+            else{
+                return new UnauthorizedResult();
+            }
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
     }
 
     @GetMapping (value="/validate")
-    public Result validateAdmin(HttpSession session){
+    public Result validateAdmin(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
         Result result = new Result();
-        if(((String) session.getAttribute("role")).equals("admin")){
+        result.setCode(400);
+        try{
+            if(((String) session.getAttribute("role")).equals("admin")){
+                result.setCode(200);
+                result.setMsg("Validate Success");
+                return result;
+            }
+            return new UnauthorizedResult();
+        }
+        catch (Exception e){
+            return new UnauthorizedResult();
+        }
+    }
+
+    @GetMapping (value="/logout")
+    public Result adminLogout(HttpServletRequest request, SessionStatus sessionStatus){
+        HttpSession session = request.getSession(false);
+        try{
+            session.removeAttribute("role");
+            session.removeAttribute("email");
+            session.invalidate();
+            sessionStatus.setComplete();
+            Result result = new Result();
             result.setCode(200);
-            result.setMsg("Validate Success");
+            result.setMsg("Successfully logged out.");
             return result;
         }
-        return result;
+        catch (Exception e){
+            e.printStackTrace();
+            Result result = new Result();
+            result.setCode(400);
+            return result;
+        }
     }
 }

@@ -105,7 +105,6 @@ public class PublicController {
             result.setCode(400);
             return result;
         }
-
    }
 
     @PostMapping(value = "/view_course")
