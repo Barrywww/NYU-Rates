@@ -15,6 +15,10 @@ for (let i = 0; i < 10; i++) {
 }
 
 class ResultsList extends React.Component {
+    /**
+     * the search result list for professor
+     * @param {object} state - the result list for professor that match with the input information
+     */
     constructor(props){
         super(props)
         this.state = {loading: true, data: listData};
