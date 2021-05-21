@@ -1,18 +1,16 @@
 import React, {lazy} from "react";
-import { Layout, Statistic, Menu, Breadcrumb, Row, Col, Button, Card, Divider } from 'antd';
+import { Layout, Menu} from 'antd';
 import {
     UserOutlined,
-    LaptopOutlined,
     NotificationOutlined,
-    HomeTwoTone,
     HomeOutlined,
-    TeamOutlined, ReadOutlined, ArrowUpOutlined, ArrowDownOutlined
+    TeamOutlined, StopTwoTone
 } from '@ant-design/icons';
 import {Link, Switch, Route, Redirect} from "react-router-dom";
 import http from "../services/httpService";
 
 const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 const AdminHome = lazy(() => import("../components/admin/home"));
 const StudentMgmt = lazy(() => import("../components/admin/studentMgmt"));
@@ -21,6 +19,11 @@ const ViewReports = lazy(() => import("../components/admin/viewReports"));
 const ProfReq = lazy(() => import("../components/admin/profReq"));
 
 class adminMain extends React.Component {
+    /**
+     * Admin Portal Homepage
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -37,6 +40,9 @@ class adminMain extends React.Component {
         })
     }
 
+    /**
+     * Window Resize Handler
+     */
     componentDidMount() {
         window.addEventListener("resize", this.handleResize.bind(this));
         this.handleResize();
@@ -50,6 +56,11 @@ class adminMain extends React.Component {
         
     }
 
+    /**
+     * Performance improvement: diff rendering
+     * @param nextProps
+     * @param nextState
+     */
     shouldComponentUpdate(nextProps, nextState){
         for (let k in this.state){
             if(this.state[k] !== nextState[k]){
@@ -59,6 +70,9 @@ class adminMain extends React.Component {
         return false;
     }
 
+    /**
+     * Window Resize Handler
+     */
     handleResize() {
         if (document.body.scrollWidth <= 600){
             this.setState({collapsed: true});
@@ -68,11 +82,29 @@ class adminMain extends React.Component {
         }
     }
 
+    /**
+     * Menu Selection Handler
+     * @param key - menu key
+     */
     handleMenuKey(key) {
         this.setState({selectedKey: key}, ()=>{console.log(this.state)});
-
     }
 
+    /**
+     * Logout Handler
+     */
+    handleLogout = () => {
+        const c = confirm("Are you sure to log out?");
+        if (c){
+            http.get("admin/logout");
+            sessionStorage.removeItem("adminStatus");
+            window.location.href="../admin/login";
+        }
+    }
+
+    /**
+     * Toggle Handler
+     */
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -107,6 +139,7 @@ class adminMain extends React.Component {
                             <SubMenu key="sub3" icon={<NotificationOutlined />} title="Comments">
                                 <Menu.Item key="9"><Link to={"./viewReports"}>Reports</Link></Menu.Item>
                             </SubMenu>
+                            <Menu.Item key="10" icon={<StopTwoTone twoToneColor="#fc2d1e"/>}onClick={this.handleLogout}>Logout</Menu.Item>
                         </Menu>
                     </Sider>
                     <Switch>

@@ -1,11 +1,9 @@
 import React from "react";
-import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown,Form, Checkbox} from 'antd';
+import {Layout} from 'antd';
 import "../css/AboutUs.css";
 import MainHeader from "../components/common/header";
 
-// function App() {return <h1>Hello World!</h1>}
-const { Header, Content, Footer } = Layout;
-const {Option} = Select;
+const {Content, Footer } = Layout;
 
 class AboutUs extends React.Component{
 

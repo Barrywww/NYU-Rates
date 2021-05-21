@@ -8,6 +8,11 @@ const {Content} = Layout;
 const GeneralModal = lazy(() => import("../common/modal"));
 
 class ProfMgmt extends React.Component {
+    /**
+     * Professor Management Class
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {data: [], hasData: true};
@@ -34,6 +39,10 @@ class ProfMgmt extends React.Component {
         this.fetchData({});
     }
 
+    /**
+     * fetch professor_list
+     * @param values - input data of form
+     */
     async fetchData(values) {
         http.post("admin/prof_list", values).then(response => {
             if (response.data.code === 200){
@@ -52,10 +61,17 @@ class ProfMgmt extends React.Component {
         })
     }
 
+    /**
+     * onFinish trigger of Ant.d Form
+     * @param values - form values
+     */
     onFinish = (values) => {
         this.fetchData(values);
     }
 
+    /**
+     * menu selection handler
+     */
     componentDidMount(){
         this.props.menuHandler("6");
         console.log(this.state);

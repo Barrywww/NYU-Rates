@@ -11,11 +11,15 @@ public class Comment {
     private Long dislikes;
     private double rate;
     private String course_code;
+    private String course_name;
     private String semester;
     private String professor_id;
+    private String professor_name;
     private String student_id;
 
-    public Comment(Long comment_id, String content, LocalDateTime date, Long likes, Long dislikes, double rate, String course_code, String semester, String professor_id, String student_id){
+    public Comment(Long comment_id, String content, LocalDateTime date, Long likes, Long dislikes,
+                   double rate, String course_code, String semester, String professor_id, String student_id,
+                   String profesor_name, String course_name){
         this.comment_id = comment_id;
         this.content = content;
         this.date = date;
@@ -26,6 +30,8 @@ public class Comment {
         this.semester = semester;
         this.professor_id = professor_id;
         this.student_id = student_id;
+        this.professor_name = profesor_name;
+        this.course_name = course_name;
     }
 
     public Comment(){
@@ -110,5 +116,21 @@ public class Comment {
 
     public void setStudent_id(String student_id){
         this.student_id = student_id;
+    }
+
+    public String getProfessor_name(){
+        return this.professor_name;
+    }
+
+    public void setProfessor_name(String professor_name){
+        this.professor_name = professor_name;
+    }
+
+    public String getCourse_name(){
+        return this.course_name;
+    }
+
+    public void setCourse_name(String course_name){
+        this.course_name = course_name;
     }
 }

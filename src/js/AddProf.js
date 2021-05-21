@@ -4,11 +4,13 @@ import AddProfForm from '../components/common/AddProfForm';
 import "../css/login.css";
 import MainHeader from "../components/common/header";
 
-// function App() {return <h1>Hello World!</h1>}
 const {Content, Footer } = Layout;
-const {Option} = Select;
 
 class AddProf extends React.Component{
+    /**
+     * Add Professor Class
+     * @constructor
+     */
     render(){
         return(
             <Layout className="layout" style={{minHeight: "100%"}}>

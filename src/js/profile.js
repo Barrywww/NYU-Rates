@@ -1,15 +1,14 @@
 import React, {Component} from "react";
-import {Layout, Select, Row, Col} from 'antd';
+import {Layout, Select} from 'antd';
 import "../css/index.css";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
-import IndexSearchWrapper from "../components/common/searchbar";
 import "../css/profile.css";
 import {Table} from 'antd';
-import {data,columns,comments} from '../components/common/commentTable';
+import {columns} from '../components/common/commentTable';
+import http from "../services/httpService";
 
-const {Header,Content,Footer} = Layout;
-const {Option} = Select;
+const {Content} = Layout;
 
 class profile extends Component {
 
@@ -23,11 +22,27 @@ class profile extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {"user" : JSON.parse(localStorage.getItem('userInfo'))};
+        this.state = {"user" : JSON.parse(localStorage.getItem('userInfo')), data:[]};
     }
 
     componentDidMount() {
-        const commentContent = {comments};
+        http.get("student/viewhistory")
+        .then(response => {
+            if (response.data.code === 200){
+                let d = [];
+                for (let c of response.data.comments){
+                    d.push({
+                        key: c.comment_id,
+                        name: c.professor_name,
+                        course: c.course_name,
+                        rate: c.rate,
+                        time: c.date.split("T")[0],
+                        description: c.content
+                    })
+                }
+                this.setState({data: d});
+            }
+        })
     }
     
     render() { 
@@ -35,13 +50,12 @@ class profile extends Component {
             <Layout className="layout" style={{minHeight: "100%"}}>
                 <MainHeader />
                 <Content>   {/*这个div是头像和欢迎-->*/}
-                    <div style={{ display:"flex",justifyContent:'center',margin:'40px 0px'}}>
-                        <div>
-                            <img src = "/images/userprofile.jpeg" style={{display:"block",borderRadius:'80px'}} />
+                    <div style={{ display:"flex",justifyContent:'center', alignItems:"center", margin:'40px 0px'}}>
+                        <div style={{textAlign: "center"}}>
+                            <img src = "/images/userprofile.jpeg" style={{borderRadius:'80px', width:"75%"}} />
                             <p style={{marginBottom:'2px'}}>Student Profile</p>
-                            <p>email : {this.state.user.email}</p>
                         </div>
-                        <div style={{marginLeft:'70px',marginTop:'50px'}}>
+                        <div style={{marginLeft:'30px'}}>
                             <h1 id='profile-bannerText'>{this.state.user.username}'s Personal Page</h1>
                             <p>You can check your comment history here</p>
                         </div>
@@ -52,10 +66,10 @@ class profile extends Component {
                         <Table columns={columns} expandable={{
                             expandedRowRender: record => <p style={{ margin: 0,fontSize:'1rem' }}>{record.description}</p>,
                             rowExpandable: record => record.name !== 'Not Expandable',
-                            }} dataSource={data}/>
+                            }} dataSource={this.state.data}/>
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Ant UED</Footer>
+                <MainFooter />
             </Layout>
          );
     }

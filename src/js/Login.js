@@ -1,14 +1,15 @@
 import React from "react";
-import {Layout, Select, Row, Col} from 'antd';
+import {Layout, Row, Col} from 'antd';
 import LoginForm from '../components/common/loginForm';
 import "../css/login.css";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 
-// function App() {return <h1>Hello World!</h1>}
 const {Content, Footer } = Layout;
-const {Option} = Select;
 
+/**
+ * Login page
+ */
 class Login extends React.Component{
     render(){
         return(

@@ -3,6 +3,8 @@ package com.example.nyurates.service;
 import com.example.nyurates.dao.PublicDao;
 import com.example.nyurates.entity.Comment;
 import com.example.nyurates.entity.Course;
+import com.example.nyurates.entity.Professor;
+import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.CourseStatsResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,34 +20,27 @@ public class ProfessorServiceImpl implements ProfessorService{
     @Autowired
     private PublicDao dao;
 
+    public CommentsResult get_prof_stats(Professor professor){
+        CommentsResult commentsResult = new CommentsResult();
+        commentsResult.setCode(400);
     /**
      * Search Professor Course Stats
      * @param course
      * @return CourseStatsResult
      */
-    public CourseStatsResult get_course_stats(Course course){
-        CourseStatsResult courseStatsResult = new CourseStatsResult();
-        courseStatsResult.setCode(400);
-
         try{
-            course = dao.matchCourse(course);
-            if(course == null){
-                courseStatsResult.setMsg("Unable to query the provided course code.");
-                courseStatsResult.setCode(400);
+            ArrayList<Comment> comments = dao.searchComments(professor);
+            if(comments.size() > 0){
+                commentsResult.setMsg("Successfully get comments");
+                commentsResult.setCode(200);
+                commentsResult.setComments(comments);
             }else{
-                courseStatsResult.setMsg("Successfully get course!");
-                courseStatsResult.setCode(200);
-                ArrayList<Comment> comments = dao.searchComments(course);
-                courseStatsResult.setComments(comments);
-                double rating = dao.searchAverageRating(course);
-                courseStatsResult.setRating(rating);
-                courseStatsResult.setComments_num(comments.size());
+                commentsResult.setMsg("Unable to query comments");
             }
         } catch (Exception e) {
-            courseStatsResult.setMsg(e.getMessage());
+            commentsResult.setMsg(e.getMessage());
             e.printStackTrace();
         }
-
-        return courseStatsResult;
+        return commentsResult;
     }
 }

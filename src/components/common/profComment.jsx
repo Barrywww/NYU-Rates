@@ -2,63 +2,34 @@ import React, { Component } from 'react';
 import { Table, Input, Button, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { FilterTwoTone } from '@ant-design/icons';
-import axios from 'axios';
+import http from "../../services/httpService";
 
 
 
-const data = [
-    {
-      key: 1,
-      name: 'John Brown',
-      course: 'Maths',
-      rate: 32,
-      time: 'New York No. 1 Lake Park',
-      description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-    },
-    {
-      key: 2,
-      name: 'Jim Green',
-      course: 'Maths',
-      rate: 42,
-      time: 'London No. 1 Lake Park',
-      description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-    },
-    {
-      key: 3,
-      name: 'John',
-      course: 'Maths',
-      rate: 29,
-      time: 'Jiangsu No. 1 Lake Park',
-      description: 'I hate him.',
-    },
-    {
-      key: 4,
-      name: 'Joe Black',
-      course: 'Maths',
-      rate: 32,
-      time: 'Sidney No. 1 Lake Park',
-      description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-    },
-    {
-        key: 5,
-        name: 'Joe Black',
-        course: 'Maths',
-        rate: 32,
-        time: 'Sidney No. 1 Lake Park',
-        description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-      },
-  ];
-
-
-
-  class profTable extends Component {
+  class ProfTable extends Component {
     state = {
       searchText: '',
       searchedColumn: '',
+      data: []
     };
 
     componentDidMount() {
-        // const {data : comments} = async () => await axios.get('xxxx'); 
+        http.get("professor/stats_course").then(response => {
+          if (response.data.code === 200){
+            let d = [];
+            for (let c of response.data.comments){
+              d.push({
+                key: c.comment_id,
+                name: c.student_id,
+                course: c.course_name,
+                rate: c.rate,
+                time: c.date.split("T")[0],
+                description: c.content
+              })
+            }
+            this.setState({data: d});
+          }
+        })
     }
   
     getColumnSearchProps = dataIndex => ({    //这一整个就是个filter而已，插入到column里去的
@@ -141,7 +112,7 @@ const data = [
     render() {
         const columns = [
             {
-              title: 'User Name',
+              title: 'User',
               dataIndex: 'name',
               key:'name',
             },
@@ -167,8 +138,8 @@ const data = [
         return <Table columns={columns} expandable={{
             expandedRowRender: record => <p style={{ margin: 0,fontSize:'1rem' }}>{record.description}</p>,
             rowExpandable: record => record.name !== 'Not Expandable',
-            }} dataSource={data} />;
+            }} dataSource={this.state.data} />;
       }
     }
   
-    export default profTable;
+    export default ProfTable;

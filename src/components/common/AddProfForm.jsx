@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Input, Button } from 'antd';
-import {login} from '../../services/authService';   
 
 const layout = {
     labelCol: {
@@ -19,8 +18,11 @@ const layout = {
   
 
   const AddProfForm = () => {
+    /**
+     * Submit Prof Request Form
+     * @return React.Component
+     */
     const onFinish = async(values) => {
-      // console.log('Success:', values);
       const requestOption = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

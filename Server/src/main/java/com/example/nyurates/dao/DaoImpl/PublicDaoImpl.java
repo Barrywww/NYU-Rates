@@ -96,28 +96,28 @@ public class PublicDaoImpl implements PublicDao {
      */
     @Override
     public boolean professorRegist(Professor professor, boolean is_member){
+        String query;
         if (is_member){
-            String query = "UPDATE Professor SET is_member = 1, visible = 1, password = ? WHERE email = ?";
+            query = "UPDATE Professor SET is_member = 1, visible = 1, password = ? WHERE email = ?";
             try{
-                jdbcTemplate.update(query, professor.getPassword(), professor.getEmail());
+                jdbcTemplate.update(query, DigestUtils.md5Hex(professor.getPassword()), professor.getEmail());
                 return true;
             } catch (DataAccessException e) {
                 SQLException exception = (SQLException) e.getCause();
                 exception.printStackTrace();
             }
-            return false;
         }
         else{
-            String query = "INSERT INTO Professor VALUES (?, ?, ?, ?, ?, 1, 0)";
+            query = "INSERT INTO Professor VALUES (?, ?, ?, ?, ?, 1, 1)";
             try{
-                jdbcTemplate.update(query, professor.getEmail(), professor.getNetid(), professor.getName(), professor.getPassword(), professor.getDept());
+                jdbcTemplate.update(query, professor.getEmail(), professor.getNetid(), professor.getName(), DigestUtils.md5Hex(professor.getPassword()), professor.getDept());
                 return true;
             } catch (DataAccessException e) {
                 SQLException exception = (SQLException) e.getCause();
                 exception.printStackTrace();
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -209,10 +209,6 @@ public class PublicDaoImpl implements PublicDao {
      */
     @Override
     public ArrayList<Course> searchCourse(Course course){
-        // String query= "SELECT course_name, code, department, " +
-        //         "(SELECT content FROM Comments WHERE Comments.course_code = Course.code ORDER BY likes DESC LIMIT 1) AS hot_comment, " +
-        //         "IFNULL((SELECT AVG(rate) FROM Comments WHERE course_code = Course.code AND Comments.semester = Course.semester), 0.0) AS rate " +
-        //         "FROM Course WHERE (code LIKE ? OR course_name LIKE ?)";
         String query = "SELECT * FROM SearchCourse WHERE (code LIKE ? OR course_name LIKE ?)";
         ArrayList<Course> resultList = new ArrayList<Course>();
         try{
@@ -285,7 +281,10 @@ public class PublicDaoImpl implements PublicDao {
      */
     @Override
     public ArrayList<Comment> searchComments(Professor professor){
-        String query = "SELECT * FROM Comments WHERE professor_id = ?";
+        String query = "SELECT DISTINCT * FROM Comments " +
+                "INNER JOIN Professor P on Comments.professor_id = P.netid " +
+                "INNER JOIN Course C on Comments.course_code = C.code " +
+                "WHERE Comments.professor_id = ? AND Comments.semester = C.semester; ";
         ArrayList<Comment> comments = new ArrayList<Comment>();
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query, professor.getNetid());
@@ -303,6 +302,8 @@ public class PublicDaoImpl implements PublicDao {
                     comment.setSemester((String) map.get("semester"));
                     comment.setProfessor_id((String) map.get("professor_id"));
                     comment.setStudent_id((String) map.get("user_id"));
+                    comment.setProfessor_name((String) map.get("name"));
+                    comment.setCourse_name((String) map.get("course_name"));
                     comments.add(comment);
                 }
             }
@@ -320,10 +321,14 @@ public class PublicDaoImpl implements PublicDao {
      */
     @Override
     public ArrayList<Comment> searchComments(Student student){
-        String query = "SELECT * FROM Comments WHERE user_id = ?";
-        ArrayList<Comment> comments = new ArrayList<Comment>();
+        String query = "SELECT * FROM Comments " +
+                "INNER JOIN Professor P on Comments.professor_id = P.netid " +
+                "INNER JOIN Course C on Comments.course_code = C.code " +
+                "WHERE Comments.user_id = ? AND Comments.semester = C.semester;";
+        ArrayList<Comment> comments = new ArrayList<>();
         try{
             List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getNetid());
+            System.out.println(result);
             if (result.size() > 0) {
                 for (int i = 0; i < result.size(); i ++){
                     Comment comment = new Comment();
@@ -338,6 +343,8 @@ public class PublicDaoImpl implements PublicDao {
                     comment.setSemester((String) map.get("semester"));
                     comment.setProfessor_id((String) map.get("professor_id"));
                     comment.setStudent_id((String) map.get("user_id"));
+                    comment.setProfessor_name((String) map.get("name"));
+                    comment.setCourse_name((String) map.get("course_name"));
                     comments.add(comment);
                 }
             }

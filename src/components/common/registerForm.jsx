@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
-import {register} from '../../services/userService'
+import { Form, Input, Select, Button} from 'antd';
+import http from "../../services/httpService";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -44,16 +44,40 @@ const RegisterForm = () => {
      * @returns {number} - request success or fail code from the backend
      */
   const onFinish = async(values) => {
-      // try {
-      //   console.log('Received values of form: ', values);
-      //   await userService.register(values);
-      // } catch (error) {
-      //     if (error.response && error.response.status == 400){
-      //         alert(error.response.data);
-      //     }
-      // };
-      alert("Register success!");
-      window.location.href="/login";
+      if (selectedRole === "student"){
+        http.post("public/regist_student",{
+          email : values.email,
+          netid: values.email.split("@")[0],
+          password : values.password,
+          name : values.name
+        }).then(response => {
+        if (response.data.code === 200){
+          alert("Register success!");
+          window.location.href="/login";
+        }
+        else{
+          alert("Register failed. Please check your information.")
+        }
+        })
+      }
+      else if (selectedRole === "professor"){
+        http.post("public/regist_professor",{
+          email : values.email,
+          netid: values.email.split("@")[0],
+          password : values.password,
+          name : values.name,
+          dept: values.department
+        }).then(response => {
+        if (response.data.code === 200){
+          alert("Register success!");
+          window.location.href="/login";
+        }
+        else{
+          alert("Register failed. Please check your information.")
+        }
+        })
+      }
+
   };
 
     /**
@@ -82,11 +106,11 @@ const RegisterForm = () => {
   )
     
   let placeholder;
-  if (selectedRole === "professor")  {
-      placeholder = professorDept;
-  }
-  else{
-      placeholder = "";    
+    if (selectedRole === "professor")  {
+        placeholder = professorDept;
+    }
+    else{
+        placeholder = "";    
   }
 
   return (

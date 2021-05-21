@@ -1,39 +1,30 @@
 import React from "react";
 import {
     Layout,
-    Menu,
     Breadcrumb,
     Input,
     Select,
-    AutoComplete,
     Row,
     Col,
-    Dropdown,
     Form,
-    Checkbox,
     List, Statistic
 } from 'antd';
 import "../css/profPage.css";
 import MainHeader from "../components/common/header";
+import MainFooter from "../components/common/footer";
 import {
     LikeOutlined,
-    MessageOutlined,
     StarOutlined,
-    DislikeOutlined,
-    WarningOutlined,
-    DownOutlined, DownCircleOutlined, LikeFilled, LikeTwoTone,DislikeTwoTone
+    WarningOutlined, DownCircleOutlined, LikeTwoTone
 } from "@ant-design/icons";
-import { UserOutlined } from '@ant-design/icons';
-import Avatar from "antd/es/avatar/avatar";
-import { Button, Radio } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { Rate } from 'antd'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
+import http from "../services/httpService";
 
-// function App() {return <h1>Hello World!</h1>}
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const {Option} = Select;
 
 const listData = {
@@ -76,12 +67,13 @@ class LikeBtn extends React.Component{
         };
     }
     islike =()=>{
+        clearTimeout();
         /**
          * Like the course and change the number for the dislikes
          */
         let liked=this.state.liked;
         if(liked){
-            if(liked==='like'){
+            if(liked === 'like'){
                 this.setState({liked:null})
                 this.setState({like:this.state.like-1});
             }
@@ -90,13 +82,23 @@ class LikeBtn extends React.Component{
                 this.setState({liked:'like'});
                 this.setState({like:this.state.like+1});
 
+
             }
         }
         else {
-            this.setState({
-                like:this.state.like+1
-            });
-            this.setState({liked:'like'});
+            setTimeout(() => {
+                http.post("student/handle_like", {comment_id: this.props.commentid, isLike: true}).then(response => {
+                    if (response.data.code === 401){
+                        alert("Please login!")
+                    }
+                    else{
+                        this.setState({
+                            like:this.state.like+1
+                        });
+                        this.setState({liked:'like'});
+                    }
+                })
+            }, 200)
         }
     };
     render(){
@@ -109,60 +111,6 @@ class LikeBtn extends React.Component{
                 onClick={this.islike}
                 icon={icon}
                 text={this.state.like}
-                key="list-vertical-like-o"
-                style={{width:60, cursor: "pointer"}}
-            />
-        );
-    }
-}
-
-class DisLikeBtn extends React.Component{
-    /**
-     * DisLikeBtn class，the dislike button for the course comment
-     * @constructor
-     * @param {object} state - whether the student dislike the comment or not and the current number of the dislikes for the comment
-     */
-    constructor(props){
-        super(props)
-        this.state={
-            dislike:props.num,
-            disliked:null,
-        };
-    }
-    isdislike =()=>{
-        /**
-         * dislike the course and change the number of the dislikes for the comment
-         */
-        let disliked=this.state.disliked;
-        if(disliked){
-            if(disliked==='dislike'){
-                this.setState({disliked:null})
-                this.setState({dislike:this.state.dislike-1});
-            }
-            else
-            {
-                this.setState({disliked:'dislike'});
-                this.setState({dislike:this.state.dislike+1});
-
-            }
-        }
-        else {
-            this.setState({
-                dislike:this.state.dislike+1
-            });
-            this.setState({disliked:'dislike'});
-        }
-    };
-    render(){
-        let icon = DislikeOutlined;
-        if (this.state.disliked !== null){
-            icon = DislikeTwoTone;
-        }
-        return(
-            <IconText
-                onClick={this.isdislike}
-                icon={icon}
-                text={this.state.dislike}
                 key="list-vertical-like-o"
                 style={{width:60, cursor: "pointer"}}
             />
@@ -289,7 +237,7 @@ class CoursePage extends React.Component{
                 if (json.comments.length > 0){
                     for (let c of json.comments){
                         listData.comment.push({
-                            time: c.date.slice(0,3).join("-"),
+                            time: c.date.split("T")[0],
                             comment_id: c.comment_id,
                             course_code:c.course_code,
                             username:c.student_id,
@@ -333,8 +281,11 @@ class CoursePage extends React.Component{
             if(json.code === 200){
                 window.location.reload();
             }
+            else if (json.code === 401) {
+                alert("Please login first!");
+            }
             else{
-                alert("Post failed, please try again.");
+                alert("Post failed! Please try again.")
             }
         })
     }
@@ -461,8 +412,7 @@ class CoursePage extends React.Component{
                                         style = {{marginTop:"15px",minHeight:"150px"}}
                                         key={item.title}
                                         actions={[
-                                            <LikeBtn num={item.likes}/>,
-                                            // <DisLikeBtn num={item.dislikes}/>,
+                                            <LikeBtn commentid={item.comment_id} num={item.likes}/>,
                                             <Report commentid={item.comment_id}/>
                                         ]}
                                         extra={
@@ -493,7 +443,7 @@ class CoursePage extends React.Component{
                         </Col>
                     </Row>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Ant UED</Footer>
+                <MainFooter />
             </Layout>
 
 

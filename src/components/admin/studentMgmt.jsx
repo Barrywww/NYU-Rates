@@ -1,6 +1,6 @@
 import React, {lazy} from 'react';
 import {Link} from 'react-router-dom';
-import {Divider, Layout, Button, Form, Checkbox, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
+import {Layout, Button, Form, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
 import http from '../../services/httpService';
 
 const {Content} = Layout;
@@ -8,6 +8,11 @@ const {Content} = Layout;
 const GeneralModal = lazy(() => import("../common/modal"));
 
 class StudentMgmt extends React.Component {
+    /**
+     * Student Management Page
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {data: [], hasData: false};
@@ -38,6 +43,10 @@ class StudentMgmt extends React.Component {
         this.fetchData({})
     }
 
+    /**
+     * Fetch student list
+     * @param values - values from props
+     */
     async fetchData(values) {
         http.post("admin/student_list", values).then(response => {
             if (response.data.code === 200){
@@ -53,11 +62,10 @@ class StudentMgmt extends React.Component {
         })
     }
 
-
-    handleHasData(){
-        this.setState({hasData: !this.state.hasData});
-    }
-
+    /**
+     * Delete User
+     * @param key - user id
+     */
     handleDelete(key) {
         const r = confirm("Are you sure to delete user: " + key + "?");
         if (r){
@@ -73,6 +81,10 @@ class StudentMgmt extends React.Component {
         };
     }
 
+    /**
+     * Form OnFinish Trigger
+     * @param values - values from form.
+     */
     onFinish = (values) => {
         this.fetchData(values);
     }

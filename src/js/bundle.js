@@ -8,9 +8,10 @@ import "../css/index.css";
 import 'antd/dist/antd.compact.css'
 import Logout from "../components/common/logout";
 
-// import IndexPage from "./index";
+/**
+ * Lazy loading.
+ */
 const IndexPage = lazy(() => import('./index'));
-const TestPage = lazy(() => import("./TestPage"));
 const LoginPage = lazy(() => import("./Login"));
 const RegisterPage = lazy(() => import("./Register"));
 const AboutUsPage = lazy(() => import("./AboutUs"));
@@ -24,6 +25,9 @@ const coursePage = lazy(() => import("./coursePage"));
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+/**
+ * Main Router for the project
+ */
 class MainRouter extends React.Component{
 
     state = {};
@@ -51,7 +55,6 @@ class MainRouter extends React.Component{
                         <Route path="/coursePage" component={coursePage} />
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/addProf" component={AddProf}/>
-                        <Route path="/test" component={TestPage}/>
                         <Route path="/search" component={SearchPage}/>
                         <Route path="/admin" component={adminRouter}/>
                         <Route path="/" component={IndexPage}/>

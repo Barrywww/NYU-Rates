@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Input, Button, Select} from 'antd';
 import {login} from '../../services/authService';
 

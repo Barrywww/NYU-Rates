@@ -5,11 +5,19 @@ import http from "../../services/httpService";
 const {Content} = Layout;
 
 class adminHome extends React.Component{
+    /**
+     * adminHomepage Class
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {comments: 0, courses: 0, profs: 0, users: 0};
     }
 
+    /**
+     * Get Statistical data
+     */
     componentDidMount() {
         this.props.menuHandler("0");
         http.get("admin/stats").then(response => {
