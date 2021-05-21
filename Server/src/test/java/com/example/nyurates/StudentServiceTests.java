@@ -20,6 +20,9 @@ public class StudentServiceTests {
     @Autowired
     private StudentService studentService;
 
+    /**
+     * Test post_comment function
+     */
     @Test
     public void testPost_comment() throws Exception{
         Comment c1 = new Comment();
@@ -50,6 +53,9 @@ public class StudentServiceTests {
         assertEquals("Unable to post comment", r2.getMsg());
     }
 
+    /**
+     * Test handle_like function
+     */
     @Test
     public void testHandle_like() throws Exception{
         Long com_id1 = 2L;
@@ -74,6 +80,9 @@ public class StudentServiceTests {
 
     }
 
+    /**
+     * Test addprofessor function
+     */
     @Test
     public void testAddprofessor() throws Exception{
         Prof_req req1 = new Prof_req();
@@ -91,6 +100,9 @@ public class StudentServiceTests {
 
     }
 
+    /**
+     * Test report_comment function
+     */
     @Test
     public void testReport_comment() throws Exception{
         Report report1 = new Report();
@@ -109,6 +121,9 @@ public class StudentServiceTests {
         assertEquals("Successful!", r1.getMsg());
     }
 
+    /**
+     * Test view_history function
+     */
     @Test
     public void testView_history() throws Exception{
         Student s1 = new Student();

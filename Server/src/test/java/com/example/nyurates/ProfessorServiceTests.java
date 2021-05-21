@@ -14,6 +14,9 @@ public class ProfessorServiceTests {
     @Autowired
     ProfessorService professorService;
 
+    /**
+     * Test get_course_stats function
+     */
     @Test
     public void testGet_course_stats() throws Exception{
         Course c1 = new Course();

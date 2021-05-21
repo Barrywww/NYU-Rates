@@ -17,6 +17,9 @@ class PublicDaoTests {
     @Autowired
     private PublicDao dao;
 
+    /**
+     * Test studentLogin function
+     */
     @Test
     public void testStudentLogin() throws Exception{
         Student student1 = new Student();
@@ -30,6 +33,9 @@ class PublicDaoTests {
         assertEquals("zy1190", result.getNetid());
     }
 
+    /**
+     * Test professorLogin function
+     */
     @Test
     public void testProfessorLogin() throws Exception{
         Professor p1 = new Professor();
@@ -42,6 +48,9 @@ class PublicDaoTests {
         assertEquals("pam32", r.getNetid());
     }
 
+    /**
+     * Test studentRegist function
+     */
     @Test
     public void testStudnetRegist() throws Exception{
         Student s1 = new Student();
@@ -54,6 +63,9 @@ class PublicDaoTests {
         assertTrue(r);
     }
 
+    /**
+     * Test searchByEmail function
+     */
     @Test
     public void testSearchByEmail() throws Exception{
         Student s1 = new Student();
@@ -66,6 +78,9 @@ class PublicDaoTests {
         assertEquals("Student0", r.getName());
     }
 
+    /**
+     * Test matchCourse function
+     */
     @Test
     public void testMatchCourse() throws Exception{
         Course c1 = new Course();
@@ -81,6 +96,9 @@ class PublicDaoTests {
         assertEquals("CENG-SHU 201", r2.getCourse_code());
     }
 
+    /**
+     * Test searchCourse function
+     */
     @Test
     public void testSearchCourse() throws Exception{
         Course c1 = new Course();
@@ -104,6 +122,9 @@ class PublicDaoTests {
         assertEquals("CENG-SHU 201", r2.get(0).getCourse_code());
     }
 
+    /**
+     * Test searchComments function
+     */
     @Test
     public void testSearchComments() throws Exception{
         Student s1 = new Student();
@@ -133,6 +154,9 @@ class PublicDaoTests {
 
     }
 
+    /**
+     * Test searchAverageRating function
+     */
     @Test
     public void testSearchAverageRating() throws Exception{
         Professor p1 = new Professor();
@@ -149,6 +173,9 @@ class PublicDaoTests {
         assertEquals(rate, r2, 0.01);
     }
 
+    /**
+     * Test matchProfessor function
+     */
     @Test
     public void testMatchProfessor() throws Exception{
         Professor p1 = new Professor();
@@ -164,6 +191,9 @@ class PublicDaoTests {
         assertEquals("Paul-Andre Mellies", r2.getName());
     }
 
+    /**
+     * Test searchProfessor function
+     */
     @Test
     public void testSearchProfessor() throws Exception{
         Professor p1 = new Professor();
@@ -187,6 +217,9 @@ class PublicDaoTests {
         assertEquals("Paul-Andre Mellies", professors4.get(0).getName());
     }
 
+    /**
+     * Test searchProfessorCourse function
+     */
     @Test
     public void testSearchProfessorCourse() throws Exception{
         Professor p1 = new Professor();
@@ -220,6 +253,9 @@ class PublicDaoTests {
 
     }
 
+    /**
+     * Test postComment function
+     */
     @Test
     public void testPostComment() throws Exception{
         Comment c1 = new Comment();
@@ -246,6 +282,9 @@ class PublicDaoTests {
         assertFalse(dao.postComment(c2));
     }
 
+    /**
+     * Test handleLike function
+     */
     @Test
     public void testHandleLike() throws Exception{
         assertTrue(dao.handleLike(Long.valueOf(1), true));
@@ -253,6 +292,9 @@ class PublicDaoTests {
         assertFalse(dao.handleLike(Long.valueOf(10), true));
     }
 
+    /**
+     * Test reportComment function
+     */
     @Test
     public void testReportComment() throws Exception{
         Report report = new Report();
