@@ -54,8 +54,8 @@ public class PublicServiceTests {
         student1.setPassword("root");
 
         Student student2 = new Student();
-        student1.setEmail("zy1190@nyu.edu");
-        student1.setPassword("abc");
+        student2.setEmail("zy1190@nyu.edu");
+        student2.setPassword("abc");
 
         LoginResult r1 = publicService.loginStudent(student1);
         LoginResult r2 = publicService.loginStudent(student2);
@@ -75,8 +75,8 @@ public class PublicServiceTests {
         p1.setPassword("root");
 
         Professor p2 = new Professor();
-        p1.setEmail("pam32@nyu.edu");
-        p1.setPassword("abc");
+        p2.setEmail("pam32@nyu.edu");
+        p2.setPassword("abc");
 
         LoginResult r1 = publicService.loginProfessor(p1);
         LoginResult r2 = publicService.loginProfessor(p2);

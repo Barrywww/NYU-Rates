@@ -33,8 +33,7 @@ public class PublicDaoImpl implements PublicDao {
     public Student studentLogin(Student student) {
         String query = "SELECT netid, name FROM Student WHERE email = ? AND password= ?";
         try{
-            String encodedpw = DigestUtils.md5Hex(student.getPassword());
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getEmail(), encodedpw);
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(query, student.getEmail(), DigestUtils.md5Hex(student.getPassword()));
             if (result.size() == 1) {
                 Map<String, Object> map = result.get(0);
                 student.setName((String) map.get("name"));
