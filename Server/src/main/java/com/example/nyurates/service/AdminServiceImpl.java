@@ -1,24 +1,13 @@
 package com.example.nyurates.service;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import com.example.nyurates.dao.AdminDao;
-import com.example.nyurates.entity.Admin;
-import com.example.nyurates.entity.Prof_req;
-import com.example.nyurates.entity.Professor;
-import com.example.nyurates.entity.Report;
-import com.example.nyurates.entity.Student;
-import com.example.nyurates.entity.results.LoginResult;
-import com.example.nyurates.entity.results.ProfListResult;
-import com.example.nyurates.entity.results.ProfReqResult;
-import com.example.nyurates.entity.results.ReportListResult;
-import com.example.nyurates.entity.results.Result;
-import com.example.nyurates.entity.results.StudentListResult;
-
+import com.example.nyurates.entity.*;
+import com.example.nyurates.entity.results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
@@ -28,7 +17,7 @@ public class AdminServiceImpl implements AdminService{
 
     /**
      * Login
-     * @param admin 用户名和密码
+     * @param admin
      * @return LoginResult
      */
     public LoginResult login(Admin admin) {
@@ -51,6 +40,13 @@ public class AdminServiceImpl implements AdminService{
         return loginResult;
     }
 
+    /**
+     * Review Comments
+     * @param comment_id
+     * @param report_id
+     * @param validity
+     * @return Result
+     */
     public Result reviewComment(int comment_id, int report_id, boolean validity){
         Result result = new Result();
         result.setCode(400);
@@ -82,6 +78,13 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
+    /**
+     * Get Student List
+     * @param name
+     * @param email
+     * @param netid
+     * @return StudentListResult
+     */
     public StudentListResult studentList(String name, String netid, String email){
         StudentListResult result = new StudentListResult();
         result.setCode(400);
@@ -97,6 +100,14 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
+    /**
+     * Get Professor List
+     * @param name
+     * @param netid
+     * @param email
+     * @param department
+     * @return ProfListResult
+     */
     public ProfListResult profList(String name, String netid, String email, String department){
         ProfListResult result = new ProfListResult();
         result.setCode(400);
@@ -112,6 +123,14 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
+    /**
+     * Get Reports
+     * @param report_id
+     * @param comment_id
+     * @param comment_user
+     * @param course_code
+     * @return ReportListResult
+     */
     public ReportListResult getReports(Long report_id, Long comment_id, String comment_user, String course_code) {
         ReportListResult result = new ReportListResult();
         ArrayList<Report> reports;
@@ -133,6 +152,10 @@ public class AdminServiceImpl implements AdminService{
         return result;
     }
 
+    /**
+     * Get Add Professor Requests
+     * @return StudentListResult
+     */
     public ProfReqResult getProfRequests(){
         ProfReqResult result = new ProfReqResult();
         result.setCode(400);
@@ -150,6 +173,12 @@ public class AdminServiceImpl implements AdminService{
         }
     }
 
+    /**
+     * Handle Professor Request
+     * @param request_id
+     * @param operation
+     * @return Result
+     */
     public Result handleProfReq(int request_id, boolean operation){
         Result result = new Result();
         result.setCode(400);
@@ -170,6 +199,11 @@ public class AdminServiceImpl implements AdminService{
         }
     };
 
+    /**
+     * Delete Student
+     * @param email
+     * @return Result
+     */
     public Result deleteStudent(String email){
         Result result = new Result();
         result.setCode(400);
@@ -186,6 +220,10 @@ public class AdminServiceImpl implements AdminService{
         }
     }
 
+    /**
+     * Get Statistics
+     * @return Result
+     */
     public Result getStatistics(){
         Result result = new Result();
         result.setCode(400);

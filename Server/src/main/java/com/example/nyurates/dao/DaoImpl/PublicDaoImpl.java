@@ -27,7 +27,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Student Login
      * @param student
-     * @return student
+     * @return Student
      */
     @Override
     public Student studentLogin(Student student) {
@@ -50,7 +50,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Professor Login
      * @param professor
-     * @return professor
+     * @return Professor
      */
     @Override
     public Professor professorLogin(Professor professor){
@@ -73,7 +73,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Student Register
      * @param student
-     * @return true/false
+     * @return boolean
      */
     @Override
     public boolean studentRegist(Student student) {
@@ -92,7 +92,7 @@ public class PublicDaoImpl implements PublicDao {
      * Professor Register
      * @param professor
      * @param is_member
-     * @return true/false
+     * @return boolean
      */
     @Override
     public boolean professorRegist(Professor professor, boolean is_member){
@@ -123,7 +123,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search By Email
      * @param student
-     * @return student
+     * @return Student
      */
     @Override
     public Student searchByEmail(Student student){
@@ -146,7 +146,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Match Course
      * @param course
-     * @return course
+     * @return Course
      */
     @Override
     public Course matchCourse(Course course){
@@ -178,7 +178,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Get Offered Semester
      * @param course
-     * @return result
+     * @return ArrayList<String>
      */
     @Override
     public ArrayList<String> getOfferedSemester(Course course){
@@ -205,7 +205,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Course
      * @param course
-     * @return resultList
+     * @return ArrayList<Course>
      */
     @Override
     public ArrayList<Course> searchCourse(Course course){
@@ -246,7 +246,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Course Comments
      * @param course
-     * @return comments
+     * @return ArrayList<Comment>
      */
     @Override
     public ArrayList<Comment> searchComments(Course course){
@@ -281,7 +281,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Professor Comments
      * @param professor
-     * @return comments
+     * @return ArrayList<Comment>
      */
     @Override
     public ArrayList<Comment> searchComments(Professor professor){
@@ -316,7 +316,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Student Comments
      * @param student
-     * @return comments
+     * @return ArrayList<Comment>
      */
     @Override
     public ArrayList<Comment> searchComments(Student student){
@@ -402,7 +402,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Match Professor
      * @param professor
-     * @return professor
+     * @return Professor
      */
     @Override
     public Professor matchProfessor(Professor professor){
@@ -436,7 +436,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Professor
      * @param professor
-     * @return resultList
+     * @return ArrayList<Professor>
      */
     @Override
     public ArrayList<Professor> searchProfessor(Professor professor){
@@ -471,7 +471,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Search Professor Course
      * @param professor
-     * @return courses
+     * @return ArrayList<Course>
      */
     @Override
     public ArrayList<Course> searchProfessorCourse(Professor professor){
@@ -503,7 +503,7 @@ public class PublicDaoImpl implements PublicDao {
      * Search Professor By Course
      * @param code
      * @param semester
-     * @return result
+     * @return String
      */
     @Override
     public String getProfByCourse(String code, String semester){
@@ -519,7 +519,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Post Comments
      * @param comment
-     * @return true/false
+     * @return boolean
      */
     @Override
     public boolean postComment(Comment comment){
@@ -537,7 +537,7 @@ public class PublicDaoImpl implements PublicDao {
      * Handle likes and dislikes
      * @param comment_id
      * @param isLike
-     * @return true/false
+     * @return boolean
      */
     @Override
     public boolean handleLike(Long comment_id, boolean isLike){
@@ -570,7 +570,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Add Professor Request
      * @param prof_req
-     * @return true/false
+     * @return String
      */
     @Override
     public boolean addprofessor(Prof_req prof_req){
@@ -588,7 +588,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Get User By Comment
      * @param comment_id
-     * @return result
+     * @return String
      */
     @Override
     public String getUserByComment(Long comment_id) {
@@ -608,7 +608,7 @@ public class PublicDaoImpl implements PublicDao {
     /**
      * Report Comments
      * @param report
-     * @return true/false
+     * @return boolean
      */
     @Override
     public boolean reportComment(Report report){

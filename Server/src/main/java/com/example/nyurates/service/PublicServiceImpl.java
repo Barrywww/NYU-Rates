@@ -23,7 +23,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Register Student
      * @param student
-     * @return result
+     * @return Result
      */
     public Result regist_student(Student student) {
         Result result = new Result();
@@ -52,7 +52,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Reguster Professor
      * @param professor
-     * @return result
+     * @return Result
      */
     public Result regist_prof(Professor professor){
         Result result = new Result();
@@ -94,7 +94,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Login
      * @param student
-     * @return loginResult
+     * @return LoginResult
      */
     public LoginResult loginStudent(Student student) {
         LoginResult loginResult = new LoginResult();
@@ -119,7 +119,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Login Professor
      * @param professor
-     * @return loginResult
+     * @return LoginResult
      */
     public LoginResult loginProfessor(Professor professor){
         LoginResult loginResult = new LoginResult();
@@ -144,7 +144,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * View Course
      * @param course
-     * @return viewCourseResult
+     * @return ViewCourseResult
      */
     public ViewCourseResult view_course(Course course){
         ViewCourseResult viewCourseResult = new ViewCourseResult();
@@ -179,7 +179,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * View Professor
      * @param professor
-     * @return viewProfessorRrsult
+     * @return ViewProfessorRrsult
      */
     public ViewProfessorResult view_professor(Professor professor){
         ViewProfessorResult viewProfessorResult = new ViewProfessorResult();
@@ -217,7 +217,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Load Comments
      * @param course
-     * @return commentsResult
+     * @return CommentsResult
      */
     public CommentsResult load_comments(Course course){
         CommentsResult commentsResult = new CommentsResult();
@@ -242,7 +242,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Search course
      * @param course
-     * @return courseListResult
+     * @return CourseListResult
      */
     public CourseListResult search_course(Course course){
         CourseListResult courseListResult = new CourseListResult();
@@ -264,7 +264,7 @@ public class PublicServiceImpl implements PublicService {
     /**
      * Search Professor
      * @param professor
-     * @return result
+     * @return ProfListResult
      */
     public ProfListResult search_professor(Professor professor){
         ProfListResult result = new ProfListResult();

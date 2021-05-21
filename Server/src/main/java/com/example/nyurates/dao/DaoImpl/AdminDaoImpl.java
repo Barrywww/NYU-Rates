@@ -47,6 +47,12 @@ public class AdminDaoImpl implements AdminDao {
         return null;
     }
 
+    /**
+     * Delete Comments
+     * @param comment_id
+     * @param report_id
+     * @return boolean
+     */
     @Override
     public boolean adminDeleteComment(int comment_id, int report_id) {
         String query_com = "DELETE FROM Comments WHERE comment_id = ?";
@@ -88,6 +94,11 @@ public class AdminDaoImpl implements AdminDao {
         }
     }
 
+    /**
+     * Search Professor By Emain
+     * @param professor_email
+     * @return boolean
+     */
     @Override
     public boolean searchProfessorByEmail(String professor_email){
         String query = "SELECT netid, name FROM Professor WHERE email = ?";
@@ -103,6 +114,14 @@ public class AdminDaoImpl implements AdminDao {
         return false;
     }
 
+    /**
+     * Get Reports
+     * @param report_id
+     * @param course_code
+     * @param comment_user
+     * @param comment_id
+     * @return ArrayList<Report>
+     */
     @Override
     public ArrayList<Report> getReports(Long report_id, Long comment_id, String comment_user, String course_code){
         String query = "SELECT report_id, Report.comment_id AS comment_id, content, course_code, comment_user, report_date, report_reason FROM Report, Comments WHERE Report.comment_id=Comments.comment_id ";
@@ -147,6 +166,13 @@ public class AdminDaoImpl implements AdminDao {
         return comments;
     }
 
+    /**
+     * Get Student List
+     * @param netid
+     * @param email
+     * @param name
+     * @return ArrayList<Student>
+     */
     @Override
     public ArrayList<Student> studentList(String name, String netid, String email){
         String query = "SELECT email, netid, name FROM Student WHERE 1=1 ";
@@ -182,6 +208,14 @@ public class AdminDaoImpl implements AdminDao {
         return student_list;
     }
 
+    /**
+     * Get Student List
+     * @param netid
+     * @param email
+     * @param name
+     * @param department
+     * @return ArrayList<Professor>
+     */
     @Override
     public ArrayList<Professor> profList(String name, String netid, String email, String department){
         String query = "SELECT email, netid, name, department, visible, is_member FROM Professor WHERE 1=1 ";
@@ -222,6 +256,11 @@ public class AdminDaoImpl implements AdminDao {
         return prof_list;
     }
 
+    /**
+     * Delete Report
+     * @param report_id
+     * @return boolean
+     */
     @Override
     public boolean deleteReport(int report_id){
         String query = "DELETE FROM Report WHERE report_id = ?";
@@ -235,6 +274,10 @@ public class AdminDaoImpl implements AdminDao {
         return false;
     }
 
+    /**
+     * Get Professor Request
+     * @return ArrayList<Prof_req>
+     */
     @Override
     public ArrayList<Prof_req> getProfReq(){
         ArrayList<Prof_req> result = new ArrayList<Prof_req>();
@@ -264,6 +307,11 @@ public class AdminDaoImpl implements AdminDao {
         return result;
     }
 
+    /**
+     * Get Professor Request By ID
+     * @param request_id
+     * @return Prof_req
+     */
     @Override
     public Prof_req getProfReqById(int request_id){
         Prof_req req = new Prof_req();
@@ -289,6 +337,12 @@ public class AdminDaoImpl implements AdminDao {
         return req;
     }
 
+    /**
+     * Handle Professor Request
+     * @param request_id
+     * @param operation
+     * @return boolean
+     */
     @Override
     public boolean handleProfReq(int request_id, boolean operation){
         if(operation){
@@ -317,11 +371,21 @@ public class AdminDaoImpl implements AdminDao {
         }
     }
 
+    /**
+     * Add Professor
+     * @param professor
+     * @return boolean
+     */
     @Override
     public boolean addProfessor(Professor professor){
         return true;
     }
 
+    /**
+     * Add Course
+     * @param course
+     * @return boolean
+     */
     @Override
     public boolean addCourse(Course course){
         String query = "INSERT INTO Course VALUES (?, ?, ?, ?, ?, ?)";
@@ -336,6 +400,11 @@ public class AdminDaoImpl implements AdminDao {
 
     }
 
+    /**
+     * Delete Request
+     * @param request_id
+     * @return boolean
+     */
     @Override
     public boolean deleteReq(int request_id){
         String query = "DELETE FROM Prof_req WHERE request_id = ?";
@@ -350,6 +419,11 @@ public class AdminDaoImpl implements AdminDao {
         return false;
     }
 
+    /**
+     * Delete Student
+     * @param email
+     * @return boolean
+     */
     @Override
     public boolean deleteStudent(String email){
         String query = "DELETE FROM Student WHERE email = ?";
@@ -365,6 +439,10 @@ public class AdminDaoImpl implements AdminDao {
         return false;
     }
 
+    /**
+     * Get Stats
+     * @return String
+     */
     @Override 
     public String getStats(){
         String result = "";

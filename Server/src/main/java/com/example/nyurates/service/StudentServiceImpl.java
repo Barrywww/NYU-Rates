@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService{
     /**
      * Post Comments
      * @param comment
-     * @return result
+     * @return Result
      */
     public Result post_comment(Comment comment){
         Result result = new Result();
@@ -47,7 +47,7 @@ public class StudentServiceImpl implements StudentService{
      * Handle Like
      * @param comment_id
      * @param isLike
-     * @return result
+     * @return Result
      */
     public Result handle_like(Long comment_id, boolean isLike){
         Result result = new Result();
@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService{
     /**
      * Addprofessor
      * @param prof_req
-     * @return result
+     * @return Result
      */
     public Result addprofessor(Prof_req prof_req){
         Result result = new Result();
@@ -97,7 +97,7 @@ public class StudentServiceImpl implements StudentService{
     /**
      * Report Comments
      * @param report
-     * @return result
+     * @return Result
      */
     public Result report_comment(Report report){
         Result result = new Result();
@@ -121,7 +121,7 @@ public class StudentServiceImpl implements StudentService{
     /**
      * View Comments History
      * @param student
-     * @return commentsResult
+     * @return CommentsResult
      */
     public CommentsResult view_history(Student student){
         CommentsResult commentsResult = new CommentsResult();

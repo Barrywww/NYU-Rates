@@ -21,7 +21,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     /**
      * Search Professor Course Stats
      * @param course
-     * @return courseStatsResult
+     * @return CourseStatsResult
      */
     public CourseStatsResult get_course_stats(Course course){
         CourseStatsResult courseStatsResult = new CourseStatsResult();
