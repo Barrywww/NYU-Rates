@@ -1,24 +1,22 @@
 import React, {lazy} from 'react';
 import {Link} from 'react-router-dom';
-import Column, {Divider, Layout, Button, Form, Checkbox, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
-import {ArrowDownOutlined, ArrowUpOutlined, LockOutlined, UserOutlined, DownOutlined} from "@ant-design/icons";
+import {Layout, Button, Form, Input, Breadcrumb, Row, Col, Table} from "antd";
+import http from "../../services/httpService";
 
 const {Content} = Layout;
 
 const GeneralModal = lazy(() => import("../common/modal"));
 
-const data = [];
-
 class ProfMgmt extends React.Component {
     constructor(props){
         super(props);
-        this.state = {hasData: true};
+        this.state = {data: [], hasData: true};
         console.log(props);
         this.modalRef = React.createRef();
         this.columns = [
             {
                 title: 'Name',
-                dataIndex: 'name',
+                dataIndex: 'name'
             },
             {
                 title: 'Email',
@@ -31,64 +29,31 @@ class ProfMgmt extends React.Component {
             {
                 title: 'Department',
                 dataIndex: 'department',
-            },
-            {
-                title: 'Action',
-                render: () => (
-                    <Space size="middle">
-                        <a className="delete">Delete</a>
-                        <a className="update">Change Info</a>
-                        <a className="addCourse">Add Course</a>
-                    </Space>
-                ),
-            },
+            }
         ];
+        this.fetchData({});
     }
 
     async fetchData(values) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(values),
-            credentials: "include"
-        }
-        const response = await fetch("http://localhost:8081/admin/prof_list/", requestOptions);
-        if (response.status !== 200){
-            let json = await response.json();
-            for (let i=0; i<json.length; i++){
-                data.push({
-                    key: i,
-                    name: json[i].name,
-                    netid: json[i].netid,
-                    email: json[i].email,
-                });
+        http.post("admin/prof_list", values).then(response => {
+            if (response.data.code === 200){
+                let result_data = [];
+                for (let r of response.data.profList){
+                    result_data.push({
+                        key: r.email,
+                        name: r.name,
+                        email: r.email,
+                        netid: r.netid,
+                        department: r.dept
+                    })
+                }
+                this.setState({data: result_data, hasData: true});
             }
-
-        }
-        else{
-            alert("Login Failure. Please try again.")
-        }
+        })
     }
 
-    handleUpdate(key){
-        alert("Are you sure to update?");
-    }
-
-    handleAddCourse(key){
-        alert("Are you sure to add course?");
-    }
-
-
-    handleHasData(){
-        this.setState({hasData: !this.state.hasData});
-    }
-
-    handleDelete(key) {
-        alert("Are you sure to delete profesor: " + key + "?");
-    }
-
-    onFinish(values) {
-        console.log(values);
+    onFinish = (values) => {
+        this.fetchData(values);
     }
 
     componentDidMount(){
@@ -147,27 +112,9 @@ class ProfMgmt extends React.Component {
                         <Row gutter={{ xs: 8, sm: 16, md: 24}} align="top" justify="center">
                             <Col span={24}>
                                 <Table
-                                    dataSource={this.state.hasData? data : null}
+                                    dataSource={this.state.hasData? this.state.data : null}
                                     columns={this.columns}
                                     scroll={{x: "500px"}}
-                                    onRow={record => {
-                                        return {
-                                            onClick: event => {
-                                                console.log(record);
-                                                event.preventDefault();
-                                                event.stopPropagation();
-                                                if (event.target.className === "addCourse"){
-                                                    this.handleAddCourse(record.email);
-                                                }
-                                                else if (event.target.className === "delete"){
-                                                    this.handleDelete(record.email);
-                                                }
-                                                else if (event.target.className === "update"){
-                                                    this.handleUpdate(record.email);
-                                                }
-                                            }
-                                        }
-                                    }}
                                 >
                                 </Table>
                             </Col>

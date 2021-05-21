@@ -4,6 +4,7 @@ import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Student;
 import com.example.nyurates.entity.results.*;
+import com.example.nyurates.service.AdminService;
 import com.example.nyurates.service.PublicService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PublicServiceTests {
     @Autowired
     PublicService publicService;
+
+    @Autowired
+    AdminService adminService;
 
     @Test
     public void testRegist() throws Exception{
@@ -31,8 +35,8 @@ public class PublicServiceTests {
         s2.setNetid("ql903");
         s2.setName("Qichen Liu");
 
-        Result r1 = publicService.regist(s1);
-        Result r2 = publicService.regist(s2);
+        Result r1 = publicService.regist_student(s1);
+        Result r2 = publicService.regist_student(s2);
 
         assertEquals(400, r1.getCode());
         assertEquals("The account has existed. Failed to register.", r1.getMsg());
@@ -40,6 +44,7 @@ public class PublicServiceTests {
         assertEquals(200, r2.getCode());
         assertEquals("Successfully registered!", r2.getMsg());
 
+        adminService.deleteStudent("ql903@nyu.edu");
     }
 
     @Test
@@ -162,10 +167,10 @@ public class PublicServiceTests {
         CourseListResult r5 = publicService.search_course(c5);
         CourseListResult r6 = publicService.search_course(c6);
 
-        assertEquals(2, r1.getCourseList().size());
-        assertEquals(2, r2.getCourseList().size());
-        assertEquals(2, r3.getCourseList().size());
-        assertEquals(2, r4.getCourseList().size());
+        assertEquals(1, r1.getCourseList().size());
+        assertEquals(1, r2.getCourseList().size());
+        assertEquals(1, r3.getCourseList().size());
+        assertEquals(1, r4.getCourseList().size());
         assertEquals(0, r5.getCourseList().size());
         assertEquals(0, r6.getCourseList().size());
 

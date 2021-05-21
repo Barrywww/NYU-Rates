@@ -1,6 +1,5 @@
 package com.example.nyurates.controller;
 
-import com.example.nyurates.annotation.RsaSecurityParameter;
 import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.Student;
@@ -24,15 +23,20 @@ public class PublicController {
     private PublicService publicService;
 
     /**
-     * Registery
+     * Register
      * @param student
-     * @return LoginResult
+     * @return Result
      */
     @PostMapping(value = "/regist_student")
     public Result regist(@RequestBody Student student){
         return publicService.regist_student(student);
     }
 
+    /**
+     * Register
+     * @param professor
+     * @return Result
+     */
     @PostMapping(value = "/regist_professor")
     public Result regist(@RequestBody Professor professor){
         return publicService.regist_prof(professor);
@@ -41,6 +45,7 @@ public class PublicController {
     /**
      * Login
      * @param params
+     * @param request
      * @return LoginResult
      */
     @PostMapping(value = "/login")
@@ -87,6 +92,13 @@ public class PublicController {
         }
     }
 
+    /**
+     * Logout
+     * @param student
+     * @param session
+     * @param sessionStatus
+     * @return Result
+     */
    @PostMapping(value = "/logout")
    public Result logout(HttpSession session, SessionStatus sessionStatus, @RequestBody Student student){
         try{
@@ -108,26 +120,51 @@ public class PublicController {
 
    }
 
+    /**
+     * View Course
+     * @param course
+     * @return ViewCourseResult
+     */
     @PostMapping(value = "/view_course")
     public ViewCourseResult view_course(@RequestBody Course course){
         return publicService.view_course(course);
     }
 
+    /**
+     * View Professor
+     * @param professor
+     * @return ViewProfessorResult
+     */
     @PostMapping(value = "/view_professor")
     public ViewProfessorResult view_professor(@RequestBody Professor professor){
         return publicService.view_professor(professor);
     }
 
+    /**
+     * Load Comments
+     * @param course
+     * @return CommentsResult
+     */
     @GetMapping(value = "/load_comments")
     public CommentsResult load_comments(@RequestBody Course course){
         return publicService.load_comments(course);
     }
 
+    /**
+     * Search Course
+     * @param course
+     * @return CourseListResult
+     */
     @PostMapping(value = "/search_course")
     public CourseListResult search_course(@RequestBody Course course){
         return publicService.search_course(course);
     }
 
+    /**
+     * Search Professor
+     * @param professor
+     * @return ProfListResult
+     */
     @PostMapping(value = "/search_professor")
     public ProfListResult search_professor(@RequestBody Professor professor){
         return publicService.search_professor(professor);

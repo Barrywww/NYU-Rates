@@ -18,6 +18,11 @@ public class ProfessorServiceImpl implements ProfessorService{
     @Autowired
     private PublicDao dao;
 
+    /**
+     * Search Professor Course Stats
+     * @param course
+     * @return courseStatsResult
+     */
     public CourseStatsResult get_course_stats(Course course){
         CourseStatsResult courseStatsResult = new CourseStatsResult();
         courseStatsResult.setCode(400);
