@@ -38,6 +38,11 @@ const RegisterForm = () => {
   const [form] = Form.useForm();
   const [selectedRole, setSelectedRole] = useState("student");
 
+    /**
+     * When user submits the form successfully
+     * @param {object} values - user inputs such as email and stuff
+     * @returns {number} - request success or fail code from the backend
+     */
   const onFinish = async(values) => {
       // try {
       //   console.log('Received values of form: ', values);
@@ -51,6 +56,11 @@ const RegisterForm = () => {
       window.location.href="/login";
   };
 
+    /**
+     * When user selects a role
+     * @param {string} values - user input of role
+     * @returns {null} - set the selected role to his/her choice
+     */
   const handleSelect = (value) => {
     setSelectedRole(value);
   };
