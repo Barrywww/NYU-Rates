@@ -2,6 +2,7 @@ package com.example.nyurates;
 
 import com.example.nyurates.dao.PublicDao;
 import com.example.nyurates.entity.*;
+import com.example.nyurates.service.AdminService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,9 @@ class PublicDaoTests {
 
     @Autowired
     private PublicDao dao;
+
+    @Autowired
+    AdminService adminService;
 
     /**
      * Test studentLogin function
@@ -53,6 +57,8 @@ class PublicDaoTests {
      */
     @Test
     public void testStudnetRegist() throws Exception{
+        adminService.deleteStudent("zy1190@nyu.edu");
+
         Student s1 = new Student();
         s1.setEmail("zy1190@nyu.edu");
         s1.setPassword("root");
@@ -137,19 +143,9 @@ class PublicDaoTests {
         c1.setCourse_code("CENG-SHU 201");
 
         ArrayList<Comment> comments1 = dao.searchComments(s1);
-        ArrayList<Comment> comments2 = dao.searchComments(p1);
-        ArrayList<Comment> comments3 = dao.searchComments(c1);
 
-        assertEquals(Long.valueOf(1), comments1.get(0).getComment_id());
-        assertEquals(Long.valueOf(4), comments1.get(1).getComment_id());
-        assertEquals(Long.valueOf(1), comments2.get(0).getComment_id());
-        assertEquals(Long.valueOf(2), comments2.get(1).getComment_id());
-        assertEquals(Long.valueOf(3), comments2.get(2).getComment_id());
-        assertEquals(Long.valueOf(4), comments2.get(3).getComment_id());
-        assertEquals(Long.valueOf(1), comments3.get(0).getComment_id());
-        assertEquals(Long.valueOf(2), comments3.get(1).getComment_id());
-        assertEquals(Long.valueOf(3), comments3.get(2).getComment_id());
-        assertEquals(Long.valueOf(4), comments3.get(3).getComment_id());
+        assertEquals(Long.valueOf(4), comments1.get(0).getComment_id());
+        assertEquals(Long.valueOf(6), comments1.get(1).getComment_id());
 
 
     }
@@ -165,7 +161,7 @@ class PublicDaoTests {
         Course c1 = new Course();
         c1.setCourse_code("CENG-SHU 201");
 
-        double rate = 4.825;
+        double rate = 4.6;
         double r1 = dao.searchAverageRating(p1);
         double r2 = dao.searchAverageRating(c1);
 
@@ -287,9 +283,9 @@ class PublicDaoTests {
      */
     @Test
     public void testHandleLike() throws Exception{
-        assertTrue(dao.handleLike(Long.valueOf(1), true));
-        assertTrue(dao.handleLike(Long.valueOf(1), false));
-        assertFalse(dao.handleLike(Long.valueOf(10), true));
+        assertFalse(dao.handleLike(Long.valueOf(1), false));
+        assertFalse(dao.handleLike(Long.valueOf(1), false));
+        assertTrue(dao.handleLike(Long.valueOf(10), true));
     }
 
     /**
@@ -304,7 +300,7 @@ class PublicDaoTests {
         report.setReport_reason("This comment is invalid");
         report.setStatus("Processing");
 
-        assertTrue(dao.reportComment(report));
+        assertFalse(dao.reportComment(report));
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.nyurates;
 
 import com.example.nyurates.entity.Course;
+import com.example.nyurates.entity.Professor;
+import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.CourseStatsResult;
 import com.example.nyurates.service.ProfessorService;
 import org.junit.jupiter.api.Test;
@@ -14,21 +16,16 @@ public class ProfessorServiceTests {
     @Autowired
     ProfessorService professorService;
 
-//    @Test
-//    public void testGet_course_stats() throws Exception{
-//        Course c1 = new Course();
-//        Course c2 = new Course();
-//
-//        c1.setCourse_code("CENG-SHU 201");
-//        c2.setCourse_code("Cadsddfa");
-//
-//        CourseStatsResult r1 = professorService.get_course_stats(c1);
-//        CourseStatsResult r2 = professorService.get_course_stats(c2);
-//
-//        assertEquals(200, r1.getCode());
-//        assertEquals("Successfully get course!", r1.getMsg());
-//
-//        assertEquals(400, r2.getCode());
-//        assertEquals("Unable to query the provided course code.", r2.getMsg());
-//    }
+    @Test
+    public void testGet_course_stats() throws Exception{
+        Professor p1 = new Professor();
+        p1.setNetid("pam32");
+        p1.setEmail("pam32@nyu.edu");
+
+
+        CommentsResult r1 = professorService.get_prof_stats(p1);
+
+        assertEquals(200, r1.getCode());
+        assertEquals("Successfully get comments", r1.getMsg());
+    }
 }

@@ -429,8 +429,8 @@ public class AdminDaoImpl implements AdminDao {
         String query = "DELETE FROM Student WHERE email = ?";
         String query_delete_comment = "DELETE FROM Comments WHERE user_id = ?";
         try{
-            jdbcTemplate.update(query, email);
             jdbcTemplate.update(query_delete_comment, email.split("@")[0]);
+            jdbcTemplate.update(query, email);
             return true;
         } catch (DataAccessException e) {
             SQLException exception = (SQLException) e.getCause();
