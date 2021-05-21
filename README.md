@@ -1,26 +1,32 @@
-# NYUSH Rates Development Guide
-## 简介 📖：
-目前采用React + Ant.d + SpringBoot 前后端分离的单页面应用(SPA)作为开发思路。
-## 开发前准备 🕙：
-1.前端：克隆后进入根目录执行`npm install`命令即可。
+# NYUSH Rates
+## Introduction：
+This project is mainly aimed to provide the students in NYU community with a platform to post comments and rate the courses they have taken and to view the comments of the courses they want to enroll later for more informations. And professor can view the comments on his/her course for future improvement. In general, it’s a vertical platform where students and professors can acquire crucial information for enrollment and improvement purposes. 
 
-2.后端：统一使用jdk 11进行开发。
-## 注意事项 ⚠️：
-### 前端
-目前webpack, React路由均已配置完毕，修改上述️配置文件时记得通知其他成员。
-## 目录结构 🗄 :
-```bash
-NYU-Rates  
-├─ LICENSE  
-├─ README.md  
-├─ package-lock.json    # nodejs 配置文件  
-├─ package.json         # nodejs 配置文件  
-├─ public               # webpack打包目录  
-│    └─ index.html      # 入口html文件
-├─ src                  # 源代码文件目录  
-│    ├─ css  
-│    │    └─ *.css  
-│    └─ js  
-│        └─ *.js  
-└─ webpack.config.js    # webpack 配置文件
-```
+## Contributor
+Barry Wang:
+
+· Front End: Structure Setup, Homepage, Admin Portal, Frontend & Backend Communication.
+
+· Back End: Admin APIs, Session Control, Database Setup.
+
+Kaan Tekin:
+
+· Front end design for Homepage, Add Professor Page
+
+· Everything except for Backend design for Login,  Logout, Register, Profile,  AboutUs Pages
+
+· Backend http service function calls
+
+Wenhao Lu:
+
+· Front end design for search result list for courses and professors, professor page and course page.
+
+Zhao Yang:
+
+· Backend design for Model and Controller.
+
+· Backend test. 
+
+· Database setup and management.
+
+
