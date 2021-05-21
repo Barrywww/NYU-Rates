@@ -1,17 +1,25 @@
 import React from 'react';
 import {Breadcrumb, Card, Col, Divider, Layout, Row, Statistic} from "antd";
-import {ArrowDownOutlined, ArrowUpOutlined} from "@ant-design/icons";
+import http from "../../services/httpService";
 
 const {Content} = Layout;
 
 class adminHome extends React.Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {comments: 0, courses: 0, profs: 0, users: 0};
     }
 
     componentDidMount() {
         this.props.menuHandler("0");
+        http.get("admin/stats").then(response => {
+            if (response.data.code === 200){
+                let result = response.data.msg.trim().split(" ");
+                result = result.map(item => {return +item});
+                console.log(result);
+                this.setState({comments: result[0], courses: result[1], profs: result[2], users: result[3]});
+            }
+        })
     }
 
     render() {
@@ -47,16 +55,10 @@ class adminHome extends React.Component{
                                         <Col xs={24} sm={12} md={8} className={"adminButtonWrapper"}>
                                             <a href={"./profMgmt"}>Professor Management</a>
                                         </Col>
-                                        <Col xs={24} sm={12} md={8} className={"adminButtonWrapper"}>
-                                            <a href={"./profMgmt"}>Comment Management</a>
-                                        </Col>
                                     </Row>
                                     <Row gutter={{xs: 8, sm: 16, md: 24}}>
                                         <Col xs={24} sm={12} md={8} className={"adminButtonWrapper"}>
-                                            <a href={"./courses"}>Course Management</a>
-                                        </Col>
-                                        <Col xs={24} sm={12} md={8} className={"adminButtonWrapper"}>
-                                            <a href={"./reports"}>View Reports</a>
+                                            <a href={"./viewReports"}>View Reports</a>
                                         </Col>
                                         <Col xs={24} sm={12} md={8} className={"adminButtonWrapper"}>
                                             <a href={"./profReq"}>New Prof. Requests</a>
@@ -68,28 +70,12 @@ class adminHome extends React.Component{
                                 <Card title="Statistics" bordered={true} style={{ width: "100%" }}>
                                     <Row gutter={{ xs: 8, sm: 16, md: 24}}>
                                         <Col span={12} >
-                                            <Statistic title="Users" value={458} />
-                                            <Statistic title="Courses" value={812} />
-                                            <Statistic
-                                                title="New Users"
-                                                value={11.28}
-                                                precision={2}
-                                                valueStyle={{ color: '#3f8600' }}
-                                                prefix={<ArrowUpOutlined />}
-                                                suffix="%"
-                                            />
+                                            <Statistic title="Users" value={this.state.users} />
+                                            <Statistic title="Courses" value={this.state.courses} />
                                         </Col>
                                         <Col span={12}>
-                                            <Statistic title="Professors" value={103} />
-                                            <Statistic title="Comments/Rates" value={1452} />
-                                            <Statistic
-                                                title="New Comments"
-                                                value={9.3}
-                                                precision={2}
-                                                valueStyle={{ color: '#cf1322' }}
-                                                prefix={<ArrowDownOutlined />}
-                                                suffix="%"
-                                            />
+                                            <Statistic title="Professors" value={this.state.profs} />
+                                            <Statistic title="Comments/Rates" value={this.state.comments} />
                                         </Col>
                                     </Row>
                                 </Card>

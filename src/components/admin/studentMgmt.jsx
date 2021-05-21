@@ -1,18 +1,16 @@
 import React, {lazy} from 'react';
 import {Link} from 'react-router-dom';
-import Column, {Divider, Layout, Button, Form, Checkbox, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
-import {ArrowDownOutlined, ArrowUpOutlined, LockOutlined, UserOutlined, DownOutlined} from "@ant-design/icons";
+import {Divider, Layout, Button, Form, Checkbox, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
+import http from '../../services/httpService';
 
 const {Content} = Layout;
 
 const GeneralModal = lazy(() => import("../common/modal"));
 
-const data = [];
-
 class StudentMgmt extends React.Component {
     constructor(props){
         super(props);
-        this.state = {hasData: true};
+        this.state = {data: [], hasData: false};
         console.log(props);
         this.modalRef = React.createRef();
         this.columns = [
@@ -23,69 +21,60 @@ class StudentMgmt extends React.Component {
             {
                 title: 'Email',
                 dataIndex: 'email',
-                sorter: (a, b) => a.age - b.age,
             },
             {
                 title: 'NetID',
                 dataIndex: 'netid',
-                sorter: (a, b) => a.age - b.age,
             },
             {
                 title: 'Action',
                 render: () => (
                     <Space size="middle">
-                        <a className="ban">Ban</a>
                         <a className="delete">Delete</a>
-                        <a className="update">Change Info</a>
                     </Space>
                 ),
             },
         ];
+        this.fetchData({})
     }
 
     async fetchData(values) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(values),
-            credentials: "include"
-        }
-        const response = await fetch("http://localhost:8081/admin/login/", requestOptions);
-        if (response.status !== 200){
-            let json = await response.json();
-            for (let i=0; i<json.length; i++){
-                data.push({
-                    key: i,
-                    name: json[i].name,
-                    netid: json[i].netid,
-                    email: json[i].email,
-                });
+        http.post("admin/student_list", values).then(response => {
+            if (response.data.code === 200){
+                let result_data = [];
+                for (let r of response.data.student_list){
+                    result_data.push({
+                        key: r.email,
+                        ...r
+                    })
+                }
+                this.setState({data: result_data, hasData: true});
             }
-
-        }
-        else{
-            alert("Login Failure. Please try again.")
-        }
+        })
     }
 
-    handleBan(key) {
-        alert("Are you sure to ban?");
-    }
-
-    handleUpdate(key){
-        alert("Are you sure to update?");
-    }
 
     handleHasData(){
         this.setState({hasData: !this.state.hasData});
     }
 
     handleDelete(key) {
-        alert("Are you sure to delete user: " + key + "?");
+        const r = confirm("Are you sure to delete user: " + key + "?");
+        if (r){
+            http.post("admin/deletestudent", {email: key}).then(response => {
+                if (response.data.code === 200){
+                    alert("Delete success!");
+                    window.location.reload();
+                }
+                else{
+                    alert("Delete Failed!");
+                }
+            })
+        };
     }
 
-    onFinish(values) {
-        console.log(values);
+    onFinish = (values) => {
+        this.fetchData(values);
     }
 
     componentDidMount(){
@@ -139,7 +128,7 @@ class StudentMgmt extends React.Component {
                         <Row gutter={{ xs: 8, sm: 16, md: 24}} align="top" justify="center">
                             <Col span={24}>
                                 <Table
-                                    dataSource={this.state.hasData? data : null}
+                                    dataSource={this.state.hasData? this.state.data : null}
                                     columns={this.columns}
                                     scroll={{x: "500px"}}
                                     onRow={record => {
@@ -148,14 +137,8 @@ class StudentMgmt extends React.Component {
                                                 console.log(record);
                                                 event.preventDefault();
                                                 event.stopPropagation();
-                                                if (event.target.className === "ban"){
-                                                    this.handleBan(record.email);
-                                                }
-                                                else if (event.target.className === "delete"){
+                                                if (event.target.className === "delete"){
                                                     this.handleDelete(record.email);
-                                                }
-                                                else if (event.target.className === "update"){
-                                                    this.handleUpdate(record.email);
                                                 }
                                             }
                                         }

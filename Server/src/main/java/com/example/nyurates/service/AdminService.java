@@ -16,4 +16,6 @@ public interface AdminService {
     public ReportListResult getReports(Long report_id, Long comment_id, String comment_user, String course_code);
     public ProfReqResult getProfRequests();
     public Result handleProfReq(int request_id, boolean operation);
+    public Result deleteStudent(String email);
+    public Result getStatistics();
 }

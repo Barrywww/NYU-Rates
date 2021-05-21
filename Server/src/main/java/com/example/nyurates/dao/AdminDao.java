@@ -20,4 +20,6 @@ public interface AdminDao {
     public boolean addProfessor(Professor professor);
     public boolean addCourse(Course course);
     public boolean deleteReq(int request_id);
+    public boolean deleteStudent(String email);
+    public String getStats();
 }

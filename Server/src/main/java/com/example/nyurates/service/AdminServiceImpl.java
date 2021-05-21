@@ -1,6 +1,7 @@
 package com.example.nyurates.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.example.nyurates.dao.AdminDao;
 import com.example.nyurates.entity.Admin;
@@ -167,5 +168,36 @@ public class AdminServiceImpl implements AdminService{
             e.printStackTrace();
             return result;
         }
+    };
+
+    public Result deleteStudent(String email){
+        Result result = new Result();
+        result.setCode(400);
+        try{
+            boolean r = dao.deleteStudent(email);
+            if(r){
+                result.setCode(200);
+                result.setMsg("Success");
+            }
+            return result;
+        }
+        catch (Exception e){
+            return result;
+        }
+    }
+
+    public Result getStatistics(){
+        Result result = new Result();
+        result.setCode(400);
+        try{
+            String r = dao.getStats();
+            result.setCode(200);
+            result.setMsg(r);
+            return result;
+        }
+        catch (Exception e){
+            return result;
+        }
+        
     }
 }
