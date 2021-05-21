@@ -27,6 +27,7 @@ public class StudentController {
     /**
      * Post Comments
      * @param comment
+     * @param request
      * @return Result
      */
     @PostMapping(value = "/post_comment")
@@ -72,6 +73,7 @@ public class StudentController {
     /**
      * Report comments
      * @param report
+     * @param session
      * @return Result
      */
     @PostMapping(value = "/reportcomment")
@@ -91,6 +93,12 @@ public class StudentController {
         }
     }
 
+    /**
+     * Add Professor Request
+     * @param prof_req
+     * @param session
+     * @return Result
+     */
     @PostMapping(value = "/addprofessor")
     public Result addprofessor(HttpServletRequest request, @RequestBody Prof_req prof_req){
         HttpSession session = request.getSession(false);
@@ -107,6 +115,11 @@ public class StudentController {
         }
     }
 
+    /**
+     * View Comments History
+     * @param student
+     * @return CommentsResult
+     */
     @GetMapping(value = "/viewhistory")
     public Result view_history(HttpServletRequest request){
         HttpSession session = request.getSession(false);
@@ -125,6 +138,11 @@ public class StudentController {
         }
     }
 
+    /**
+     * Validate Role
+     * @param session
+     * @return Result
+     */
     @GetMapping(value= "/validate")
     public Result validate_role(HttpServletRequest request){
         Result result = new Result();

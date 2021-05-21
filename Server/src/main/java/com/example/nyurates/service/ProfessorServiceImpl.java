@@ -23,6 +23,11 @@ public class ProfessorServiceImpl implements ProfessorService{
     public CommentsResult get_prof_stats(Professor professor){
         CommentsResult commentsResult = new CommentsResult();
         commentsResult.setCode(400);
+    /**
+     * Search Professor Course Stats
+     * @param course
+     * @return CourseStatsResult
+     */
         try{
             ArrayList<Comment> comments = dao.searchComments(professor);
             if(comments.size() > 0){

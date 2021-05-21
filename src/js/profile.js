@@ -13,6 +13,15 @@ const {Header,Content,Footer} = Layout;
 const {Option} = Select;
 
 class profile extends Component {
+
+/**
+* Profile类，学生的profile page.
+* @constructor
+* @param {object} state - current user's info
+* @param {object} comments -comments contented needed for filling the table
+* @returns {component} -整个Profile页面
+*/
+
     constructor(props) {
         super(props);
         this.state = {"user" : JSON.parse(localStorage.getItem('userInfo')), data:[]};
@@ -55,6 +64,7 @@ class profile extends Component {
                     </div>
                    {/*这个div是comment历史表*/}
                     <div className = "CommentSection" style={{margin:'40px 50px'}}>
+                        
                         <Table columns={columns} expandable={{
                             expandedRowRender: record => <p style={{ margin: 0,fontSize:'1rem' }}>{record.description}</p>,
                             rowExpandable: record => record.name !== 'Not Expandable',

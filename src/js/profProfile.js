@@ -13,14 +13,15 @@ const {Header,Content,Footer} = Layout;
 const {Option} = Select;
 
 class ProfProfile extends Component {
+/**
+* profProfile类，教授的profile page.
+* @constructor
+* @param {object} state - current user's info
+*/
     constructor(props) {
         super(props);
         this.state = {"user" : JSON.parse(localStorage.getItem('userInfo'))};
     }
-
-    //componentDidMount() {
-      //  const commentContent = {comments};
-    //}
     
     render() { 
         return ( 

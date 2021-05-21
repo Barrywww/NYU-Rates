@@ -4,15 +4,13 @@ import com.example.nyurates.entity.Admin;
 import com.example.nyurates.entity.results.*;
 import com.example.nyurates.service.AdminService;
 
-import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
@@ -22,8 +20,9 @@ public class AdminController {
     private AdminService adminService;
 
     /**
-     * 登录
-     * @param admin 参数封装
+     * Login
+     * @param admin
+     * @param request
      * @return LoginResult
      */
     @PostMapping(value = "/login")
@@ -38,6 +37,10 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * Get Statistics
+     * @return Result
+     */
     @GetMapping (value = "/stats")
     public Result getStats(HttpServletRequest request){
         HttpSession session = request.getSession(false);
@@ -54,6 +57,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Get Student List
+     * @param params
+     * @return StudentListResult
+     */
     @PostMapping(value = "/student_list")
     public Result studentList(HttpServletRequest request, @RequestBody Map<String, String> params){
         HttpSession session = request.getSession(false);
@@ -71,6 +79,11 @@ public class AdminController {
 
     }
 
+    /**
+     * Get Professor List
+     * @param params
+     * @return ProfListResult
+     */
     @PostMapping(value = "/prof_list")
     public Result profList(HttpServletRequest request, @RequestBody Map<String, String> params){
         HttpSession session = request.getSession(false);
@@ -87,6 +100,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * Get Reports
+     * @param session
+     * @param params
+     * @return ReportListResult
+     */
     @RequestMapping(value = "/getreports")
     public Result getReports(HttpServletRequest request, @RequestBody Map<String, Object> params){
         HttpSession session = request.getSession(false);
@@ -103,6 +122,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Review Comments
+     * @param params
+     * @return Result
+     */
     @PostMapping(value = "/reviewcomment")
     public Result reviewComment(HttpServletRequest request, @RequestBody Map<String, Object> params) {
         HttpSession session = request.getSession(false);
@@ -119,6 +143,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Get Add Professor Request
+     * @param params
+     * @return ProfReqResult
+     */
     @RequestMapping (value="/getprofrequests")
     public Result getProfRequests(HttpServletRequest request, @RequestBody Map<String, Object> params){
         HttpSession session = request.getSession(false);
@@ -135,6 +164,11 @@ public class AdminController {
         }
     } 
 
+    /**
+     * Handle Add Professor Request
+     * @param params
+     * @return Result
+     */
     @RequestMapping (value="/handleprofrequests")
     public Result handleProfRequests(HttpServletRequest request, @RequestBody Map<String, Object> params){
         HttpSession session = request.getSession(false);
@@ -151,6 +185,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Delete Student
+     * @param params
+     * @return Result
+     */
     @RequestMapping (value="/deletestudent")
     public Result deleteStudent(HttpServletRequest request, @RequestBody Map<String, String> params){
         HttpSession session = request.getSession(false);
@@ -167,6 +206,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Validate
+     * @param session
+     * @return Result
+     */
     @GetMapping (value="/validate")
     public Result validateAdmin(HttpServletRequest request){
         HttpSession session = request.getSession(false);

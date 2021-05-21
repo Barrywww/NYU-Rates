@@ -21,6 +21,11 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     private PublicDao dao;
 
+    /**
+     * Post Comments
+     * @param comment
+     * @return Result
+     */
     public Result post_comment(Comment comment){
         Result result = new Result();
         result.setCode(400);
@@ -38,6 +43,12 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
+    /**
+     * Handle Like
+     * @param comment_id
+     * @param isLike
+     * @return Result
+     */
     public Result handle_like(Long comment_id, boolean isLike){
         Result result = new Result();
         result.setCode(400);
@@ -58,6 +69,11 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
+    /**
+     * Addprofessor
+     * @param prof_req
+     * @return Result
+     */
     public Result addprofessor(Prof_req prof_req){
         Result result = new Result();
         result.setCode(400);
@@ -78,6 +94,11 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
+    /**
+     * Report Comments
+     * @param report
+     * @return Result
+     */
     public Result report_comment(Report report){
         Result result = new Result();
         result.setCode(400);
@@ -97,6 +118,11 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
+    /**
+     * View Comments History
+     * @param student
+     * @return CommentsResult
+     */
     public CommentsResult view_history(Student student){
         CommentsResult commentsResult = new CommentsResult();
         commentsResult.setCode(400);

@@ -22,6 +22,11 @@ public class ProfessorController {
     @Autowired
     private ProfessorService professorService;
 
+    /**
+     * Get Course Stats
+     * @param course
+     * @return CourseStatsResult
+     */
     @GetMapping(value = "/stats_course")
     public Result get_course_stats(HttpServletRequest request){
         HttpSession session = request.getSession(false);
