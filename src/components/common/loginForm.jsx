@@ -63,6 +63,7 @@ const layout = {
             },
           ]}>
           <Select
+              id = "role-input"
               placeholder="Select a role"
               onChange={console.log(0)}
               allowClear
@@ -86,7 +87,7 @@ const layout = {
             },
           ]}
         >
-          <Input />
+          <Input id="email-input"/>
         </Form.Item>
 
         <Form.Item
@@ -99,7 +100,7 @@ const layout = {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password id="password-input"/>
         </Form.Item>
 
 
