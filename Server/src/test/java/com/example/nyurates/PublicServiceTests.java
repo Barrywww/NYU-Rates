@@ -31,8 +31,8 @@ public class PublicServiceTests {
         s2.setNetid("ql903");
         s2.setName("Qichen Liu");
 
-        Result r1 = publicService.regist(s1);
-        Result r2 = publicService.regist(s2);
+        Result r1 = publicService.regist_student(s1);
+        Result r2 = publicService.regist_student(s2);
 
         assertEquals(400, r1.getCode());
         assertEquals("The account has existed. Failed to register.", r1.getMsg());
