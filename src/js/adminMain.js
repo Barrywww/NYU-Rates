@@ -103,21 +103,21 @@ class adminMain extends React.Component {
                             style={{ height: '100%', borderRight: 0 }}
                         >
                             <Menu.Item key="0" icon={<HomeOutlined />}><Link to={"./home"}>Home</Link></Menu.Item>
-                            <SubMenu key="sub1" icon={<UserOutlined />} title="Student">
+                            {/* <SubMenu key="sub1" icon={<UserOutlined />} title="Student">
                                 <Menu.Item key="1"><Link to={"./studentMgmt"}>Student Management</Link> </Menu.Item>
-                            </SubMenu>
+                            </SubMenu> */}
                             <SubMenu key="sub2" icon={<TeamOutlined />} title="Professor">
                                 <Menu.Item key="5"><Link to={"./profReq"}>New Requests</Link> </Menu.Item>
-                                <Menu.Item key="6"><Link to={"./profMgmt"}>Professor Management</Link> </Menu.Item>
+                                {/* <Menu.Item key="6"><Link to={"./profMgmt"}>Professor Management</Link> </Menu.Item> */}
                             </SubMenu>
                             <SubMenu key="sub3" icon={<NotificationOutlined />} title="Comments">
                                 <Menu.Item key="9"><Link to={"./viewReports"}>Reports</Link></Menu.Item>
-                                <Menu.Item key="10">Comments Management</Menu.Item>
+                                {/* <Menu.Item key="10">Comments Management</Menu.Item> */}
                             </SubMenu>
-                            <SubMenu key="sub4" icon={<ReadOutlined />} title="Dept./Course">
+                            {/* <SubMenu key="sub4" icon={<ReadOutlined />} title="Dept./Course">
                                 <Menu.Item key="13">New Dept./Course</Menu.Item>
                                 <Menu.Item key="14">Management</Menu.Item>
-                            </SubMenu>
+                            </SubMenu> */}
                         </Menu>
                     </Sider>
                     <Switch>

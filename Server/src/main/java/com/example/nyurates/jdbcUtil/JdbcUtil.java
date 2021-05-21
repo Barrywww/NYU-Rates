@@ -10,7 +10,7 @@ public class JdbcUtil {
 
     /**
      *
-     * Describe:获得数据库的连接
+     * Describe:acquire database connections
      * Param: []
      * Return: java.sql.Connection
      */
@@ -30,7 +30,7 @@ public class JdbcUtil {
 
     /**
      *
-     * Describe:关闭数据库操作
+     * Describe:Close database connection
      * Param: [connection, preparedStatement, resultSet]
      * Return: void
      */

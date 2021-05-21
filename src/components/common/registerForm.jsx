@@ -39,14 +39,16 @@ const RegisterForm = () => {
   const [selectedRole, setSelectedRole] = useState("student");
 
   const onFinish = async(values) => {
-      try {
-        console.log('Received values of form: ', values);
-        await userService.register(values);
-      } catch (error) {
-          if (error.response && error.response.status == 400){
-              alert(error.response.data);
-          }
-      };
+      // try {
+      //   console.log('Received values of form: ', values);
+      //   await userService.register(values);
+      // } catch (error) {
+      //     if (error.response && error.response.status == 400){
+      //         alert(error.response.data);
+      //     }
+      // };
+      alert("Register success!");
+      window.location.href="/login";
   };
 
   const handleSelect = (value) => {
