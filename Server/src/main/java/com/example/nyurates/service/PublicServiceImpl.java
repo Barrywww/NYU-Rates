@@ -21,9 +21,9 @@ public class PublicServiceImpl implements PublicService {
     private PublicDao dao;
 
     /**
-     * 注册
-     * @param student 参数封装
-     * @return Result
+     * Register Student
+     * @param student
+     * @return result
      */
     public Result regist_student(Student student) {
         Result result = new Result();
@@ -49,6 +49,11 @@ public class PublicServiceImpl implements PublicService {
         return result;
     }
 
+    /**
+     * Reguster Professor
+     * @param professor
+     * @return result
+     */
     public Result regist_prof(Professor professor){
         Result result = new Result();
         result.setCode(400);
@@ -88,8 +93,8 @@ public class PublicServiceImpl implements PublicService {
 
     /**
      * Login
-     * @param student 用户名和密码
-     * @return LoginResult
+     * @param student
+     * @return loginResult
      */
     public LoginResult loginStudent(Student student) {
         LoginResult loginResult = new LoginResult();
@@ -111,6 +116,11 @@ public class PublicServiceImpl implements PublicService {
         return loginResult;
     }
 
+    /**
+     * Login Professor
+     * @param professor
+     * @return loginResult
+     */
     public LoginResult loginProfessor(Professor professor){
         LoginResult loginResult = new LoginResult();
         loginResult.setCode(400);
@@ -131,6 +141,11 @@ public class PublicServiceImpl implements PublicService {
         return loginResult;
     }
 
+    /**
+     * View Course
+     * @param course
+     * @return viewCourseResult
+     */
     public ViewCourseResult view_course(Course course){
         ViewCourseResult viewCourseResult = new ViewCourseResult();
         viewCourseResult.setCode(400);
@@ -161,6 +176,11 @@ public class PublicServiceImpl implements PublicService {
         return viewCourseResult;
     }
 
+    /**
+     * View Professor
+     * @param professor
+     * @return viewProfessorRrsult
+     */
     public ViewProfessorResult view_professor(Professor professor){
         ViewProfessorResult viewProfessorResult = new ViewProfessorResult();
         viewProfessorResult.setCode(400);
@@ -194,6 +214,11 @@ public class PublicServiceImpl implements PublicService {
         return viewProfessorResult;
     }
 
+    /**
+     * Load Comments
+     * @param course
+     * @return commentsResult
+     */
     public CommentsResult load_comments(Course course){
         CommentsResult commentsResult = new CommentsResult();
         commentsResult.setCode(400);
@@ -214,6 +239,11 @@ public class PublicServiceImpl implements PublicService {
         return commentsResult;
     }
 
+    /**
+     * Search course
+     * @param course
+     * @return courseListResult
+     */
     public CourseListResult search_course(Course course){
         CourseListResult courseListResult = new CourseListResult();
         courseListResult.setCode(400);
@@ -231,6 +261,11 @@ public class PublicServiceImpl implements PublicService {
         return courseListResult;
     }
 
+    /**
+     * Search Professor
+     * @param professor
+     * @return result
+     */
     public ProfListResult search_professor(Professor professor){
         ProfListResult result = new ProfListResult();
         result.setCode(400);

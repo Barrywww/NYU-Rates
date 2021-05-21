@@ -26,6 +26,7 @@ public class StudentController {
     /**
      * Post Comments
      * @param comment
+     * @param request
      * @return Result
      */
     @PostMapping(value = "/post_comment")
@@ -50,6 +51,7 @@ public class StudentController {
     /**
      * Report comments
      * @param report
+     * @param session
      * @return Result
      */
     @PostMapping(value = "/reportcomment")
@@ -63,6 +65,12 @@ public class StudentController {
         
     }
 
+    /**
+     * Add Professor Request
+     * @param prof_req
+     * @param session
+     * @return Result
+     */
     @PostMapping(value = "/addprofessor")
     public Result addprofessor(HttpSession session, @RequestBody Prof_req prof_req){
         if(((String) session.getAttribute("role")).equals("student")){
@@ -73,11 +81,21 @@ public class StudentController {
         }
     }
 
+    /**
+     * View Comments History
+     * @param student
+     * @return CommentsResult
+     */
     @GetMapping(value = "/viewhistory")
     public CommentsResult view_history(@RequestBody Student student){
         return studentService.view_history(student);
     }
 
+    /**
+     * Validate Role
+     * @param session
+     * @return Result
+     */
     @GetMapping(value= "/validate")
     public Result validate_role(HttpSession session){
         Result result = new Result();

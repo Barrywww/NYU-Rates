@@ -24,6 +24,11 @@ public class PublicDaoImpl implements PublicDao {
     @Autowired
     NamedParameterJdbcTemplate namedJdbcTemplate;
 
+    /**
+     * Student Login
+     * @param student
+     * @return student
+     */
     @Override
     public Student studentLogin(Student student) {
         String query = "SELECT netid, name FROM Student WHERE email = ? AND password= ?";
@@ -43,6 +48,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
+    /**
+     * Professor Login
+     * @param professor
+     * @return professor
+     */
     @Override
     public Professor professorLogin(Professor professor){
         String query = "SELECT netid, name FROM Professor WHERE email = ? AND password= ?";
@@ -61,6 +71,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
+    /**
+     * Student Register
+     * @param student
+     * @return true/false
+     */
     @Override
     public boolean studentRegist(Student student) {
         String query = "INSERT INTO Student VALUES (?, ?, ?, ?)";
@@ -74,6 +89,12 @@ public class PublicDaoImpl implements PublicDao {
         return false;
     }
 
+    /**
+     * Professor Register
+     * @param professor
+     * @param is_member
+     * @return true/false
+     */
     @Override
     public boolean professorRegist(Professor professor, boolean is_member){
         if (is_member){
@@ -100,6 +121,11 @@ public class PublicDaoImpl implements PublicDao {
         }
     }
 
+    /**
+     * Search By Email
+     * @param student
+     * @return student
+     */
     @Override
     public Student searchByEmail(Student student){
         String query = "SELECT netid, name FROM Student WHERE email = ?";
@@ -118,6 +144,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
+    /**
+     * Match Course
+     * @param course
+     * @return course
+     */
     @Override
     public Course matchCourse(Course course){
         String queryCourseName = "SELECT course_name FROM Course WHERE code = ?";
@@ -145,6 +176,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
+    /**
+     * Get Offered Semester
+     * @param course
+     * @return result
+     */
     @Override
     public ArrayList<String> getOfferedSemester(Course course){
         String query = "SELECT semester FROM Course WHERE code = ?";
@@ -167,6 +203,11 @@ public class PublicDaoImpl implements PublicDao {
         return result;
     }
 
+    /**
+     * Search Course
+     * @param course
+     * @return resultList
+     */
     @Override
     public ArrayList<Course> searchCourse(Course course){
         // String query= "SELECT course_name, code, department, " +
@@ -203,6 +244,11 @@ public class PublicDaoImpl implements PublicDao {
         return resultList;
     }
 
+    /**
+     * Search Course Comments
+     * @param course
+     * @return comments
+     */
     @Override
     public ArrayList<Comment> searchComments(Course course){
         String query = "SELECT * FROM Comments WHERE course_code = ?";
@@ -233,6 +279,11 @@ public class PublicDaoImpl implements PublicDao {
         return comments;
     }
 
+    /**
+     * Search Professor Comments
+     * @param professor
+     * @return comments
+     */
     @Override
     public ArrayList<Comment> searchComments(Professor professor){
         String query = "SELECT * FROM Comments WHERE professor_id = ?";
@@ -263,6 +314,11 @@ public class PublicDaoImpl implements PublicDao {
         return comments;
     }
 
+    /**
+     * Search Student Comments
+     * @param student
+     * @return comments
+     */
     @Override
     public ArrayList<Comment> searchComments(Student student){
         String query = "SELECT * FROM Comments WHERE user_id = ?";
@@ -293,6 +349,11 @@ public class PublicDaoImpl implements PublicDao {
         return comments;
     }
 
+    /**
+     * Search Course Average Rating
+     * @param course
+     * @return rating
+     */
     @Override
     public double searchAverageRating(Course course){
         String query = "SELECT ROUND(AVG(rate), 2) AS AverageRate FROM Comments WHERE course_code = ?";
@@ -310,6 +371,11 @@ public class PublicDaoImpl implements PublicDao {
         return rating;
     }
 
+    /**
+     * Search Professor Average Rating
+     * @param professor
+     * @return rating
+     */
     @Override
     public double searchAverageRating(Professor professor){
         String query = "SELECT code FROM Course WHERE professor_id = ?";
@@ -334,6 +400,11 @@ public class PublicDaoImpl implements PublicDao {
         return rating;
     }
 
+    /**
+     * Match Professor
+     * @param professor
+     * @return professor
+     */
     @Override
     public Professor matchProfessor(Professor professor){
         String queryProfessorName = "SELECT name, department FROM Professor WHERE netid = ? AND visible = 1";
@@ -363,7 +434,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
-
+    /**
+     * Search Professor
+     * @param professor
+     * @return resultList
+     */
     @Override
     public ArrayList<Professor> searchProfessor(Professor professor){
         String query= "SELECT name, netid, department, " +
@@ -394,6 +469,11 @@ public class PublicDaoImpl implements PublicDao {
         return resultList;
     }
 
+    /**
+     * Search Professor Course
+     * @param professor
+     * @return courses
+     */
     @Override
     public ArrayList<Course> searchProfessorCourse(Professor professor){
         String query = "SELECT * FROM Course WHERE professor_id = ?";
@@ -420,6 +500,12 @@ public class PublicDaoImpl implements PublicDao {
         return courses;
     }
 
+    /**
+     * Search Professor By Course
+     * @param code
+     * @param semester
+     * @return result
+     */
     @Override
     public String getProfByCourse(String code, String semester){
         String query = "SELECT professor_id FROM Course WHERE code = ? AND semester = ?";
@@ -431,7 +517,11 @@ public class PublicDaoImpl implements PublicDao {
         }
     }
 
-
+    /**
+     * Post Comments
+     * @param comment
+     * @return true/false
+     */
     @Override
     public boolean postComment(Comment comment){
         String query = "INSERT INTO Comments(content, time, likes, dislikes, rate, course_code, semester, professor_id, user_id) VALUES (?, NOW(), 0, 0, ?, ?, ?, ?, ?)";
@@ -444,6 +534,12 @@ public class PublicDaoImpl implements PublicDao {
         }
     }
 
+    /**
+     * Handle likes and dislikes
+     * @param comment_id
+     * @param isLike
+     * @return true/false
+     */
     @Override
     public boolean handleLike(Long comment_id, boolean isLike){
         String query = "SELECT likes, dislikes FROM Comments WHERE comment_id = ?";
@@ -472,6 +568,11 @@ public class PublicDaoImpl implements PublicDao {
         return false;
     }
 
+    /**
+     * Add Professor Request
+     * @param prof_req
+     * @return true/false
+     */
     @Override
     public boolean addprofessor(Prof_req prof_req){
         String query = "INSERT INTO Prof_req(professor_name, professor_department, professor_email, professor_course_name, professor_course_code, professor_course_semester) VALUES (?, ?, ?, ?, ?, ?)";
@@ -485,6 +586,11 @@ public class PublicDaoImpl implements PublicDao {
         return false;
     }
 
+    /**
+     * Get User By Comment
+     * @param comment_id
+     * @return result
+     */
     @Override
     public String getUserByComment(Long comment_id) {
         String query = "SELECT user_id FROM Comments WHERE comment_id = ?";
@@ -500,6 +606,11 @@ public class PublicDaoImpl implements PublicDao {
         return null;
     }
 
+    /**
+     * Report Comments
+     * @param report
+     * @return true/false
+     */
     @Override
     public boolean reportComment(Report report){
         String user_id = this.getUserByComment(report.getComment_id());

@@ -15,6 +15,11 @@ public class ProfessorController {
     @Autowired
     private ProfessorService professorService;
 
+    /**
+     * Get Course Stats
+     * @param course
+     * @return CourseStatsResult
+     */
     @GetMapping(value = "/stats_course")
     public CourseStatsResult get_course_stats(@RequestBody Course course){
         return professorService.get_course_stats(course);
