@@ -1,6 +1,8 @@
 //呼叫后端Service
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:8081/"
+
 axios.interceptors.response.use(null, config => {
     config.withCredentials = true;
     return config},error=>{
@@ -15,4 +17,4 @@ const http = axios.create({
   withCredentials: true
 })
 
-export default http
+export default http;

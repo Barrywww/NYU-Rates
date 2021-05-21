@@ -349,4 +349,38 @@ public class AdminDaoImpl implements AdminDao {
         }
         return false;
     }
+
+    @Override
+    public boolean deleteStudent(String email){
+        String query = "DELETE FROM Student WHERE email = ?";
+        String query_delete_comment = "DELETE FROM Comments WHERE user_id = ?";
+        try{
+            jdbcTemplate.update(query, email);
+            jdbcTemplate.update(query_delete_comment, email.split("@")[0]);
+            return true;
+        } catch (DataAccessException e) {
+            SQLException exception = (SQLException) e.getCause();
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override 
+    public String getStats(){
+        String result = "";
+        try{
+            String query =  "SELECT TABLE_NAME, TABLE_ROWS FROM `information_schema`.`tables` WHERE `table_schema` = 'nyurates' AND (TABLE_NAME IN ('Professor', 'Student', 'Comments', 'Course'))";
+            List<Map<String, Object>> r = jdbcTemplate.queryForList(query);
+            for (int i=0; i<r.size(); i++){
+                Map<String, Object> item = r.get(i);
+                result += String.valueOf(item.get("TABLE_ROWS"));
+                result += " ";
+            }
+            return result;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return result;
+        }
+    }
 }

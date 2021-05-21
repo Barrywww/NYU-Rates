@@ -36,6 +36,11 @@ public class AdminController {
         return result;
     }
 
+    @GetMapping (value = "/stats")
+    public Result getStats(){
+        return adminService.getStatistics();    
+    }
+
     @PostMapping(value = "/student_list")
     public StudentListResult studentList(@RequestBody Map<String, String> params){
         return adminService.studentList(params.get("name"), params.get("netid"), params.get("email"));
@@ -66,6 +71,11 @@ public class AdminController {
     public Result handleProfRequests(@RequestBody Map<String, Object> params){
         return adminService.handleProfReq((Integer) params.get("request_id"), (boolean) params.get("operation"));
     } 
+
+    @RequestMapping (value="/deletestudent")
+    public Result deleteStudent(@RequestBody Map<String, String> params){
+        return adminService.deleteStudent(params.get("email"));
+    }
 
     @GetMapping (value="/validate")
     public Result validateAdmin(HttpSession session){
