@@ -23,7 +23,7 @@ export const columns = [
  
 export const {data : comments} = async () => await axios.get('xxxx'); //从后端获取comment数据
                                                                     //需要做成规范样式作为param传进table
-
+//填充data
 export const data = [
     {
       key: 1,

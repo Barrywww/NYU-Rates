@@ -23,6 +23,10 @@ const IconText = ({ icon, text }) => (
 
 
 class ResultsList extends React.Component {
+    /**
+     * the search result list for course
+     * @param {object} state - the result list for courses that match with the input information
+     */
 	constructor(props){
         super(props)
 		this.state = {loading: true, data: listData};

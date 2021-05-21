@@ -63,6 +63,11 @@ const IconText = ({ icon, text, onClick, style }) => (
 );
 
 class LikeBtn extends React.Component{
+    /**
+     * LikeBtn class，the like button for the course comment
+     * @constructor
+     * @param {object} state - whether the student like the comment or not and the current number of the likes for the comment
+     */
     constructor(props){
         super(props)
         this.state={
@@ -71,6 +76,9 @@ class LikeBtn extends React.Component{
         };
     }
     islike =()=>{
+        /**
+         * Like the course and change the number for the dislikes
+         */
         let liked=this.state.liked;
         if(liked){
             if(liked==='like'){
@@ -109,6 +117,11 @@ class LikeBtn extends React.Component{
 }
 
 class DisLikeBtn extends React.Component{
+    /**
+     * DisLikeBtn class，the dislike button for the course comment
+     * @constructor
+     * @param {object} state - whether the student dislike the comment or not and the current number of the dislikes for the comment
+     */
     constructor(props){
         super(props)
         this.state={
@@ -117,6 +130,9 @@ class DisLikeBtn extends React.Component{
         };
     }
     isdislike =()=>{
+        /**
+         * dislike the course and change the number of the dislikes for the comment
+         */
         let disliked=this.state.disliked;
         if(disliked){
             if(disliked==='dislike'){
@@ -232,6 +248,11 @@ const Report = (props) => {
 
 
 class CoursePage extends React.Component{
+    /**
+     * CoursePage class, the information page for the course\
+     * @constructor
+     * @param {object} state - current course info
+     */
     constructor(props){
         super(props)        
         let param = this.props.location.search.slice(1).split("=");

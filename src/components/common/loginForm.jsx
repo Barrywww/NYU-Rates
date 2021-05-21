@@ -21,6 +21,11 @@ const layout = {
   
 
   const LoginForm = () => {
+    /**
+     * When user submits the form successfully
+     * @param {object} values - user inputs such as email and stuff
+     * @returns {number} - request success or fail code from the backend
+     */
     const onFinish = async(values) => {
       try {
         // console.log('Success:', values);
@@ -40,7 +45,11 @@ const layout = {
         }
       }
     };
-
+    /**
+     * When user fails to submit the form 
+     * @param {object} errorInfo - error details
+     * @returns {null} - prints out error message
+     */
     const onFinishFailed = (errorInfo) => {
       console.log('Failed:', errorInfo);
     };
