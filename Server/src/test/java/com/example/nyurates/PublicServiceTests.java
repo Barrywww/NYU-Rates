@@ -20,6 +20,9 @@ public class PublicServiceTests {
     @Autowired
     AdminService adminService;
 
+    /**
+     * Test regist function
+     */
     @Test
     public void testRegist() throws Exception{
         Student s1 = new Student();
@@ -47,6 +50,9 @@ public class PublicServiceTests {
         adminService.deleteStudent("ql903@nyu.edu");
     }
 
+    /**
+     * Test loginStudent function
+     */
     @Test
     public void testLoginStudent() throws Exception{
         Student student1 = new Student();
@@ -68,6 +74,9 @@ public class PublicServiceTests {
 
     }
 
+    /**
+     * Test loginProfessor function
+     */
     @Test
     public void testLoginProfessor() throws Exception{
         Professor p1 = new Professor();
@@ -88,8 +97,11 @@ public class PublicServiceTests {
         assertEquals("Unable to login with provided credentials.", r2.getMsg());
     }
 
+    /**
+     * Test view_course function
+     */
     @Test
-    public void testView_Course() throws Exception{
+    public void testView_course() throws Exception{
         Course c1 = new Course();
         Course c2 = new Course();
 
@@ -106,6 +118,9 @@ public class PublicServiceTests {
         assertEquals("Unable to query the provided course code.", r2.getMsg());
     }
 
+    /**
+     * Test view_professor function
+     */
     @Test
     public void testView_professor() throws Exception{
         Professor p1 = new Professor();
@@ -126,6 +141,9 @@ public class PublicServiceTests {
 
     }
 
+    /**
+     * Test load_comments function
+     */
     @Test
     public void testLoad_comments() throws Exception{
         Course c1 = new Course();
@@ -144,6 +162,9 @@ public class PublicServiceTests {
         assertEquals("Unable to query comments", r2.getMsg());
     }
 
+    /**
+     * Test search_course function
+     */
     @Test
     public void testSearch_course() throws Exception{
         Course c1 = new Course();
@@ -179,8 +200,11 @@ public class PublicServiceTests {
 
     }
 
+    /**
+     * Test search_professor function
+     */
     @Test
-    public void testSearch_Professor() throws Exception{
+    public void testSearch_professor() throws Exception{
         Professor p1 = new Professor();
         Professor p2 = new Professor();
         Professor p3 = new Professor();
