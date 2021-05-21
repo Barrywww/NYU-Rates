@@ -238,7 +238,7 @@ class ProfPage extends React.Component{
                 }
                 for (let c of json.comments){
                     listData.comment.push({
-                        time: c.date.slice(0,3).join("-"),
+                        time: c.date.split("T")[0],
                         course_code:c.course_code,
                         username:c.student_id,
                         rating: c.rate,
@@ -345,7 +345,7 @@ class ProfPage extends React.Component{
                                     >
                                         <List.Item.Meta
                                             className="listItemMetaGeneral"
-                                            title={<p>{item.username+" from Course "+item.course_code}</p>}
+                                            title={<p>{item.username+" from "+item.course_code}</p>}
                                             description={item.time}
                                         />
                                         {item.content}

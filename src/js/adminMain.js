@@ -6,7 +6,7 @@ import {
     NotificationOutlined,
     HomeTwoTone,
     HomeOutlined,
-    TeamOutlined, ReadOutlined, ArrowUpOutlined, ArrowDownOutlined
+    TeamOutlined, ReadOutlined, ArrowUpOutlined, ArrowDownOutlined, StopTwoTone
 } from '@ant-design/icons';
 import {Link, Switch, Route, Redirect} from "react-router-dom";
 import http from "../services/httpService";
@@ -70,7 +70,15 @@ class adminMain extends React.Component {
 
     handleMenuKey(key) {
         this.setState({selectedKey: key}, ()=>{console.log(this.state)});
+    }
 
+    handleLogout = () => {
+        const c = confirm("Are you sure to log out?");
+        if (c){
+            http.get("admin/logout");
+            sessionStorage.removeItem("adminStatus");
+            window.location.href="../admin/login";
+        }
     }
 
     toggle = () => {
@@ -107,6 +115,7 @@ class adminMain extends React.Component {
                             <SubMenu key="sub3" icon={<NotificationOutlined />} title="Comments">
                                 <Menu.Item key="9"><Link to={"./viewReports"}>Reports</Link></Menu.Item>
                             </SubMenu>
+                            <Menu.Item key="10" icon={<StopTwoTone twoToneColor="#fc2d1e"/>}onClick={this.handleLogout}>Logout</Menu.Item>
                         </Menu>
                     </Sider>
                     <Switch>
