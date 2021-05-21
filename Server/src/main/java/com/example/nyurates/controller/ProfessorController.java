@@ -1,9 +1,6 @@
 package com.example.nyurates.controller;
 
-import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
-import com.example.nyurates.entity.results.CommentsResult;
-import com.example.nyurates.entity.results.CourseStatsResult;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.entity.results.UnauthorizedResult;
 import com.example.nyurates.service.ProfessorService;
@@ -24,7 +21,7 @@ public class ProfessorController {
 
     /**
      * Get Course Stats
-     * @param course
+     * @param request
      * @return CourseStatsResult
      */
     @GetMapping(value = "/stats_course")

@@ -4,7 +4,6 @@ import com.example.nyurates.entity.Comment;
 import com.example.nyurates.entity.Prof_req;
 import com.example.nyurates.entity.Report;
 import com.example.nyurates.entity.Student;
-import com.example.nyurates.entity.results.CommentsResult;
 import com.example.nyurates.entity.results.Result;
 import com.example.nyurates.entity.results.UnauthorizedResult;
 import com.example.nyurates.service.StudentService;
@@ -20,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/student")
 @CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 public class StudentController {
-    //植入对象
     @Autowired
     private StudentService studentService;
 

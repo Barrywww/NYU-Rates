@@ -49,7 +49,6 @@ public class PublicController {
      * @return LoginResult
      */
     @PostMapping(value = "/login")
-    // @RsaSecurityParameter
     public LoginResult login(HttpServletRequest request, @RequestBody Map<String, Object> params){
         LoginResult result;
         
