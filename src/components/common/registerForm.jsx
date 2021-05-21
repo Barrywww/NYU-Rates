@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Select, Button} from 'antd';
 import http from "../../services/httpService";
 const { Option } = Select;
 

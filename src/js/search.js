@@ -1,6 +1,5 @@
 import React from "react";
-import {Layout, Row, Col, Skeleton, Switch, List, Breadcrumb} from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import {Layout, Breadcrumb} from "antd";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 import IndexSearchWrapper from "../components/common/searchbar.jsx";
@@ -13,6 +12,11 @@ import {Link} from "react-router-dom";
 
 
 class SearchPage extends React.Component {
+    /**
+     * Main Search page
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         console.log(this.props.location.search);
@@ -37,6 +41,9 @@ class SearchPage extends React.Component {
         
     }
 
+    /**
+     * Load search params from url.
+     */
     componentDidMount(){
 		if (this.state.st === "Professor"){
 			const requestOptions = {

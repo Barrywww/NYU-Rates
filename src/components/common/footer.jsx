@@ -3,6 +3,11 @@ import {Layout} from "antd";
 
 const {Footer} = Layout;
 
+/**
+ * Main Footer Function
+ * @constructor
+ * @return React.Component
+ */
 function MainFooter(){
     return (
         <Footer id={"globalFooter"} style={{ textAlign: 'center' }}>

@@ -1,6 +1,6 @@
 import React from "react";
-import {Switch, List, Skeleton, Avatar, Space} from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import {List, Skeleton} from "antd";
+import { StarOutlined} from '@ant-design/icons';
 import { Statistic, Row, Col } from 'antd';
 
 const listData = [];
@@ -13,13 +13,6 @@ for (let i = 0; i < 10; i++) {
         rating: 5.0
     });
 }
-
-const IconText = ({ icon, text }) => (
-    <span>
-    {React.createElement(icon, { style: { marginRight: 8 } })}
-        {text}
-  </span>
-);
 
 
 class ResultsList extends React.Component {

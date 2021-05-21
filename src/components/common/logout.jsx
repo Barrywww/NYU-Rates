@@ -3,7 +3,9 @@ import {logout} from '../../services/authService';
 
 
 class Logout extends Component {
-
+    /**
+     * User Logout Handler
+     */
     componentDidMount() {
         localStorage.removeItem('userInfo');
         logout();

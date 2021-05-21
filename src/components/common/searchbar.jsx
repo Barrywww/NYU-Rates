@@ -3,6 +3,11 @@ import {Button, Col, Dropdown, Input, Menu, Row} from "antd";
 import {DownOutlined, ReadOutlined, SearchOutlined, UserOutlined} from "@ant-design/icons";
 
 class IndexDropDown extends React.Component{
+    /**
+     * Main Searchbar Dropdown
+     * @param props
+     * @constructor
+     */
     constructor(props) {
         super(props);
         this.props = props;
@@ -20,10 +25,16 @@ class IndexDropDown extends React.Component{
         );
     }
 
+    /**
+     * Event Listener for resize
+     */
     componentDidMount() {
         window.addEventListener('resize', this.props.handleResize.bind(this))
     }
 
+    /**
+     * Event Listener for resize
+     */
     componentWillUnmount() {
         window.removeEventListener('resize', this.props.handleResize.bind(this))
     }
@@ -47,6 +58,11 @@ class IndexDropDown extends React.Component{
 }
 
 class IndexSearchWrapper extends React.Component{
+    /**
+     * Main Searchbar Wrapper
+     * @param props
+     * @constructor
+     */
     constructor(props) {
         super(props);
         this.state = {inputPrompt: "", selectedType: "", collapse: false}
@@ -56,17 +72,26 @@ class IndexSearchWrapper extends React.Component{
         this.inputRef = React.createRef();
     }
 
+    /**
+     * Search Action handler
+     */
     handleSearch(){
         if(this.state.selectedType.trim() !== "" & this.inputRef.current.state.value.trim() !== ""){
             window.location.href = "/search?st="+this.state.selectedType + "&v=" + this.inputRef.current.state.value;
         }
     }
 
-
+    /**
+     * Menu Selection Handler
+     * @param key
+     */
     handleMenuClick({key}){
         this.setState((state) => ({selectedType: key}))
     }
 
+    /**
+     * Window Resize handler
+     */
     handleResize(){
         if (window.innerWidth < 900){
             this.setState((state) => ({collapse: true}))

@@ -1,17 +1,15 @@
 import React from "react";
-import {BrowserRouter, Link} from "react-router-dom";
-import {useRouteMatch} from "react-router";
-import { DownOutlined, UserOutlined, ReadOutlined } from '@ant-design/icons';
-import {Layout, Menu, Breadcrumb, Input, Select, AutoComplete, Row, Col, Button, Dropdown,Form, Checkbox} from 'antd';
+import {Layout, Row, Col} from 'antd';
 import RegisterForm from '../components/common/registerForm';
 import "../css/login.css";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 
-// function App() {return <h1>Hello World!</h1>}
-const { Header, Content, Footer } = Layout;
-const {Option} = Select;
+const {Content } = Layout;
 
+/**
+ * Menu Register Page
+ */
 class Register extends React.Component{
     render(){
         return(

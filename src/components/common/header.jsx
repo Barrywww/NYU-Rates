@@ -9,6 +9,10 @@ const { TreeNode } = TreeSelect;
 
 
 class MainHeader extends React.Component{
+    /**
+     * Main Footer Function
+     * @constructor
+     */
     constructor(props){
         super(props)
         this.state = {"user":JSON.parse(localStorage.getItem('userInfo'))} //用给下面conditional rendering

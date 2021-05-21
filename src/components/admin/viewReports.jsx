@@ -1,15 +1,17 @@
 import React, {lazy} from 'react';
 import {Link} from 'react-router-dom';
-import Column, {Divider, Layout, Button, Form, Checkbox, Input, Breadcrumb, Row, Col, Table, Switch, Radio, Space} from "antd";
-import {ArrowDownOutlined, ArrowUpOutlined, LockOutlined, UserOutlined, DownOutlined} from "@ant-design/icons";
+import {Layout, Breadcrumb, Row, Col, Table, Space} from "antd";
 
 const {Content} = Layout;
 
 const GeneralModal = lazy(() => import("../common/modal"));
 
-const data = [];
-
 class ViewReports extends React.Component {
+    /**
+     * View Reports Page
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {hasData: false, data:[]};
@@ -49,6 +51,10 @@ class ViewReports extends React.Component {
         this.fetchData({})
     }
 
+    /**
+     * Fetch Reports
+     * @param values - values from form.
+     */
     async fetchData(values) {
         const requestOptions = {
             method: 'POST',
@@ -81,6 +87,11 @@ class ViewReports extends React.Component {
         )
     }
 
+    /**
+     * Handle Delete Comment
+     * @param key - report key
+     * @param report - report reason
+     */
     handleDelete(key, report){
         console.log(key);
         let con = confirm("Are you sure to delete this comment?");
@@ -107,43 +118,34 @@ class ViewReports extends React.Component {
         }
     }
 
-    handleAddCourse(key){
-        alert("Are you sure to add course?");
-    }
-
-
-    handleHasData(){
-        this.setState({hasData: !this.state.hasData});
-    }
-
+    /**
+     * Handle Revert Comment
+     * @param key - report key
+     * @param report - report reason
+     */
     handleRevert(key, report) {
         console.log(key);
         let con = confirm("Are you sure to revert this comment?");
-        if (con){
+        if (con) {
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({comment_id: key, report_id: report, validity: true}),
                 credentials: "include"
             }
             fetch("http://localhost:8081/admin/reviewcomment/", requestOptions).then(response => {
-                if (response.status == 200){
+                if (response.status == 200) {
                     return response.json();
                 }
             })
-            .then(json => {
-                if (json.code !== 200){
-                    alert("Operation Failed!");
-                }
-                else{
-                    this.fetchData({})
-                }
-            })
+                .then(json => {
+                    if (json.code !== 200) {
+                        alert("Operation Failed!");
+                    } else {
+                        this.fetchData({})
+                    }
+                })
         }
-    }
-
-    onFinish(values) {
-        console.log(values);
     }
 
     componentDidMount(){
@@ -166,39 +168,6 @@ class ViewReports extends React.Component {
                         minHeight: 280,
                     }}>
                     <div id="adminMainWrapper">
-                        {/* <Form
-                            name="profQuery"
-                            onFinish={this.onFinish}>
-                            <Row gutter={{ xs: 8, sm: 16, md: 24}} align="top" justify="center">
-                                <Col xs={12} sm={12} md={5}>
-                                    <Form.Item name="name">
-                                        <Input size="large" placeholder="Name"/>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={12} sm={12} md={5}>
-                                    <Form.Item name="netid">
-                                        <Input size="large" placeholder="NetID"/>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={12} sm={12} md={5}>
-                                    <Form.Item name="email">
-                                        <Input size="large" placeholder="Email"/>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={12} sm={12} md={5}>
-                                    <Form.Item name="department">
-                                        <Input size="large" placeholder="Department"/>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={12} sm={12} md={4}>
-                                    <Form.Item>
-                                        <Button type="primary" htmlType="submit" style={{width: "100%"}} size="large">
-                                            Search
-                                        </Button>
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Form> */}
                         <Row gutter={{ xs: 8, sm: 16, md: 24}} align="top" justify="center">
                             <Col span={24}>
                                 <Table

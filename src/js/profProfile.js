@@ -2,15 +2,12 @@ import React, {Component} from "react";
 import {Layout, Select, Row, Col} from 'antd';
 import "../css/index.css";
 import MainHeader from "../components/common/header";
-import MainFooter from "../components/common/footer";
-import IndexSearchWrapper from "../components/common/searchbar";
 import "../css/profile.css";
 import {Table} from 'antd';
 import ProfTable from '../components/common/profComment';
 
 
-const {Header,Content,Footer} = Layout;
-const {Option} = Select;
+const {Content,Footer} = Layout;
 
 class ProfProfile extends Component {
 /**

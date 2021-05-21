@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import {Layout, Select, Row, Col} from 'antd';
+import {Layout, Row, Col} from 'antd';
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 import IndexSearchWrapper from "../components/common/searchbar";
 
 const {Content} = Layout;
-const {Option} = Select;
-
-
 
 class IndexPage extends Component{
+    /**
+     * Homepage Class
+     * @param props
+     * @constructor
+     */
     constructor(props) {
         super(props);
     }

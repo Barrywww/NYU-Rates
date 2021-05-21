@@ -1,16 +1,12 @@
 import React from "react";
 import {
     Layout,
-    Menu,
     Breadcrumb,
     Input,
     Select,
-    AutoComplete,
     Row,
     Col,
-    Dropdown,
     Form,
-    Checkbox,
     List, Statistic
 } from 'antd';
 import "../css/profPage.css";
@@ -18,24 +14,17 @@ import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
 import {
     LikeOutlined,
-    MessageOutlined,
     StarOutlined,
-    DislikeOutlined,
-    WarningOutlined,
-    DownOutlined, DownCircleOutlined, LikeFilled, LikeTwoTone,DislikeTwoTone
+    WarningOutlined, DownCircleOutlined, LikeTwoTone
 } from "@ant-design/icons";
-import { UserOutlined } from '@ant-design/icons';
-import Avatar from "antd/es/avatar/avatar";
-import { Button, Radio } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { Rate } from 'antd'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import http from "../services/httpService";
 
-// function App() {return <h1>Hello World!</h1>}
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const {Option} = Select;
 
 const listData = {

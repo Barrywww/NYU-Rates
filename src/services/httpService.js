@@ -3,6 +3,10 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8081/"
 
+/**
+ * Axios global conf
+ * @param config - axios config
+ */
 axios.interceptors.response.use(null, config => {
     config.withCredentials = true;
     return config},error=>{

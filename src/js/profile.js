@@ -1,16 +1,14 @@
 import React, {Component} from "react";
-import {Layout, Select, Row, Col} from 'antd';
+import {Layout, Select} from 'antd';
 import "../css/index.css";
 import MainHeader from "../components/common/header";
 import MainFooter from "../components/common/footer";
-import IndexSearchWrapper from "../components/common/searchbar";
 import "../css/profile.css";
 import {Table} from 'antd';
 import {columns} from '../components/common/commentTable';
 import http from "../services/httpService";
 
-const {Header,Content,Footer} = Layout;
-const {Option} = Select;
+const {Content} = Layout;
 
 class profile extends Component {
 

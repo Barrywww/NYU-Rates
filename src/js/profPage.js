@@ -1,41 +1,28 @@
 import React from "react";
 import {
     Layout,
-    Menu,
     Breadcrumb,
     Input,
     Select,
-    AutoComplete,
     Row,
     Col,
-    Dropdown,
     Form,
-    Checkbox,
     List, Statistic
 } from 'antd';
 import MainHeader from "../components/common/header";
 import {
     LikeOutlined,
-    MessageOutlined,
     StarOutlined,
     DislikeOutlined,
-    WarningOutlined,
-    DownOutlined, DownCircleOutlined, LikeFilled, LikeTwoTone,DislikeTwoTone
+    WarningOutlined, LikeTwoTone,DislikeTwoTone
 } from "@ant-design/icons";
-import { UserOutlined } from '@ant-design/icons';
-import Avatar from "antd/es/avatar/avatar";
-import { Button, Radio } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
-import { Rate } from 'antd'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 
 import "../css/profPage.css";
 
-// function App() {return <h1>Hello World!</h1>}
-const { Header, Content, Footer } = Layout;
-const {Option} = Select;
+const {Content, Footer } = Layout;
 
 const listData = {
     professor_name:"",

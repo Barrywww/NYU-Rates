@@ -1,15 +1,20 @@
 import React, {lazy} from 'react';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
-import {Divider, Layout, Button, Form, Checkbox, Input} from "antd";
+import {Route, Switch} from 'react-router-dom'
+import {Divider, Layout, Button, Form, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import GeneralModal from "../components/common/modal";
 import "../css/admin.css";
 
 const adminMain = lazy(() => import("./adminMain"));
 
-let {Header, Content, Footer} = Layout;
+let {Content} = Layout;
 
 class adminBundle extends React.Component{
+    /**
+     * Admin Bundle Class, for login / route purposes
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
         this.state = {}
@@ -21,6 +26,10 @@ class adminBundle extends React.Component{
         document.getElementById("root").style.minHeight = "100%";
     }
 
+    /**
+     * login form handler
+     * @param values - values from form.
+     */
     onFinish = async (values) => {
         console.log('Success:', values);
         const requestOptions = {
@@ -46,6 +55,10 @@ class adminBundle extends React.Component{
         }
     };
 
+    /**
+     * form error trigger
+     * @param errorInfo
+     */
     onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
         const title = "Login Failed";
@@ -105,6 +118,11 @@ class adminBundle extends React.Component{
 
 
 class adminRouter extends React.Component{
+    /**
+     * Admin Router Class. Router for admin pages.
+     * @param props
+     * @constructor
+     */
     constructor(props){
         super(props);
     }
