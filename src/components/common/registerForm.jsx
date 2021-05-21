@@ -92,6 +92,7 @@ const RegisterForm = () => {
           },
         ]}>
         <Select
+            id = "role-input"
             placeholder="Select a role"
             onChange={handleSelect}
             allowClear
@@ -120,7 +121,7 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input />
+        <Input id="email-input"/>
       </Form.Item>
 
 
@@ -137,7 +138,7 @@ const RegisterForm = () => {
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password id="password-input"/>
       </Form.Item>
 
       <Form.Item
@@ -175,7 +176,7 @@ const RegisterForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input id="name-input"/>
       </Form.Item>
 
       {placeholder}
