@@ -1,9 +1,7 @@
 package com.example.nyurates;
 
-import com.example.nyurates.entity.Course;
 import com.example.nyurates.entity.Professor;
 import com.example.nyurates.entity.results.CommentsResult;
-import com.example.nyurates.entity.results.CourseStatsResult;
 import com.example.nyurates.service.ProfessorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,9 @@ public class ProfessorServiceTests {
     @Autowired
     ProfessorService professorService;
 
+    /**
+     * Professor - Get All of His/Her Comments test
+     */
     @Test
     public void testGet_course_stats() throws Exception{
         Professor p1 = new Professor();
